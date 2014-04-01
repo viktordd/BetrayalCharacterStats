@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlCharacter"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="@string/dscr_character"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/ivCharacter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/dscr_character" />
+
+    <RelativeLayout
+        android:id="@+id/ivPins"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/dscr_pins" >
+
+        <ImageView
+            android:id="@+id/ivSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:contentDescription="@string/dscr_speed_pin" />
+
+        <ImageView
+            android:id="@+id/ivMight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/dscr_might_pin" />
+
+        <ImageView
+            android:id="@+id/ivSanity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/dscr_sanity_pin" />
+
+        <ImageView
+            android:id="@+id/ivKnowledge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="0dp"
+            android:contentDescription="@string/dscr_knowledge_pin" />
+
+        <Button
+            android:id="@+id/decreaseSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/decrease"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/increaseSanity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/increase"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/increaseSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/decreaseSpeed"
+            android:layout_alignParentLeft="true"
+            android:text="@string/increase"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/increaseMight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/increase"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/decreaseMight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/increaseMight"
+            android:text="@string/decrease"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/decreaseSanity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/increaseSanity"
+            android:text="@string/decrease"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/decreaseKnowledge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/decrease"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/increaseKnowledge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/decreaseKnowledge"
+            android:layout_alignParentRight="true"
+            android:text="@string/increase"
+            android:textColor="@android:color/white" />
+
+    </RelativeLayout>
+    
+</RelativeLayout>

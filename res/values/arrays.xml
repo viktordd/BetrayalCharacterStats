@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="char_constraints">
+    	<item name="min">0</item>
+    	<item name="max">8</item>
+    </integer-array>
+    <integer-array name="brandon">
+    	<item name="speed">3</item>
+    	<item name="might">4</item>
+    	<item name="sanity">4</item>
+    	<item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="darrin">
+    	<item name="speed">5</item>
+    	<item name="might">3</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="father">
+    	<item name="speed">3</item>
+    	<item name="might">3</item>
+    	<item name="sanity">5</item>
+    	<item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="heather">
+    	<item name="speed">3</item>
+    	<item name="might">3</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">5</item>
+    </integer-array>
+    <integer-array name="jenny">
+    	<item name="speed">4</item>
+    	<item name="might">3</item>
+    	<item name="sanity">5</item>
+    	<item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="madame">
+    	<item name="speed">3</item>
+    	<item name="might">4</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="missy">
+    	<item name="speed">3</item>
+    	<item name="might">4</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="ox">
+    	<item name="speed">5</item>
+    	<item name="might">3</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="peter">
+    	<item name="speed">4</item>
+    	<item name="might">3</item>
+    	<item name="sanity">4</item>
+    	<item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="professor">
+    	<item name="speed">4</item>
+    	<item name="might">3</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">5</item>
+    </integer-array>
+    <integer-array name="vivian">
+    	<item name="speed">4</item>
+    	<item name="might">3</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="zoe">
+    	<item name="speed">4</item>
+    	<item name="might">4</item>
+    	<item name="sanity">3</item>
+    	<item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="pin_offset_lower">
+    	<item name="x_min">217</item>
+    	<item name="y_min">211</item>
+    	<item name="x_max">291</item>
+    	<item name="y_max">-15</item>
+    </integer-array>
+    <integer-array name="pin_offset_upper">
+    	<item name="x_min">255</item>
+    	<item name="y_min">114</item>
+    	<item name="x_max">60</item>
+    	<item name="y_max">255</item>
+    </integer-array>
+    <string-array name="titles">
+        <item>Madame</item>
+        <item>Vivian</item>
+        <item>Brandon</item>
+        <item>Peter</item>
+        <item>Heather</item>
+        <item>Jenny</item>
+        <item>Darrin</item>
+        <item>Ox</item>
+        <item>Father</item>
+        <item>Professor</item>
+        <item>Missy</item>
+        <item>Zoe</item>
+    </string-array>
+</resources>

@@ -1,0 +1,26 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ViktorDikov.BetrayalCharacterStats"
+    android:versionCode="10"
+    android:versionName="2.0.3" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.ViktorDikov.BetrayalCharacterStats.CharacterActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.ViktorDikov.BetrayalCharacterStats.ReorderCharsActivity" android:label="@string/reorder_name"></activity>
+    </application>
+
+</manifest>

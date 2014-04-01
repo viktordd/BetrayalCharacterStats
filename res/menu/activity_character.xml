@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_reset"
+        android:enabled="true"
+        android:icon="@drawable/reset"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_reset"
+        android:titleCondensed="@string/menu_reset_short"
+        android:visible="true"/>
+    <item
+        android:id="@+id/menu_flip"
+        android:enabled="true"
+        android:icon="@drawable/flip"
+        android:orderInCategory="101"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_flip"
+        android:titleCondensed="@string/menu_flip_short"
+        android:visible="true"/>
+    <item
+        android:id="@+id/menu_reorder"
+        android:enabled="true"
+        android:icon="@drawable/re_order"
+        android:orderInCategory="102"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_re_order"
+        android:titleCondensed="@string/menu_re_order_short"
+        android:visible="true"/>
+
+</menu>

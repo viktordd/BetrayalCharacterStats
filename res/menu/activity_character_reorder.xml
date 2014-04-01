@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_reset_order"
+        android:enabled="true"
+        android:icon="@drawable/reset"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_reset_order"
+        android:titleCondensed="@string/menu_reset_order_short"
+        android:visible="true"/>
+
+</menu>
