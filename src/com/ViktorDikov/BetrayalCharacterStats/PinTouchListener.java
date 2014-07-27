@@ -60,6 +60,7 @@ abstract class PinTouchListener implements OnTouchListener {
 				
 			case MotionEvent.ACTION_CANCEL:
 				SetPoint(v, CurrPos);
+				SetStats(CurrPos, false);
 				
 				delta = null;
 				ViewPager.requestDisallowInterceptTouchEvent(false);

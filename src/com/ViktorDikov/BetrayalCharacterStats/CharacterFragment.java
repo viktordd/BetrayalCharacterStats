@@ -171,9 +171,8 @@ public class CharacterFragment extends Fragment {
 		speedPin.setOnTouchListener(new PinTouchListener(m_stats.getSpeed(), Pins.getPinPos(PinDetails.SPEED_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
+				m_stats.setSpeed(pos);
 				SetSpeedValue();
-				if (touchEnd)
-					m_stats.setSpeed(pos);
 			}
 		});
 
@@ -181,9 +180,8 @@ public class CharacterFragment extends Fragment {
 		mightPin.setOnTouchListener(new PinTouchListener(m_stats.getMight(), Pins.getPinPos(PinDetails.MIGHT_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
+				m_stats.setMight(pos);
 				SetMightValue();
-				if (touchEnd)
-					m_stats.setMight(pos);
 			}
 		});
 
@@ -191,9 +189,8 @@ public class CharacterFragment extends Fragment {
 		sanityPin.setOnTouchListener(new PinTouchListener(m_stats.getSanity(), Pins.getPinPos(PinDetails.SANITY_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
+				m_stats.setSanity(pos);
 				SetSanityValue();
-				if (touchEnd)
-					m_stats.setSanity(pos);
 			}
 		});
 
@@ -201,9 +198,8 @@ public class CharacterFragment extends Fragment {
 		knowledgePin.setOnTouchListener(new PinTouchListener(m_stats.getKnowledge(), Pins.getPinPos(PinDetails.KNOWLEDGE_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
+				m_stats.setKnowledge(pos);
 				SetKnowledgeValue();
-				if (touchEnd)
-					m_stats.setKnowledge(pos);
 			}
 		});
 
