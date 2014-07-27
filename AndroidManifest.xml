@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ViktorDikov.BetrayalCharacterStats"
-    android:versionCode="10"
+    android:versionCode="11"
     android:versionName="2.1.0" >
 
     <uses-sdk

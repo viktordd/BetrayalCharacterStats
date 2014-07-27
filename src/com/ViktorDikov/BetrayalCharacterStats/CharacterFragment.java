@@ -170,36 +170,40 @@ public class CharacterFragment extends Fragment {
 		speedPin.setImageBitmap(Pins.getSpeedPinImg());
 		speedPin.setOnTouchListener(new PinTouchListener(m_stats.getSpeed(), Pins.getPinPos(PinDetails.SPEED_PINS), vp) {
 			@Override
-			protected void SetStats(int pos) {
-				m_stats.setSpeed(pos);
+			protected void SetStats(int pos, boolean touchEnd) {
 				SetSpeedValue();
+				if (touchEnd)
+					m_stats.setSpeed(pos);
 			}
 		});
 
 		mightPin.setImageBitmap(Pins.getMightPinImg());
 		mightPin.setOnTouchListener(new PinTouchListener(m_stats.getMight(), Pins.getPinPos(PinDetails.MIGHT_PINS), vp) {
 			@Override
-			protected void SetStats(int pos) {
-				m_stats.setMight(pos);
+			protected void SetStats(int pos, boolean touchEnd) {
 				SetMightValue();
+				if (touchEnd)
+					m_stats.setMight(pos);
 			}
 		});
 
 		sanityPin.setImageBitmap(Pins.getSanityPinImg());
 		sanityPin.setOnTouchListener(new PinTouchListener(m_stats.getSanity(), Pins.getPinPos(PinDetails.SANITY_PINS), vp) {
 			@Override
-			protected void SetStats(int pos) {
-				m_stats.setSanity(pos);
+			protected void SetStats(int pos, boolean touchEnd) {
 				SetSanityValue();
+				if (touchEnd)
+					m_stats.setSanity(pos);
 			}
 		});
 
 		knowledgePin.setImageBitmap(Pins.getKnowledgePinImg());
 		knowledgePin.setOnTouchListener(new PinTouchListener(m_stats.getKnowledge(), Pins.getPinPos(PinDetails.KNOWLEDGE_PINS), vp) {
 			@Override
-			protected void SetStats(int pos) {
-				m_stats.setKnowledge(pos);
+			protected void SetStats(int pos, boolean touchEnd) {
 				SetKnowledgeValue();
+				if (touchEnd)
+					m_stats.setKnowledge(pos);
 			}
 		});
 

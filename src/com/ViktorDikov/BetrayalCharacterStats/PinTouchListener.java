@@ -43,6 +43,7 @@ abstract class PinTouchListener implements OnTouchListener {
 				closestPos = getClosestPin(x, y);
 				if (closestPos > -1) {
 					SetPoint(v, closestPos);
+					SetStats(closestPos, false);
 				}
 				break;
 
@@ -50,7 +51,7 @@ abstract class PinTouchListener implements OnTouchListener {
 				closestPos = getClosestPin(x, y);
 				if (closestPos > -1) {
 					SetPoint(v, closestPos);
-					SetStats(closestPos);
+					SetStats(closestPos, true);
 				}
 				
 				delta = null;
@@ -91,5 +92,5 @@ abstract class PinTouchListener implements OnTouchListener {
 		v.setLayoutParams(layoutParams);
 	}
 
-	protected abstract void SetStats(int pos);
+	protected abstract void SetStats(int pos, boolean touchEnd);
 }
