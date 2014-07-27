@@ -1,35 +1,31 @@
 package com.ViktorDikov.BetrayalCharacterStats;
 
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
+import com.ViktorDikov.BetrayalCharacterStats.CharacterActivity.AsynchResult;
 import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats;
 import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStatsProvider;
 
 /**
  * A fragment that launches other parts of the application.
  */
-public class CharacterFragment extends Fragment implements OnGlobalLayoutListener {
+public class CharacterFragment extends Fragment {
 
 	public static final String ARG_ID = "position";
 	public static final String ARG_ORIENTATION = "orientation";
 
-	private int m_id;
+	private int mId;
 	private CharacterStats m_stats;
-
-	private boolean waitingForGlobalLayout = false;
-	private RelativeLayout pins;
+	private PinDetails Pins;
 
 	private ImageView character;
 	private ImageView speedPin;
@@ -37,91 +33,35 @@ public class CharacterFragment extends Fragment implements OnGlobalLayoutListene
 	private ImageView sanityPin;
 	private ImageView knowledgePin;
 
-	private Button increaseSpeed;
-	private Button decreaseSpeed;
-	private Button increaseMight;
-	private Button decreaseMight;
-	private Button increaseSanity;
-	private Button decreaseSanity;
-	private Button increaseKnowledge;
-	private Button decreaseKnowledge;
+	private TextView age;
+	private TextView height;
+	private TextView weight;
+	private TextView hobbies;
+	private TextView birthday;
+	private TextView speed;
+	private TextView might;
+	private TextView sanity;
+	private TextView knowledge;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_character, container, false);
 
 		character = (ImageView) rootView.findViewById(R.id.ivCharacter);
-		pins = (RelativeLayout) rootView.findViewById(R.id.ivPins);
 		speedPin = (ImageView) rootView.findViewById(R.id.ivSpeed);
 		mightPin = (ImageView) rootView.findViewById(R.id.ivMight);
 		sanityPin = (ImageView) rootView.findViewById(R.id.ivSanity);
 		knowledgePin = (ImageView) rootView.findViewById(R.id.ivKnowledge);
 
-		increaseSpeed = (Button) rootView.findViewById(R.id.increaseSpeed);
-		decreaseSpeed = (Button) rootView.findViewById(R.id.decreaseSpeed);
-		increaseMight = (Button) rootView.findViewById(R.id.increaseMight);
-		decreaseMight = (Button) rootView.findViewById(R.id.decreaseMight);
-		increaseSanity = (Button) rootView.findViewById(R.id.increaseSanity);
-		decreaseSanity = (Button) rootView.findViewById(R.id.decreaseSanity);
-		increaseKnowledge = (Button) rootView.findViewById(R.id.increaseKnowledge);
-		decreaseKnowledge = (Button) rootView.findViewById(R.id.decreaseKnowledge);
-
-		increaseSpeed.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.increaseSpeed();
-				UpdateStats();
-			}
-		});
-		decreaseSpeed.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.decreaseSpeed();
-				UpdateStats();
-			}
-		});
-		increaseMight.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.increaseMight();
-				UpdateStats();
-			}
-		});
-		decreaseMight.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.decreaseMight();
-				UpdateStats();
-			}
-		});
-		increaseSanity.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.increaseSanity();
-				UpdateStats();
-			}
-		});
-		decreaseSanity.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.decreaseSanity();
-				UpdateStats();
-			}
-		});
-		increaseKnowledge.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.increaseKnowledge();
-				UpdateStats();
-			}
-		});
-		decreaseKnowledge.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_stats.decreaseKnowledge();
-				UpdateStats();
-			}
-		});
+		age = (TextView) rootView.findViewById(R.id.tvAge);
+		height = (TextView) rootView.findViewById(R.id.tvHeight);
+		weight = (TextView) rootView.findViewById(R.id.tvWeight);
+		hobbies = (TextView) rootView.findViewById(R.id.tvHobbies);
+		birthday = (TextView) rootView.findViewById(R.id.tvBirthday);
+		speed = (TextView) rootView.findViewById(R.id.tvSpeed);
+		might = (TextView) rootView.findViewById(R.id.tvMight);
+		sanity = (TextView) rootView.findViewById(R.id.tvSanity);
+		knowledge = (TextView) rootView.findViewById(R.id.tvKnowledge);
 
 		return rootView;
 	}
@@ -131,43 +71,37 @@ public class CharacterFragment extends Fragment implements OnGlobalLayoutListene
 		super.onActivityCreated(savedInstanceState);
 
 		Bundle args = getArguments();
-		m_id = args.getInt(ARG_ID);
+		mId = args.getInt(ARG_ID);
 
-		CharacterStatsProvider statsProvider = new CharacterStatsProvider(getActivity(), m_id);
+		CharacterStatsProvider statsProvider = new CharacterStatsProvider(getActivity(), mId);
 		m_stats = statsProvider.getStats();
-		
-		pins.getViewTreeObserver().addOnGlobalLayoutListener(this);
-		waitingForGlobalLayout = true;
-	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onGlobalLayout() {
-		if (pins != null) {
-			CharacterActivity activity = ((CharacterActivity) getActivity());
-			activity.loadBitmaps(GetImageResource(), this, pins.getWidth(), pins.getHeight(), activity.getWindowManager().getDefaultDisplay().getRotation());
-			pins.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-			waitingForGlobalLayout = false;
-		}
+		age.setText(Integer.toString(m_stats.getAge()));
+		height.setText(m_stats.getHeight());
+		weight.setText(Integer.toString(m_stats.getWeight()));
+		hobbies.setText(m_stats.getHobbies());
+		birthday.setText(m_stats.getBirthday());
+		SetSpeedValue();
+		SetMightValue();
+		SetSanityValue();
+		SetKnowledgeValue();
+
+		// Load bitmaps asynchronously
+		((CharacterActivity) getActivity()).loadBitmaps(this);
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		
-		CharacterStatsProvider statsProvider = new CharacterStatsProvider(getActivity(), m_id);
+
+		CharacterStatsProvider statsProvider = new CharacterStatsProvider(getActivity(), mId);
 		statsProvider.setStats(m_stats);
 		statsProvider.apply();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-
-		if (waitingForGlobalLayout)
-			pins.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-		pins = null;
 
 		character.setImageBitmap(null);
 		speedPin.setImageBitmap(null);
@@ -181,78 +115,130 @@ public class CharacterFragment extends Fragment implements OnGlobalLayoutListene
 		sanityPin = null;
 		knowledgePin = null;
 
-		increaseSpeed = null;
-		decreaseSpeed = null;
-		increaseMight = null;
-		decreaseMight = null;
-		increaseSanity = null;
-		decreaseSanity = null;
-		increaseKnowledge = null;
-		decreaseKnowledge = null;
+		age = null;
+		weight = null;
+		height = null;
+		hobbies = null;
+		birthday = null;
+		speed = null;
+		might = null;
+		sanity = null;
+		knowledge = null;
 	}
-	
+
 	public void ResetChar() {
-		CharacterStatsProvider statsProvider = new CharacterStatsProvider(getActivity(), m_id);
-		m_stats.Set(statsProvider.getDefaults());
+		m_stats.ResetToDefaults();
+		SetSpeedValue();
+		SetMightValue();
+		SetSanityValue();
+		SetKnowledgeValue();
 		UpdateStats();
 	}
 
-	public void SetCharacterImage(Bitmap bitmap) {
-		if (character != null)
-			character.setImageBitmap(bitmap);
+	private void SetSpeedValue() {
+		speed.setText(Integer.toString(m_stats.getSpeedVal()));
+		speed.setTextColor(getResources().getColor((m_stats.getSpeed() == m_stats.getSpeedDefault() ? R.color.Green : R.color.White)));
+
 	}
 
-	public void SetPinImages(PinDetails pins) {
-		if (speedPin == null || mightPin == null || sanityPin == null || knowledgePin == null)
+	private void SetMightValue() {
+		might.setText(Integer.toString(m_stats.getMightVal()));
+		might.setTextColor(getResources().getColor((m_stats.getMight() == m_stats.getMightDefault() ? R.color.Green : R.color.White)));
+	}
+
+	private void SetSanityValue() {
+		sanity.setText(Integer.toString(m_stats.getSanityVal()));
+		sanity.setTextColor(getResources().getColor((m_stats.getSanity() == m_stats.getSanityDefault() ? R.color.Green : R.color.White)));
+	}
+
+	private void SetKnowledgeValue() {
+		knowledge.setText(Integer.toString(m_stats.getKnowledgeVal()));
+		knowledge.setTextColor(getResources().getColor((m_stats.getKnowledge() == m_stats.getKnowledgeDefault() ? R.color.Green : R.color.White)));
+	}
+
+	// Called when character images are loaded
+	public void SetCharacterImages(AsynchResult result) {
+		if (character == null || speedPin == null || mightPin == null || sanityPin == null || knowledgePin == null || result == null || result.Bitmap == null
+				|| result.Pins == null)
 			return;
-		speedPin.setImageBitmap(pins.getSpeedPinImg());
-		mightPin.setImageBitmap(pins.getMightPinImg());
-		sanityPin.setImageBitmap(pins.getSanityPinImg());
-		knowledgePin.setImageBitmap(pins.getKnowledgePinImg());
+
+		CharacterActivity activity = (CharacterActivity) getActivity();
+		ViewPager vp = activity.getViewPager();
+		character.setImageBitmap(result.Bitmap);
+		Pins = result.Pins;
+
+		speedPin.setImageBitmap(Pins.getSpeedPinImg());
+		speedPin.setOnTouchListener(new PinTouchListener(m_stats.getSpeed(), Pins.getPinPos(PinDetails.SPEED_PINS), vp) {
+			@Override
+			protected void SetStats(int pos) {
+				m_stats.setSpeed(pos);
+				SetSpeedValue();
+			}
+		});
+
+		mightPin.setImageBitmap(Pins.getMightPinImg());
+		mightPin.setOnTouchListener(new PinTouchListener(m_stats.getMight(), Pins.getPinPos(PinDetails.MIGHT_PINS), vp) {
+			@Override
+			protected void SetStats(int pos) {
+				m_stats.setMight(pos);
+				SetMightValue();
+			}
+		});
+
+		sanityPin.setImageBitmap(Pins.getSanityPinImg());
+		sanityPin.setOnTouchListener(new PinTouchListener(m_stats.getSanity(), Pins.getPinPos(PinDetails.SANITY_PINS), vp) {
+			@Override
+			protected void SetStats(int pos) {
+				m_stats.setSanity(pos);
+				SetSanityValue();
+			}
+		});
+
+		knowledgePin.setImageBitmap(Pins.getKnowledgePinImg());
+		knowledgePin.setOnTouchListener(new PinTouchListener(m_stats.getKnowledge(), Pins.getPinPos(PinDetails.KNOWLEDGE_PINS), vp) {
+			@Override
+			protected void SetStats(int pos) {
+				m_stats.setKnowledge(pos);
+				SetKnowledgeValue();
+			}
+		});
+
 		UpdateStats();
 	}
 
 	private void UpdateStats() {
-		CharacterStats s = m_stats;
+		if (Pins == null)
+			return;
 
-		increaseSpeed.setEnabled(s.canIncreaseSpeed());
-		decreaseSpeed.setEnabled(s.canDecreaseSpeed());
-		increaseMight.setEnabled(s.canIncreaseMight());
-		decreaseMight.setEnabled(s.canDecreaseMight());
-		increaseSanity.setEnabled(s.canIncreaseSanity());
-		decreaseSanity.setEnabled(s.canDecreaseSanity());
-		increaseKnowledge.setEnabled(s.canIncreaseKnowledge());
-		decreaseKnowledge.setEnabled(s.canDecreaseKnowledge());
+		LayoutParams layoutParams;
 
-		CharacterActivity activity = ((CharacterActivity) getActivity());
+		Point speedPos = Pins.getPinPos(PinDetails.SPEED_PINS, m_stats.getSpeed());
+		layoutParams = (LayoutParams) speedPin.getLayoutParams();
+		layoutParams.leftMargin = speedPos.x;
+		layoutParams.topMargin = speedPos.y;
+		speedPin.setLayoutParams(layoutParams);
 
-		Point speedPos = activity.Pins.getPinPos(0, s.getSpeed());
-		LayoutParams speedParams = (LayoutParams) speedPin.getLayoutParams();
-		speedParams.leftMargin = speedPos.x;
-		speedParams.bottomMargin = speedPos.y;
-		speedPin.setLayoutParams(speedParams);
+		Point mightPos = Pins.getPinPos(PinDetails.MIGHT_PINS, m_stats.getMight());
+		layoutParams = (LayoutParams) mightPin.getLayoutParams();
+		layoutParams.leftMargin = mightPos.x;
+		layoutParams.topMargin = mightPos.y;
+		mightPin.setLayoutParams(layoutParams);
 
-		Point mightPos = activity.Pins.getPinPos(1, s.getMight());
-		LayoutParams mightParams = (LayoutParams) mightPin.getLayoutParams();
-		mightParams.leftMargin = mightPos.x;
-		mightParams.topMargin = mightPos.y;
-		mightPin.setLayoutParams(mightParams);
+		Point sanityPos = Pins.getPinPos(PinDetails.SANITY_PINS, m_stats.getSanity());
+		layoutParams = (LayoutParams) sanityPin.getLayoutParams();
+		layoutParams.leftMargin = sanityPos.x;
+		layoutParams.topMargin = sanityPos.y;
+		sanityPin.setLayoutParams(layoutParams);
 
-		Point sanityPos = activity.Pins.getPinPos(1, s.getSanity());
-		LayoutParams sanityParams = (LayoutParams) sanityPin.getLayoutParams();
-		sanityParams.rightMargin = sanityPos.x;
-		sanityParams.topMargin = sanityPos.y;
-		sanityPin.setLayoutParams(sanityParams);
-
-		Point knowledgePos = activity.Pins.getPinPos(0, s.getKnowledge());
-		LayoutParams knowledgeParams = (LayoutParams) knowledgePin.getLayoutParams();
-		knowledgeParams.rightMargin = knowledgePos.x;
-		knowledgeParams.bottomMargin = knowledgePos.y;
-		knowledgePin.setLayoutParams(knowledgeParams);
+		Point knowledgePos = Pins.getPinPos(PinDetails.KNOWLEDGE_PINS, m_stats.getKnowledge());
+		layoutParams = (LayoutParams) knowledgePin.getLayoutParams();
+		layoutParams.leftMargin = knowledgePos.x;
+		layoutParams.topMargin = knowledgePos.y;
+		knowledgePin.setLayoutParams(layoutParams);
 	}
 
-	private int GetImageResource() {
-		switch (m_id) {
+	public int GetImageResource() {
+		switch (mId) {
 			default:
 			case 0:
 				return R.drawable.char_blue_madame_zostra;
@@ -282,6 +268,6 @@ public class CharacterFragment extends Fragment implements OnGlobalLayoutListene
 	}
 
 	public int getCharID() {
-		return this.m_id;
+		return this.mId;
 	}
 }

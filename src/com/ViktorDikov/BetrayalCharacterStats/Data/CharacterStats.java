@@ -1,35 +1,44 @@
 package com.ViktorDikov.BetrayalCharacterStats.Data;
 
-
 /**
  * Holds Character Stats
  */
 public class CharacterStats {
-	
+
 	private int Min;
 	private int Max;
+	
+	private int[] Defaults;
 
 	private int Speed;
 	private int Might;
 	private int Sanity;
 	private int Knowledge;
 
+	private int[] Stats;
 
-	public CharacterStats(int[] constraints) {
+	private int Age;
+	private String Height;
+	private int Weight;
+	private String Hobbies;
+	private String Birthday;
+
+	public CharacterStats(int[] constraints, int[] stats, int[] defaults) {
 		Min = constraints[0];
 		Max = constraints[1];
 		
-		setSpeed(Min);
-		setMight(Min);
-		setSanity(Min);
-		setKnowledge(Min);
+		Defaults = defaults;
+		
+		ResetToDefaults();
+		
+		Stats = stats;
 	}
 
-	public void Set(int[] vals) {
-		setSpeed(vals[0]);
-		setMight(vals[1]);
-		setSanity(vals[2]);
-		setKnowledge(vals[3]);
+	public void ResetToDefaults() {
+		setSpeed(getSpeedDefault());
+		setMight(getMightDefault());
+		setSanity(getSanityDefault());
+		setKnowledge(getKnowledgeDefault());
 	}
 
 	public int getMin() {
@@ -40,8 +49,16 @@ public class CharacterStats {
 		return Max;
 	}
 
+	public int getSpeedDefault() {
+		return Defaults[0];
+	}
+
 	public int getSpeed() {
 		return Speed;
+	}
+
+	public int getSpeedVal() {
+		return Stats[Speed];
 	}
 
 	public void setSpeed(int speed) {
@@ -53,30 +70,16 @@ public class CharacterStats {
 			Speed = speed;
 	}
 
-	public Boolean canIncreaseSpeed() {
-		return Speed < Max;
-	}
-
-	public void increaseSpeed() {
-		if (canIncreaseSpeed())
-			Speed++;
-		else
-			Speed = Max;
-	}
-
-	public Boolean canDecreaseSpeed() {
-		return Speed > Min;
-	}
-
-	public void decreaseSpeed() {
-		if (canDecreaseSpeed())
-			Speed--;
-		else
-			Speed = Min;
+	public int getMightDefault() {
+		return Defaults[1];
 	}
 
 	public int getMight() {
 		return Might;
+	}
+
+	public int getMightVal() {
+		return Stats[Max + 1 + Might];
 	}
 
 	public void setMight(int might) {
@@ -88,30 +91,16 @@ public class CharacterStats {
 			Might = might;
 	}
 
-	public Boolean canIncreaseMight() {
-		return Might < Max;
-	}
-
-	public void increaseMight() {
-		if (canIncreaseMight())
-			Might++;
-		else
-			Might = Max;
-	}
-
-	public Boolean canDecreaseMight() {
-		return Might > Min;
-	}
-
-	public void decreaseMight() {
-		if (canDecreaseMight())
-			Might--;
-		else
-			Might = Min;
+	public int getSanityDefault() {
+		return Defaults[2];
 	}
 
 	public int getSanity() {
 		return Sanity;
+	}
+
+	public int getSanityVal() {
+		return Stats[2 * (Max + 1) + Sanity];
 	}
 
 	public void setSanity(int sanity) {
@@ -123,30 +112,16 @@ public class CharacterStats {
 			Sanity = sanity;
 	}
 
-	public Boolean canIncreaseSanity() {
-		return Sanity < Max;
-	}
-
-	public void increaseSanity() {
-		if (canIncreaseSanity())
-			Sanity++;
-		else
-			Sanity = Max;
-	}
-
-	public Boolean canDecreaseSanity() {
-		return Sanity > Min;
-	}
-
-	public void decreaseSanity() {
-		if (canDecreaseSanity())
-			Sanity--;
-		else
-			Sanity = Min;
+	public int getKnowledgeDefault() {
+		return Defaults[3];
 	}
 
 	public int getKnowledge() {
 		return Knowledge;
+	}
+
+	public int getKnowledgeVal() {
+		return Stats[3 * (Max + 1) + Knowledge];
 	}
 
 	public void setKnowledge(int knowledge) {
@@ -158,26 +133,44 @@ public class CharacterStats {
 			Knowledge = knowledge;
 	}
 
-	public Boolean canIncreaseKnowledge() {
-		return Knowledge < Max;
+	public int getAge() {
+		return Age;
 	}
 
-	public void increaseKnowledge() {
-		if (canIncreaseKnowledge())
-			Knowledge++;
-		else
-			Knowledge = Max;
+	public void setAge(int age) {
+		Age = age;
 	}
 
-	public Boolean canDecreaseKnowledge() {
-		return Knowledge > Min;
+	public String getHeight() {
+		return Height;
 	}
 
-	public void decreaseKnowledge() {
-		if (canDecreaseKnowledge())
-			Knowledge--;
-		else
-			Knowledge = Min;
+	public void setHeight(String height) {
+		Height = height;
+	}
+
+	public int getWeight() {
+		return Weight;
+	}
+
+	public void setWeight(int weight) {
+		Weight = weight;
+	}
+
+	public String getHobbies() {
+		return Hobbies;
+	}
+
+	public void setHobbies(String hobbies) {
+		Hobbies = hobbies;
+	}
+
+	public String getBirthday() {
+		return Birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		Birthday = birthday;
 	}
 
 }

@@ -1,15 +1,20 @@
 package com.ViktorDikov.BetrayalCharacterStats;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 
 public class PinDetails {
+	public static int SPEED_PINS = 0;
+	public static int MIGHT_PINS = 1;
+	public static int SANITY_PINS = 2;
+	public static int KNOWLEDGE_PINS = 3;
 
 	private Bitmap speedPinImg = null;
 	private Bitmap mightPinImg = null;
 	private Bitmap sanityPinImg = null;
 	private Bitmap knowledgePinImg = null;
-	private int ImageOrientation = -1;
 	private Point[][] PinPos = null;
 
 	public PinDetails() {
@@ -17,10 +22,6 @@ public class PinDetails {
 	
 	public boolean isSet() {
 		return speedPinImg != null && mightPinImg != null && sanityPinImg != null && knowledgePinImg != null;
-	}
-	
-	public boolean isSet(int orientation) {
-		return isSet() && ImageOrientation == orientation;
 	}
 	
 	public void Clear(){
@@ -68,41 +69,45 @@ public class PinDetails {
 		this.knowledgePinImg = knowledgePinImg;
 	}
 
-	public int getImageOrientation() {
-		return ImageOrientation;
-	}
-
-	public void setImageOrientation(int imageOrientation) {
-		ImageOrientation = imageOrientation;
+	public Point[] getPinPos(int i) {
+		return PinPos[i];
 	}
 
 	public Point getPinPos(int i, int j) {
 		return PinPos[i][j];
 	}
-
-	public void FillScaledPinPos(int numPositions, int displayAreaWidth, int displayAreaHeight, double density, double scale, int[] lowerPinOffsets, int[] upperPinOffsets) {
-		PinPos = new Point[2][];
-		for (int i = 0; i < 2; i++) {
+	public void FillScaledPinPos(Resources r, int charID, Bitmap charImg, int width, int height, double densityScale, int orientation) {
+		int numPositions = r.getIntArray(R.array.char_constraints)[1] + 1;
+		PinPos = new Point[4][];
+		for (int i = 0; i < 4; i++) {
 			PinPos[i] = new Point[numPositions];
-			for (int j = 0; j < PinPos[i].length; j++) {
+			for (int j = 0; j < numPositions; j++) {
 				PinPos[i][j] = new Point();
 			}
 		}
-		
-		double densityScale = (density / 320.0) * scale;
-		fillScaledPinPos(0, displayAreaWidth, displayAreaHeight, speedPinImg.getWidth(), speedPinImg.getHeight(), densityScale, lowerPinOffsets);
-		fillScaledPinPos(1, displayAreaWidth, displayAreaHeight, mightPinImg.getWidth(), mightPinImg.getHeight(), densityScale, upperPinOffsets);
+		int[] pinPoint = r.getIntArray(R.array.pin_pointer_offset);
+		int[] array = r.getIntArray(getCharPinOffsetResoureID(charID));
+		fillScaledPinPos(SPEED_PINS, width, height, orientation, charImg, densityScale, array, 0, pinPoint[0], pinPoint[1]);
+		fillScaledPinPos(MIGHT_PINS, width, height, orientation, charImg, densityScale, array, 4, pinPoint[2], pinPoint[3]);
+		fillScaledPinPos(SANITY_PINS, width, height, orientation, charImg, densityScale, array, 8, pinPoint[4], pinPoint[5]);
+		fillScaledPinPos(KNOWLEDGE_PINS, width, height, orientation, charImg, densityScale, array, 12, pinPoint[6], pinPoint[7]);
 	}
-	private void fillScaledPinPos(int i, int displayAreaWidth, int displayAreaHeight, int imageWidth, int imageHeight, double densityScale, int[] pinOffsets) {
-
-		double x = (displayAreaWidth / 2.0) - (imageWidth / 2.0);
-		double y = (displayAreaHeight / 2.0) - (imageHeight / 2.0);
+	private void fillScaledPinPos(int i, int width, int height, int orientation, Bitmap charImg, double densityScale, int[] pinOffsets, int pinOffsetsI, int pinX, int pinY) {
+		int xOffset, yOffset;
+		if (orientation == Configuration.ORIENTATION_PORTRAIT){
+			xOffset = 0;
+			yOffset = height - charImg.getHeight();
+		} 
+		else { // Configuration.ORIENTATION_LANDSCAPE
+			xOffset = width - charImg.getWidth();
+			yOffset = 0;
+		}
 		
-		double xMin = x - (pinOffsets[0] * densityScale);
-		double yMin = y - (pinOffsets[1] * densityScale);
+		double xMin = xOffset + ((pinOffsets[pinOffsetsI + 0] - pinX) * densityScale);
+		double yMin = yOffset + ((pinOffsets[pinOffsetsI + 1] - pinY) * densityScale);
 		
-		double xMax = x - (pinOffsets[2] * densityScale);
-		double yMax = y - (pinOffsets[3] * densityScale);
+		double xMax = xOffset + ((pinOffsets[pinOffsetsI + 2] - pinX) * densityScale);
+		double yMax = yOffset + ((pinOffsets[pinOffsetsI + 3] - pinY) * densityScale);
 
 		int lastPos = PinPos[i].length - 1;
 		double xDelta = (xMax - xMin) / lastPos;
@@ -112,5 +117,35 @@ public class PinDetails {
 			PinPos[i][j].set((int) (xMin + (xDelta * j)), (int) (yMin + (yDelta * j)));
 		}
 		PinPos[i][lastPos].set((int) xMax, (int) yMax);
+	}
+	
+	private int getCharPinOffsetResoureID(int m_id) {
+		switch (m_id) {
+			default:
+			case 0:
+				return R.array.pin_offset_blue_madame_zostra;
+			case 1:
+				return R.array.pin_offset_blue_vivian_lopez;
+			case 2:
+				return R.array.pin_offset_green_brandon_jaspers;
+			case 3:
+				return R.array.pin_offset_green_peter_akimoto;
+			case 4:
+				return R.array.pin_offset_purple_heather_granville;
+			case 5:
+				return R.array.pin_offset_purple_jenny_leclerc;
+			case 6:
+				return R.array.pin_offset_red_darrin_flash_williams;
+			case 7:
+				return R.array.pin_offset_red_ox_bellows;
+			case 8:
+				return R.array.pin_offset_white_father_rhinehardt;
+			case 9:
+				return R.array.pin_offset_white_professor_longfellow;
+			case 10:
+				return R.array.pin_offset_yellow_missy_dubourde;
+			case 11:
+				return R.array.pin_offset_yellow_zoe_ingstrom;
+		}
 	}
 }

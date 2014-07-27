@@ -3,6 +3,7 @@ package com.ViktorDikov.BetrayalCharacterStats;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -10,10 +11,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -23,13 +26,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Spinner;
 
 import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterOrderProvider;
 
-public class CharacterActivity extends FragmentActivity implements ActionBar.TabListener, OnSharedPreferenceChangeListener {
+public class CharacterActivity extends FragmentActivity implements ActionBar.TabListener, OnSharedPreferenceChangeListener, OnGlobalLayoutListener {
 
 	public static final String SAVED_TAB_POSITION = "saved_tab_position";
 	/**
@@ -42,19 +47,27 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 	 */
 	CharacterPagerAdapter mCharacterPagerAdapter;
 
-	public PinDetails Pins;
+	View content;
+
+	public int Width = -1;
+	public int Height = -1;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	
+	public ViewPager getViewPager() {
+		return mViewPager;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_character);
 
-		Pins = new PinDetails();
+		content = findViewById(android.R.id.content);
+		content.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -75,7 +88,7 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 			@Override
 			public void onPageSelected(int position) {
 				getActionBar().setSelectedNavigationItem(position);
-				ViewParent root = findViewById(android.R.id.content).getParent();
+				ViewParent root = content.getParent();
 				findAndUpdateSpinner(root, position);
 			}
 
@@ -116,21 +129,38 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 		AddTitles(actionBar);
 		CharacterOrderProvider order = new CharacterOrderProvider(this);
 		order.getPrefs().registerOnSharedPreferenceChangeListener(this);
+
+	}
+
+	@Override
+	public void onGlobalLayout() {
+		removeOnGlobalLayoutListener();
+		Width = content.getWidth();
+		Height = content.getHeight();
+		loadWaitingFragments();
+	}
+
+	@SuppressWarnings("deprecation")
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private void removeOnGlobalLayoutListener() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			content.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+		} else {
+			content.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+		}
 	}
 
 	private void AddTitles(ActionBar actionBar) {
 		CharacterOrderProvider order = new CharacterOrderProvider(this);
 		ArrayList<Integer> ids = order.getIDs();
-		
+
 		// For each character, add a tab to the action bar.
 		for (Integer id : ids) {
 			// Create a tab with text corresponding to the page title defined by
 			// the adapter. Also specify this Activity object, which implements
 			// the TabListener interface, as the callback (listener) for when
 			// this tab is selected.
-			actionBar.addTab(actionBar.newTab()
-									  .setText(mCharacterPagerAdapter.getPageTitle(id))
-									  .setTabListener(this));
+			actionBar.addTab(actionBar.newTab().setText(mCharacterPagerAdapter.getPageTitle(id)).setTabListener(this));
 		}
 	}
 
@@ -152,19 +182,19 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 			int pos = mViewPager.getCurrentItem();
 
 			int newID = id + (id % 2 == 0 ? 1 : -1);
-			
+
 			CharacterOrderProvider order = new CharacterOrderProvider(this);
 			ArrayList<Integer> ids = order.getIDs();
 			ids.set(pos, newID);
 			order.setIDs(ids);
 			order.apply();
-			
+
 			ActionBar actionBar = getActionBar();
 			Tab tab = actionBar.getTabAt(pos);
 			tab.setText(mCharacterPagerAdapter.getPageTitle(newID));
 
 			mCharacterPagerAdapter.notifyCurrChanged(ids);
-			
+
 			return true;
 		}
 		if (item.getItemId() == R.id.menu_reorder) {
@@ -209,12 +239,13 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if (Width < 0)
+			removeOnGlobalLayoutListener();
 		mCharacterPagerAdapter = null;
 		getActionBar().removeAllTabs();
 		mViewPager.removeAllViews();
 		mViewPager = null;
-		Pins = null;
-		tokenWorkerTask = null;
+		mWaitingFragments = null;
 		CharacterOrderProvider order = new CharacterOrderProvider(this);
 		order.getPrefs().unregisterOnSharedPreferenceChangeListener(this);
 	}
@@ -222,7 +253,7 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPrefs, String key) {
 		if (key.startsWith(CharacterOrderProvider.CHANGED)) {
-			
+
 			mCharacterPagerAdapter.notifyDataSetChanged();
 			ActionBar actionBar = getActionBar();
 			actionBar.removeAllTabs();
@@ -276,13 +307,13 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 				return POSITION_NONE;
 			return POSITION_UNCHANGED;
 		}
-		
-		public void notifyCurrChanged(ArrayList<Integer> ids){
+
+		public void notifyCurrChanged(ArrayList<Integer> ids) {
 			this.ids = ids;
 			refreshAll = false;
 			super.notifyDataSetChanged();
 		}
-		
+
 		@Override
 		public void notifyDataSetChanged() {
 			CharacterOrderProvider order = new CharacterOrderProvider(fragmentActivity);
@@ -302,145 +333,114 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 		}
 	}
 
-	TokenWorkerTask tokenWorkerTask;
+	private ArrayList<WeakReference<CharacterFragment>> mWaitingFragments;
 
-	public void loadBitmaps(int resId, CharacterFragment fragment, int displayAreaWidth, int displayAreaHeight, int orientation) {
-		boolean getTokesn = !Pins.isSet(orientation);
-		if (getTokesn) {
-			if (tokenWorkerTask != null && tokenWorkerTask.Orientation == orientation) {
-				tokenWorkerTask.Fragments.add(new WeakReference<CharacterFragment>(fragment));
-				TokenWorkerTask task = new TokenWorkerTask(fragment, false, false, orientation);
-				task.execute(resId, displayAreaWidth, displayAreaHeight);
-			} else {
-				tokenWorkerTask = new TokenWorkerTask(fragment, getTokesn, true, orientation);
-				tokenWorkerTask.execute(resId, displayAreaWidth, displayAreaHeight);
+	private void loadWaitingFragments() {
+		if (mWaitingFragments != null && mWaitingFragments.size() > 0) {
+			for (WeakReference<CharacterFragment> fragRef : mWaitingFragments) {
+				if (fragRef.get() != null)
+					loadBitmaps(fragRef);
 			}
-		} else {
-			TokenWorkerTask task = new TokenWorkerTask(fragment, false, true, orientation);
-			task.execute(resId, displayAreaWidth, displayAreaHeight);
 		}
+		mWaitingFragments.clear();
+		mWaitingFragments = null;
+	}
+
+	public void loadBitmaps(CharacterFragment fragment) {
+		if (Height < 0) {
+			if (mWaitingFragments == null)
+				mWaitingFragments = new ArrayList<WeakReference<CharacterFragment>>();
+			mWaitingFragments.add(new WeakReference<CharacterFragment>(fragment));
+			return;
+		}
+
+		loadBitmaps(new WeakReference<CharacterFragment>(fragment));
+	}
+
+	private void loadBitmaps(WeakReference<CharacterFragment> fragment) {
+		int orientation = getResources().getConfiguration().orientation;
+
+		CharacterFragment f = fragment.get();
+
+		TokenWorkerTask task = new TokenWorkerTask(fragment, f.getCharID(), f.GetImageResource(), orientation, Width, Height);
+		task.execute();
 	}
 
 	class TokenWorkerTask extends AsyncTask<Integer, Void, AsynchResult> {
-		public final WeakReference<CharacterFragment> InitialFragment;
-		public final ArrayList<WeakReference<CharacterFragment>> Fragments;
-		public final boolean GetTokens;
-		public final boolean SetPins;
+		public final WeakReference<CharacterFragment> CharFragment;
+		public final int CharId;
+		public final int ImgResId;
 		public final int Orientation;
+		public final int Width;
+		public final int Height;
 
-		public TokenWorkerTask(CharacterFragment fragment, boolean getTokens, boolean setPins, int orientation) {
+		public TokenWorkerTask(WeakReference<CharacterFragment> fragment, int charID, int imgResId, int orientation, int width, int height) {
 			// Use a WeakReference to ensure the ImageView can be garbage
 			// collected
-			InitialFragment = new WeakReference<CharacterFragment>(fragment);
-			Fragments = new ArrayList<WeakReference<CharacterFragment>>();
-			GetTokens = getTokens;
-			SetPins = setPins;
+			CharId = charID;
+			CharFragment = fragment;
+			ImgResId = imgResId;
 			Orientation = orientation;
+			Width = width;
+			Height = height;
 		}
 
 		// Decode image in background.
 		@Override
 		protected AsynchResult doInBackground(Integer... params) {
-			int resID = params[0];
-			int DisplayAreaWidth = params[1];
-			int DisplayAreaHeight = params[2];
+			Resources r = getResources();
 
-			Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
-			PinDetails pins = null;
+			// Load image
+			Bitmap tempImg = BitmapFactory.decodeResource(r, ImgResId);
 
-			if (GetTokens) {
-				Double Scale = getScale(DisplayAreaWidth, DisplayAreaHeight, bitmap.getWidth(), bitmap.getHeight());
-				int Density = bitmap.getDensity();
+			double Scale = getScale(tempImg);
+			int Density = tempImg.getDensity();
 
-				Resources r = getResources();
-				pins = new PinDetails();
-				pins.setImageOrientation(Orientation);
+			Bitmap bitmap = scaleImage(Scale, tempImg);
 
-				if (Scale == 1.0) {
-					pins.setSpeedPinImg(BitmapFactory.decodeResource(r, R.drawable.pin_speed));
-					pins.setMightPinImg(BitmapFactory.decodeResource(r, R.drawable.pin_might));
-					pins.setSanityPinImg(BitmapFactory.decodeResource(r, R.drawable.pin_sanity));
-					pins.setKnowledgePinImg(BitmapFactory.decodeResource(r, R.drawable.pin_knowledge));
-				} else {
-					Bitmap speedPinImg = BitmapFactory.decodeResource(r, R.drawable.pin_speed);
-					pins.setSpeedPinImg(Bitmap.createScaledBitmap(speedPinImg, (int) (speedPinImg.getWidth() * Scale), (int) (speedPinImg.getHeight() * Scale),
-							true));
-					speedPinImg.recycle();
-					speedPinImg = null;
+			// Load pins
+			PinDetails pins = new PinDetails();
+			pins.setSpeedPinImg(scaleImage(r, R.drawable.pin_speed, Scale));
+			pins.setMightPinImg(scaleImage(r, R.drawable.pin_might, Scale));
+			pins.setSanityPinImg(scaleImage(r, R.drawable.pin_sanity, Scale));
+			pins.setKnowledgePinImg(scaleImage(r, R.drawable.pin_knowledge, Scale));
 
-					Bitmap mightPinImg = BitmapFactory.decodeResource(r, R.drawable.pin_might);
-					pins.setMightPinImg(Bitmap.createScaledBitmap(mightPinImg, (int) (mightPinImg.getWidth() * Scale), (int) (mightPinImg.getHeight() * Scale),
-							true));
-					mightPinImg.recycle();
-					mightPinImg = null;
+			pins.FillScaledPinPos(r, CharId, bitmap, Width, Height, (Density / 320.0) * Scale, Orientation);
 
-					Bitmap sanityPinImg = BitmapFactory.decodeResource(r, R.drawable.pin_sanity);
-					pins.setSanityPinImg(Bitmap.createScaledBitmap(sanityPinImg, (int) (sanityPinImg.getWidth() * Scale),
-							(int) (sanityPinImg.getHeight() * Scale), true));
-					sanityPinImg.recycle();
-					sanityPinImg = null;
-
-					Bitmap knowledgePinImg = BitmapFactory.decodeResource(r, R.drawable.pin_knowledge);
-					pins.setKnowledgePinImg(Bitmap.createScaledBitmap(knowledgePinImg, (int) (knowledgePinImg.getWidth() * Scale), (int) (knowledgePinImg
-							.getHeight() * Scale), true));
-					knowledgePinImg.recycle();
-					knowledgePinImg = null;
-				}
-				pins.FillScaledPinPos(r.getIntArray(R.array.char_constraints)[1] + 1, DisplayAreaWidth, DisplayAreaHeight, Density, Scale, r
-						.getIntArray(R.array.pin_offset_lower), r.getIntArray(R.array.pin_offset_upper));
-			}
 			return new AsynchResult(bitmap, pins);
 		}
 
-		private double getScale(int displayAreaWidth, int displayAreaHeight, int imageWidth, int imageHeight) {
-			double displayWidth = (double) displayAreaWidth;
-			double displayHeight = (double) displayAreaHeight;
-			double imgWidth = (double) imageWidth;
-			double imgHeight = (double) imageHeight;
-
-			double displayRatio = displayWidth / displayHeight;
-			double imageRatio = imgWidth / imgHeight;
-
-			double scale = 0.0;
-			if (displayRatio <= imageRatio) {
-				scale = displayWidth / imgWidth;
-			} else {
-				scale = displayHeight / imgHeight;
-			}
-			return scale;
+		private double getScale(Bitmap b) {
+			if (Orientation == Configuration.ORIENTATION_PORTRAIT)
+				return Width / (float) b.getWidth();
+			else
+				// Configuration.ORIENTATION_LANDSCAPE
+				return Height / (float) b.getHeight();
 		}
 
-		// Once complete, see if ImageView is still around and set bitmap.
+		private Bitmap scaleImage(double Scale, Bitmap tempImg) {
+			if (Scale == 1.0)
+				return tempImg;
+			Bitmap scaled = Bitmap.createScaledBitmap(tempImg, (int) (tempImg.getWidth() * Scale), (int) (tempImg.getHeight() * Scale), true);
+			tempImg.recycle();
+			tempImg = null;
+			return scaled;
+		}
+
+		private Bitmap scaleImage(Resources r, int resource, double Scale) {
+			Bitmap tempImg = BitmapFactory.decodeResource(r, resource);
+			return scaleImage(Scale, tempImg);
+		}
+
+		// Once complete, see if CharFragment is still around and set bitmaps.
 		@Override
 		protected void onPostExecute(AsynchResult result) {
-			if (result == null || result.Bitmap == null)
+			if (result == null || result.Bitmap == null || result.Pins == null || CharFragment == null)
 				return;
 
-			if (tokenWorkerTask == this)
-				tokenWorkerTask = null;
-
-			if (result.Pins != null && result.Pins.isSet())
-				Pins = result.Pins;
-
-			if (InitialFragment != null) {
-				CharacterFragment fragment = InitialFragment.get();
-				if (fragment != null) {
-					fragment.SetCharacterImage(result.Bitmap);
-					if (SetPins)
-						fragment.SetPinImages(Pins);
-				}
-			}
-
-			if (SetPins && Fragments != null && Fragments.size() > 0) {
-				ArrayList<CharacterFragment> fragments = new ArrayList<CharacterFragment>();
-				for (WeakReference<CharacterFragment> fragRef : Fragments) {
-					CharacterFragment fragment = fragRef.get();
-					if (fragment != null)
-						fragments.add(fragment);
-				}
-				for (CharacterFragment fragment : fragments) {
-					fragment.SetPinImages(Pins);
-				}
+			CharacterFragment fragment = CharFragment.get();
+			if (fragment != null) {
+				fragment.SetCharacterImages(result);
 			}
 		}
 	}
