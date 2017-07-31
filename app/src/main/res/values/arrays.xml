@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="char_constraints">
+        <item name="min">0</item>
+        <item name="max">8</item>
+    </integer-array>
+
+    <integer-array name="defaults_blue_madame_zostra">
+        <item name="speed">3</item>
+        <item name="might">4</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="defaults_blue_vivian_lopez">
+        <item name="speed">4</item>
+        <item name="might">3</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="defaults_green_brandon_jaspers">
+        <item name="speed">3</item>
+        <item name="might">4</item>
+        <item name="sanity">4</item>
+        <item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="defaults_green_peter_akimoto">
+        <item name="speed">4</item>
+        <item name="might">3</item>
+        <item name="sanity">4</item>
+        <item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="defaults_purple_heather_granville">
+        <item name="speed">3</item>
+        <item name="might">3</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">5</item>
+    </integer-array>
+    <integer-array name="defaults_purple_jenny_leclerc">
+        <item name="speed">4</item>
+        <item name="might">3</item>
+        <item name="sanity">5</item>
+        <item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="defaults_red_darrin_flash_williams">
+        <item name="speed">5</item>
+        <item name="might">3</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="defaults_red_ox_bellows">
+        <item name="speed">5</item>
+        <item name="might">3</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">3</item>
+    </integer-array>
+    <integer-array name="defaults_white_father_rhinehardt">
+        <item name="speed">3</item>
+        <item name="might">3</item>
+        <item name="sanity">5</item>
+        <item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="defaults_white_professor_longfellow">
+        <item name="speed">4</item>
+        <item name="might">3</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">5</item>
+    </integer-array>
+    <integer-array name="defaults_yellow_missy_dubourde">
+        <item name="speed">3</item>
+        <item name="might">4</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">4</item>
+    </integer-array>
+    <integer-array name="defaults_yellow_zoe_ingstrom">
+        <item name="speed">4</item>
+        <item name="might">4</item>
+        <item name="sanity">3</item>
+        <item name="knowledge">3</item>
+    </integer-array>
+
+
+    <integer-array name="stats_blue_madame_zostra">
+        <item name="speed">0</item>
+        <item name="speed">2</item>
+        <item name="speed">3</item>
+        <item name="speed">3</item>
+        <item name="speed">5</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+
+        <item name="might">0</item>
+        <item name="might">2</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">5</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+        <item name="sanity">8</item>
+        <item name="sanity">8</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">1</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">6</item>
+    </integer-array>
+    <integer-array name="stats_blue_vivian_lopez">
+        <item name="speed">0</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+        <item name="speed">8</item>
+
+        <item name="might">0</item>
+        <item name="might">2</item>
+        <item name="might">2</item>
+        <item name="might">2</item>
+        <item name="might">4</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">6</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+        <item name="sanity">8</item>
+        <item name="sanity">8</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">7</item>
+    </integer-array>
+    <integer-array name="stats_green_brandon_jaspers">
+        <item name="speed">0</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+        <item name="speed">8</item>
+
+        <item name="might">0</item>
+        <item name="might">2</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">6</item>
+        <item name="might">7</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">3</item>
+        <item name="sanity">3</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+        <item name="sanity">8</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">1</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">7</item>
+    </integer-array>
+
+    <integer-array name="stats_green_peter_akimoto">
+        <item name="speed">0</item>
+        <item name="speed">3</item>
+        <item name="speed">3</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">6</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+        <item name="speed">7</item>
+
+        <item name="might">0</item>
+        <item name="might">2</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">8</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">7</item>
+        <item name="knowledge">7</item>
+        <item name="knowledge">8</item>
+    </integer-array>
+    <integer-array name="stats_purple_heather_granville">
+        <item name="speed">0</item>
+        <item name="speed">3</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+        <item name="speed">8</item>
+
+        <item name="might">0</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">7</item>
+        <item name="might">8</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">3</item>
+        <item name="sanity">3</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">6</item>
+        <item name="sanity">6</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">2</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">7</item>
+        <item name="knowledge">8</item>
+    </integer-array>
+    <integer-array name="stats_purple_jenny_leclerc">
+        <item name="speed">0</item>
+        <item name="speed">2</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">8</item>
+
+        <item name="might">0</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">4</item>
+        <item name="might">4</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">8</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">1</item>
+        <item name="sanity">1</item>
+        <item name="sanity">2</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">2</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">8</item>
+    </integer-array>
+    <integer-array name="stats_red_darrin_flash_williams">
+        <item name="speed">0</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+        <item name="speed">7</item>
+        <item name="speed">8</item>
+
+        <item name="might">0</item>
+        <item name="might">2</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">6</item>
+        <item name="might">7</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">1</item>
+        <item name="sanity">2</item>
+        <item name="sanity">3</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">6</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">2</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">7</item>
+    </integer-array>
+    <integer-array name="stats_red_ox_bellows">
+        <item name="speed">0</item>
+        <item name="speed">2</item>
+        <item name="speed">2</item>
+        <item name="speed">2</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+
+        <item name="might">0</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">6</item>
+        <item name="might">7</item>
+        <item name="might">8</item>
+        <item name="might">8</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">2</item>
+        <item name="sanity">2</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">2</item>
+        <item name="knowledge">2</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">6</item>
+    </integer-array>
+    <integer-array name="stats_white_father_rhinehardt">
+        <item name="speed">0</item>
+        <item name="speed">2</item>
+        <item name="speed">3</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+        <item name="speed">7</item>
+
+        <item name="might">0</item>
+        <item name="might">1</item>
+        <item name="might">2</item>
+        <item name="might">2</item>
+        <item name="might">4</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">5</item>
+        <item name="might">7</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+        <item name="sanity">7</item>
+        <item name="sanity">8</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">1</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">8</item>
+    </integer-array>
+    <integer-array name="stats_white_professor_longfellow">
+        <item name="speed">0</item>
+        <item name="speed">2</item>
+        <item name="speed">2</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">6</item>
+
+        <item name="might">0</item>
+        <item name="might">1</item>
+        <item name="might">2</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">6</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">1</item>
+        <item name="sanity">3</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">7</item>
+        <item name="knowledge">8</item>
+    </integer-array>
+    <integer-array name="stats_yellow_missy_dubourde">
+        <item name="speed">0</item>
+        <item name="speed">3</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">6</item>
+        <item name="speed">6</item>
+        <item name="speed">7</item>
+        <item name="speed">7</item>
+
+        <item name="might">0</item>
+        <item name="might">2</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">5</item>
+        <item name="might">6</item>
+        <item name="might">7</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">1</item>
+        <item name="sanity">2</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">2</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">6</item>
+        <item name="knowledge">6</item>
+    </integer-array>
+    <integer-array name="stats_yellow_zoe_ingstrom">
+        <item name="speed">0</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">4</item>
+        <item name="speed">5</item>
+        <item name="speed">6</item>
+        <item name="speed">8</item>
+        <item name="speed">8</item>
+
+        <item name="might">0</item>
+        <item name="might">2</item>
+        <item name="might">2</item>
+        <item name="might">3</item>
+        <item name="might">3</item>
+        <item name="might">4</item>
+        <item name="might">4</item>
+        <item name="might">6</item>
+        <item name="might">7</item>
+
+        <item name="sanity">0</item>
+        <item name="sanity">3</item>
+        <item name="sanity">4</item>
+        <item name="sanity">5</item>
+        <item name="sanity">5</item>
+        <item name="sanity">6</item>
+        <item name="sanity">6</item>
+        <item name="sanity">7</item>
+        <item name="sanity">8</item>
+
+        <item name="knowledge">0</item>
+        <item name="knowledge">1</item>
+        <item name="knowledge">2</item>
+        <item name="knowledge">3</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">4</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+        <item name="knowledge">5</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_blue_madame_zostra">
+        <item name="spped_x_min">200</item>
+        <item name="speed_y_min">544</item>
+        <item name="speed_x_max">126</item>
+        <item name="speed_y_max">317</item>
+
+        <item name="might_x_min">143</item>
+        <item name="might_y_min">282</item>
+        <item name="might_x_max">336</item>
+        <item name="might_y_max">143</item>
+
+        <item name="sanity_x_min">570</item>
+        <item name="sanity_y_min">282</item>
+        <item name="sanity_x_max">377</item>
+        <item name="sanity_y_max">142</item>
+
+        <item name="knowledge_x_min">513</item>
+        <item name="knowledge_y_min">545</item>
+        <item name="knowledge_x_max">588</item>
+        <item name="knowledge_y_max">316</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_blue_vivian_lopez">
+        <item name="spped_x_min">204</item>
+        <item name="speed_y_min">545</item>
+        <item name="speed_x_max">130</item>
+        <item name="speed_y_max">318</item>
+
+        <item name="might_x_min">147</item>
+        <item name="might_y_min">280</item>
+        <item name="might_x_max">339</item>
+        <item name="might_y_max">140</item>
+
+        <item name="sanity_x_min">571</item>
+        <item name="sanity_y_min">281</item>
+        <item name="sanity_x_max">380</item>
+        <item name="sanity_y_max">141</item>
+
+        <item name="knowledge_x_min">515</item>
+        <item name="knowledge_y_min">544</item>
+        <item name="knowledge_x_max">591</item>
+        <item name="knowledge_y_max">316</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_green_brandon_jaspers">
+        <item name="spped_x_min">201</item>
+        <item name="speed_y_min">542</item>
+        <item name="speed_x_max">129</item>
+        <item name="speed_y_max">314</item>
+
+        <item name="might_x_min">143</item>
+        <item name="might_y_min">277</item>
+        <item name="might_x_max">336</item>
+        <item name="might_y_max">138</item>
+
+        <item name="sanity_x_min">571</item>
+        <item name="sanity_y_min">277</item>
+        <item name="sanity_x_max">378</item>
+        <item name="sanity_y_max">138</item>
+
+        <item name="knowledge_x_min">515</item>
+        <item name="knowledge_y_min">540</item>
+        <item name="knowledge_x_max">589</item>
+        <item name="knowledge_y_max">312</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_green_peter_akimoto">
+        <item name="spped_x_min">205</item>
+        <item name="speed_y_min">539</item>
+        <item name="speed_x_max">128</item>
+        <item name="speed_y_max">313</item>
+
+        <item name="might_x_min">144</item>
+        <item name="might_y_min">277</item>
+        <item name="might_x_max">336</item>
+        <item name="might_y_max">137</item>
+
+        <item name="sanity_x_min">573</item>
+        <item name="sanity_y_min">276</item>
+        <item name="sanity_x_max">380</item>
+        <item name="sanity_y_max">135</item>
+
+        <item name="knowledge_x_min">516</item>
+        <item name="knowledge_y_min">538</item>
+        <item name="knowledge_x_max">591</item>
+        <item name="knowledge_y_max">311</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_purple_heather_granville">
+        <item name="spped_x_min">206</item>
+        <item name="speed_y_min">543</item>
+        <item name="speed_x_max">134</item>
+        <item name="speed_y_max">316</item>
+
+        <item name="might_x_min">147</item>
+        <item name="might_y_min">278</item>
+        <item name="might_x_max">340</item>
+        <item name="might_y_max">138</item>
+
+        <item name="sanity_x_min">575</item>
+        <item name="sanity_y_min">277</item>
+        <item name="sanity_x_max">382</item>
+        <item name="sanity_y_max">138</item>
+
+        <item name="knowledge_x_min">522</item>
+        <item name="knowledge_y_min">538</item>
+        <item name="knowledge_x_max">595</item>
+        <item name="knowledge_y_max">309</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_purple_jenny_leclerc">
+        <item name="spped_x_min">203</item>
+        <item name="speed_y_min">545</item>
+        <item name="speed_x_max">131</item>
+        <item name="speed_y_max">317</item>
+
+        <item name="might_x_min">148</item>
+        <item name="might_y_min">280</item>
+        <item name="might_x_max">340</item>
+        <item name="might_y_max">141</item>
+
+        <item name="sanity_x_min">573</item>
+        <item name="sanity_y_min">280</item>
+        <item name="sanity_x_max">380</item>
+        <item name="sanity_y_max">141</item>
+
+        <item name="knowledge_x_min">521</item>
+        <item name="knowledge_y_min">544</item>
+        <item name="knowledge_x_max">593</item>
+        <item name="knowledge_y_max">315</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_red_darrin_flash_williams">
+        <item name="spped_x_min">203</item>
+        <item name="speed_y_min">544</item>
+        <item name="speed_x_max">129</item>
+        <item name="speed_y_max">317</item>
+
+        <item name="might_x_min">145</item>
+        <item name="might_y_min">278</item>
+        <item name="might_x_max">339</item>
+        <item name="might_y_max">139</item>
+
+        <item name="sanity_x_min">573</item>
+        <item name="sanity_y_min">279</item>
+        <item name="sanity_x_max">380</item>
+        <item name="sanity_y_max">139</item>
+
+        <item name="knowledge_x_min">517</item>
+        <item name="knowledge_y_min">545</item>
+        <item name="knowledge_x_max">591</item>
+        <item name="knowledge_y_max">316</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_red_ox_bellows">
+        <item name="spped_x_min">206</item>
+        <item name="speed_y_min">541</item>
+        <item name="speed_x_max">129</item>
+        <item name="speed_y_max">315</item>
+
+        <item name="might_x_min">145</item>
+        <item name="might_y_min">280</item>
+        <item name="might_x_max">336</item>
+        <item name="might_y_max">141</item>
+
+        <item name="sanity_x_min">568</item>
+        <item name="sanity_y_min">279</item>
+        <item name="sanity_x_max">376</item>
+        <item name="sanity_y_max">138</item>
+
+        <item name="knowledge_x_min">513</item>
+        <item name="knowledge_y_min">542</item>
+        <item name="knowledge_x_max">589</item>
+        <item name="knowledge_y_max">314</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_white_father_rhinehardt">
+        <item name="spped_x_min">205</item>
+        <item name="speed_y_min">554</item>
+        <item name="speed_x_max">133</item>
+        <item name="speed_y_max">326</item>
+
+        <item name="might_x_min">146</item>
+        <item name="might_y_min">288</item>
+        <item name="might_x_max">339</item>
+        <item name="might_y_max">149</item>
+
+        <item name="sanity_x_min">574</item>
+        <item name="sanity_y_min">287</item>
+        <item name="sanity_x_max">380</item>
+        <item name="sanity_y_max">148</item>
+
+        <item name="knowledge_x_min">519</item>
+        <item name="knowledge_y_min">550</item>
+        <item name="knowledge_x_max">591</item>
+        <item name="knowledge_y_max">321</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_white_professor_longfellow">
+        <item name="spped_x_min">203</item>
+        <item name="speed_y_min">543</item>
+        <item name="speed_x_max">131</item>
+        <item name="speed_y_max">315</item>
+
+        <item name="might_x_min">147</item>
+        <item name="might_y_min">278</item>
+        <item name="might_x_max">340</item>
+        <item name="might_y_max">138</item>
+
+        <item name="sanity_x_min">573</item>
+        <item name="sanity_y_min">280</item>
+        <item name="sanity_x_max">379</item>
+        <item name="sanity_y_max">140</item>
+
+        <item name="knowledge_x_min">518</item>
+        <item name="knowledge_y_min">544</item>
+        <item name="knowledge_x_max">591</item>
+        <item name="knowledge_y_max">315</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_yellow_missy_dubourde">
+        <item name="spped_x_min">202</item>
+        <item name="speed_y_min">538</item>
+        <item name="speed_x_max">126</item>
+        <item name="speed_y_max">312</item>
+
+        <item name="might_x_min">142</item>
+        <item name="might_y_min">273</item>
+        <item name="might_x_max">334</item>
+        <item name="might_y_max">132</item>
+
+        <item name="sanity_x_min">570</item>
+        <item name="sanity_y_min">272</item>
+        <item name="sanity_x_max">378</item>
+        <item name="sanity_y_max">131</item>
+
+        <item name="knowledge_x_min">513</item>
+        <item name="knowledge_y_min">537</item>
+        <item name="knowledge_x_max">588</item>
+        <item name="knowledge_y_max">309</item>
+    </integer-array>
+
+    <integer-array name="pin_offset_yellow_zoe_ingstrom">
+        <item name="spped_x_min">204</item>
+        <item name="speed_y_min">534</item>
+        <item name="speed_x_max">129</item>
+        <item name="speed_y_max">308</item>
+
+        <item name="might_x_min">144</item>
+        <item name="might_y_min">273</item>
+        <item name="might_x_max">336</item>
+        <item name="might_y_max">133</item>
+
+        <item name="sanity_x_min">572</item>
+        <item name="sanity_y_min">270</item>
+        <item name="sanity_x_max">379</item>
+        <item name="sanity_y_max">130</item>
+
+        <item name="knowledge_x_min">516</item>
+        <item name="knowledge_y_min">535</item>
+        <item name="knowledge_x_max">590</item>
+        <item name="knowledge_y_max">306</item>
+    </integer-array>
+
+    <integer-array name="pin_pointer_offset">
+        <item name="spped_x">118</item>
+        <item name="speed_y">23</item>
+
+        <item name="might_x">87</item>
+        <item name="might_y">104</item>
+
+        <item name="sanity_x">5</item>
+        <item name="sanity_y">104</item>
+
+        <item name="knowledge_x">1</item>
+        <item name="knowledge_y">23</item>
+    </integer-array>
+
+    <string-array name="titles">
+        <item>Madame</item>
+        <item>Vivian</item>
+        <item>Brandon</item>
+        <item>Peter</item>
+        <item>Heather</item>
+        <item>Jenny</item>
+        <item>Darrin</item>
+        <item>Ox</item>
+        <item>Father</item>
+        <item>Professor</item>
+        <item>Missy</item>
+        <item>Zoe</item>
+    </string-array>
+</resources>
