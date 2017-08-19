@@ -7,27 +7,27 @@
         android:enabled="true"
         android:icon="@mipmap/reset"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom|withText"
         android:title="@string/menu_reset"
         android:titleCondensed="@string/menu_reset_short"
-        android:visible="true"/>
+        android:visible="true"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/menu_flip"
         android:enabled="true"
         android:icon="@mipmap/flip"
         android:orderInCategory="101"
-        app:showAsAction="ifRoom|withText"
         android:title="@string/menu_flip"
         android:titleCondensed="@string/menu_flip_short"
-        android:visible="true"/>
+        android:visible="true"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/menu_reorder"
         android:enabled="true"
         android:icon="@mipmap/re_order"
         android:orderInCategory="102"
-        app:showAsAction="ifRoom|withText"
         android:title="@string/menu_re_order"
         android:titleCondensed="@string/menu_re_order_short"
-        android:visible="true"/>
+        android:visible="true"
+        app:showAsAction="never"/>
 
 </menu>
