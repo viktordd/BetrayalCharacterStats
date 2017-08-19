@@ -1,33 +1,30 @@
 package com.viktordikov.betrayalcharacterstats;
 
 import android.annotation.TargetApi;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.viktordikov.betrayalcharacterstats.Data.AsyncResult;
 import com.viktordikov.betrayalcharacterstats.Data.CharacterStats;
 import com.viktordikov.betrayalcharacterstats.Data.CharacterStatsProvider;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * A fragment that launches other parts of the application.
  */
-public class CharacterFragment extends Fragment {
+public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener {
 
 	public static final String ARG_ID = "position";
 	public static final String ARG_ORIENTATION = "orientation";
@@ -36,6 +33,7 @@ public class CharacterFragment extends Fragment {
 	private CharacterStats m_stats;
 	private PinDetails Pins;
 
+	private View rootView;
 	private ImageView character;
 	private ImageView speedPin;
 	private ImageView mightPin;
@@ -52,9 +50,12 @@ public class CharacterFragment extends Fragment {
 	private TextView sanity;
 	private TextView knowledge;
 
+    public int Width = -1;
+    public int Height = -1;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_character, container, false);
+		rootView = inflater.inflate(R.layout.fragment_character, container, false);
 
 		character = rootView.findViewById(R.id.ivCharacter);
 		speedPin = rootView.findViewById(R.id.ivSpeed);
@@ -72,7 +73,10 @@ public class CharacterFragment extends Fragment {
 		sanity = rootView.findViewById(R.id.tvSanity);
 		knowledge = rootView.findViewById(R.id.tvKnowledge);
 
+		rootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
+
 		return rootView;
+
 	}
 
 	@Override
@@ -94,9 +98,6 @@ public class CharacterFragment extends Fragment {
 		SetMightValue();
 		SetSanityValue();
 		SetKnowledgeValue();
-
-		// Load bitmaps asynchronously
-		loadBitmaps(this);
 	}
 
 	@Override
@@ -111,6 +112,9 @@ public class CharacterFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
+
+		if (Width < 0)
+			removeOnGlobalLayoutListener();
 
 		character.setImageBitmap(null);
 		speedPin.setImageBitmap(null);
@@ -146,24 +150,33 @@ public class CharacterFragment extends Fragment {
 
 	private void SetSpeedValue() {
 		speed.setText(m_stats.getSpeedString());
-		speed.setTextColor(getResources().getColor((m_stats.getSpeed() == m_stats.getSpeedDefault() ? R.color.Green : R.color.White)));
+		speed.setTextColor(getColor(m_stats.getSpeed() == m_stats.getSpeedDefault() ? R.color.Green : R.color.White));
 
 	}
 
 	private void SetMightValue() {
 		might.setText(m_stats.getMightString());
-		might.setTextColor(getResources().getColor((m_stats.getMight() == m_stats.getMightDefault() ? R.color.Green : R.color.White)));
+		might.setTextColor(getColor((m_stats.getMight() == m_stats.getMightDefault() ? R.color.Green : R.color.White)));
 	}
 
 	private void SetSanityValue() {
 		sanity.setText(m_stats.getSanityString());
-		sanity.setTextColor(getResources().getColor((m_stats.getSanity() == m_stats.getSanityDefault() ? R.color.Green : R.color.White)));
+		sanity.setTextColor(getColor((m_stats.getSanity() == m_stats.getSanityDefault() ? R.color.Green : R.color.White)));
 	}
 
 	private void SetKnowledgeValue() {
 		knowledge.setText(m_stats.getKnowledgeString());
-		knowledge.setTextColor(getResources().getColor((m_stats.getKnowledge() == m_stats.getKnowledgeDefault() ? R.color.Green : R.color.White)));
+		knowledge.setTextColor(getColor((m_stats.getKnowledge() == m_stats.getKnowledgeDefault() ? R.color.Green : R.color.White)));
 	}
+
+    private int getColor(int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getContext().getColor(id);
+        } else {
+            //noinspection deprecation
+            return getResources().getColor(id);
+        }
+    }
 
 	// Called when character images are loaded
 	public void SetCharacterImages(AsyncResult result) {
@@ -171,11 +184,13 @@ public class CharacterFragment extends Fragment {
                 result == null || result.Bitmap == null || result.Pins == null)
 			return;
 
+		CharacterActivity activity = (CharacterActivity) getActivity();
+		ViewPager vp = activity.getViewPager();
 		character.setImageBitmap(result.Bitmap);
 		Pins = result.Pins;
 
 		speedPin.setImageBitmap(Pins.getSpeedPinImg());
-		speedPin.setOnTouchListener(new PinTouchListener(m_stats.getSpeed(), Pins.getPinPos(PinDetails.SPEED_PINS)) {
+		speedPin.setOnTouchListener(new PinTouchListener(m_stats.getSpeed(), Pins.getPinPos(PinDetails.SPEED_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setSpeed(pos);
@@ -184,7 +199,7 @@ public class CharacterFragment extends Fragment {
 		});
 
 		mightPin.setImageBitmap(Pins.getMightPinImg());
-		mightPin.setOnTouchListener(new PinTouchListener(m_stats.getMight(), Pins.getPinPos(PinDetails.MIGHT_PINS)) {
+		mightPin.setOnTouchListener(new PinTouchListener(m_stats.getMight(), Pins.getPinPos(PinDetails.MIGHT_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setMight(pos);
@@ -193,7 +208,7 @@ public class CharacterFragment extends Fragment {
 		});
 
 		sanityPin.setImageBitmap(Pins.getSanityPinImg());
-		sanityPin.setOnTouchListener(new PinTouchListener(m_stats.getSanity(), Pins.getPinPos(PinDetails.SANITY_PINS)) {
+		sanityPin.setOnTouchListener(new PinTouchListener(m_stats.getSanity(), Pins.getPinPos(PinDetails.SANITY_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setSanity(pos);
@@ -202,7 +217,7 @@ public class CharacterFragment extends Fragment {
 		});
 
 		knowledgePin.setImageBitmap(Pins.getKnowledgePinImg());
-		knowledgePin.setOnTouchListener(new PinTouchListener(m_stats.getKnowledge(), Pins.getPinPos(PinDetails.KNOWLEDGE_PINS)) {
+		knowledgePin.setOnTouchListener(new PinTouchListener(m_stats.getKnowledge(), Pins.getPinPos(PinDetails.KNOWLEDGE_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setKnowledge(pos);
@@ -278,52 +293,26 @@ public class CharacterFragment extends Fragment {
 		return this.mId;
 	}
 
-    public int Width = -1;
-    public int Height = -1;
 
 
-    @Override
-    public void onGlobalLayout() {
-        removeOnGlobalLayoutListener();
-        Width = content.getWidth();
-        Height = content.getHeight();
-        loadWaitingFragments();
-    }
+	@Override
+	public void onGlobalLayout() {
+		removeOnGlobalLayoutListener();
+		Width = rootView.getWidth();
+		Height = rootView.getHeight();
 
-    @SuppressWarnings("deprecation")
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void removeOnGlobalLayoutListener() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            content.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-        } else {
-            content.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-        }
-    }
-
-	private ArrayList<WeakReference<CharacterFragment>> mWaitingFragments;
-
-	private void loadWaitingFragments() {
-		if (mWaitingFragments != null) {
-			if (mWaitingFragments.size() > 0) {
-				for (WeakReference<CharacterFragment> fragRef : mWaitingFragments) {
-					if (fragRef.get() != null)
-						loadBitmaps(fragRef);
-				}
-			}
-			mWaitingFragments.clear();
-		}
-		mWaitingFragments = null;
+		// Load bitmaps asynchronously
+		loadBitmaps(new WeakReference<>(this));
 	}
 
-	public void loadBitmaps(CharacterFragment fragment) {
-		if (Height < 0) {
-			if (mWaitingFragments == null)
-				mWaitingFragments = new ArrayList<>();
-			mWaitingFragments.add(new WeakReference<>(fragment));
-			return;
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private void removeOnGlobalLayoutListener() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+		} else {
+			//noinspection deprecation
+			rootView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 		}
-
-		loadBitmaps(new WeakReference<>(fragment));
 	}
 
 	private void loadBitmaps(WeakReference<CharacterFragment> fragment) {
@@ -331,95 +320,7 @@ public class CharacterFragment extends Fragment {
 
 		CharacterFragment f = fragment.get();
 
-		TokenWorkerTask task = new TokenWorkerTask(fragment, f.getCharID(), f.GetImageResource(), orientation, Width, Height);
+		TokenWorkerTask task = new TokenWorkerTask(fragment, f.getCharID(), f.GetImageResource(), orientation, Width, Height, getResources());
 		task.execute();
-	}
-
-	private class TokenWorkerTask extends AsyncTask<Integer, Void, AsyncResult> {
-		final WeakReference<CharacterFragment> CharFragment;
-		final int CharId;
-		final int ImgResId;
-		final int Orientation;
-		final int Width;
-		final int Height;
-
-		TokenWorkerTask(WeakReference<CharacterFragment> fragment, int charID, int imgResId, int orientation, int width, int height) {
-			// Use a WeakReference to ensure the ImageView can be garbage
-			// collected
-			CharId = charID;
-			CharFragment = fragment;
-			ImgResId = imgResId;
-			Orientation = orientation;
-			Width = width;
-			Height = height;
-		}
-
-		// Decode image in background.
-		@Override
-		protected AsyncResult doInBackground(Integer... params) {
-			Resources r = getResources();
-
-			// Load image
-			Bitmap tempImg = BitmapFactory.decodeResource(r, ImgResId);
-
-			double Scale = getScale(tempImg);
-			int Density = tempImg.getDensity();
-
-			Bitmap bitmap = scaleImage(Scale, tempImg);
-
-			// Load pins
-			PinDetails pins = new PinDetails();
-			pins.setSpeedPinImg(scaleImage(r, R.mipmap.pin_speed, Scale));
-			pins.setMightPinImg(scaleImage(r, R.mipmap.pin_might, Scale));
-			pins.setSanityPinImg(scaleImage(r, R.mipmap.pin_sanity, Scale));
-			pins.setKnowledgePinImg(scaleImage(r, R.mipmap.pin_knowledge, Scale));
-
-			pins.FillScaledPinPos(r, CharId, bitmap, Width, Height, (Density / 320.0) * Scale, Orientation);
-
-			return new AsyncResult(bitmap, pins);
-		}
-
-		private double getScale(Bitmap b) {
-			if (Orientation == Configuration.ORIENTATION_PORTRAIT)
-				return Width / (float) b.getWidth();
-			else
-				// Configuration.ORIENTATION_LANDSCAPE
-				return Height / (float) b.getHeight();
-		}
-
-		private Bitmap scaleImage(double Scale, Bitmap tempImg) {
-			if (Scale == 1.0)
-				return tempImg;
-			Bitmap scaled = Bitmap.createScaledBitmap(tempImg, (int) (tempImg.getWidth() * Scale), (int) (tempImg.getHeight() * Scale), true);
-			tempImg.recycle();
-			return scaled;
-		}
-
-		private Bitmap scaleImage(Resources r, int resource, double Scale) {
-			Bitmap tempImg = BitmapFactory.decodeResource(r, resource);
-			return scaleImage(Scale, tempImg);
-		}
-
-		// Once complete, see if CharFragment is still around and set bitmaps.
-		@Override
-		protected void onPostExecute(AsyncResult result) {
-			if (result == null || result.Bitmap == null || result.Pins == null || CharFragment == null)
-				return;
-
-			CharacterFragment fragment = CharFragment.get();
-			if (fragment != null) {
-				fragment.SetCharacterImages(result);
-			}
-		}
-	}
-
-	class AsyncResult {
-		final Bitmap Bitmap;
-		final PinDetails Pins;
-
-		AsyncResult(Bitmap bitmap, PinDetails pins) {
-			this.Bitmap = bitmap;
-			this.Pins = pins;
-		}
 	}
 }

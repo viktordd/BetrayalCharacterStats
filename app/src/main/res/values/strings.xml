@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BetrayalCharacterStats</string>
 
@@ -5,6 +6,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    
+    <string name="reorder_name">Re-Order Characters</string>
 
     <string name="menu_reset">Reset Current Character</string>
     <string name="menu_reset_short">Reset</string>
