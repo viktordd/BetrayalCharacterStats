@@ -44,10 +44,10 @@ public class TokenWorkerTask extends AsyncTask<Integer, Void, AsyncResult> {
 
         // Load pins
         PinDetails pins = new PinDetails();
-        pins.setSpeedPinImg(scaleImage(r, R.mipmap.pin_speed, Scale));
-        pins.setMightPinImg(scaleImage(r, R.mipmap.pin_might, Scale));
-        pins.setSanityPinImg(scaleImage(r, R.mipmap.pin_sanity, Scale));
-        pins.setKnowledgePinImg(scaleImage(r, R.mipmap.pin_knowledge, Scale));
+        pins.setSpeedPinImg(scaleImage(r, R.drawable.pin_speed, Scale));
+        pins.setMightPinImg(scaleImage(r, R.drawable.pin_might, Scale));
+        pins.setSanityPinImg(scaleImage(r, R.drawable.pin_sanity, Scale));
+        pins.setKnowledgePinImg(scaleImage(r, R.drawable.pin_knowledge, Scale));
 
         pins.FillScaledPinPos(r, CharId, bitmap, Width, Height, (Density / 320.0) * Scale, Orientation);
 

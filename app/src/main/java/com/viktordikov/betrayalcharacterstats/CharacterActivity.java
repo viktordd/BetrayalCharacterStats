@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,14 +21,24 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Spinner;
 
+import com.google.android.gms.cast.framework.CastButtonFactory;
+import com.google.android.gms.cast.framework.CastContext;
+import com.google.android.gms.cast.framework.CastSession;
+import com.google.android.gms.cast.framework.Session;
+import com.google.android.gms.cast.framework.SessionManager;
+import com.google.android.gms.cast.framework.SessionManagerListener;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.viktordikov.betrayalcharacterstats.Data.CharacterOrderProvider;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CharacterActivity extends FragmentActivity implements ActionBar.TabListener,OnSharedPreferenceChangeListener {
 
 	public static final String SAVED_TAB_POSITION = "saved_tab_position";
-	/**
+    private static final String TAG = "CharacterActivity";
+    /**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
 	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
@@ -40,11 +51,15 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 	View content;
 
 	/**
-	 * The {@link android.support.v4.view.ViewPager} that will host the section contents.
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
 	 */
-	ViewPager mViewPager;
+    private ViewPager mViewPager;
+	private CastSession mCastSession;
+	private SessionManager mSessionManager;
+    private CastChannel mCastChannel;
+	private final SessionManagerListener mSessionManagerListener = new SessionManagerListenerImpl();
 
-	public ViewPager getViewPager() {
+    public ViewPager getViewPager() {
 		return mViewPager;
 	}
 
@@ -121,26 +136,16 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 			AddTitles(actionBar);
 		CharacterOrderProvider order = new CharacterOrderProvider(this);
 		order.getPrefs().registerOnSharedPreferenceChangeListener(this);
-	}
 
-	private void AddTitles(ActionBar actionBar) {
-		CharacterOrderProvider order = new CharacterOrderProvider(this);
-		ArrayList<Integer> ids = order.getIDs();
-
-		// For each character, add a tab to the action bar.
-		for (Integer id : ids) {
-			// Create a tab with text corresponding to the page title defined by
-			// the adapter. Also specify this Activity object, which implements
-			// the TabListener interface, as the callback (listener) for when
-			// this tab is selected.
-			actionBar.addTab(actionBar.newTab().setText(mCharacterPagerAdapter.getPageTitle(id)).setTabListener(this));
-		}
-	}
+		mSessionManager = CastContext.getSharedInstance(this).getSessionManager();
+        mCastChannel = new CastChannel();
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_character, menu);
+        CastButtonFactory.setUpMediaRouteButton(getApplicationContext(), menu, R.id.media_route_menu_item);
 		return true;
 	}
 
@@ -202,6 +207,9 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 
 		SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
 		mViewPager.setCurrentItem(sharedPrefs.getInt(SAVED_TAB_POSITION, 0));
+
+		mCastSession = mSessionManager.getCurrentCastSession();
+		mSessionManager.addSessionManagerListener(mSessionManagerListener);
 	}
 
 	@Override
@@ -211,6 +219,9 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 		SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
 		editor.putInt(SAVED_TAB_POSITION, mViewPager.getCurrentItem());
 		editor.apply();
+
+		mSessionManager.removeSessionManagerListener(mSessionManagerListener);
+		mCastSession = null;
 	}
 
 	@Override
@@ -244,71 +255,90 @@ public class CharacterActivity extends FragmentActivity implements ActionBar.Tab
 		}
 	}
 
-	/**
-	 * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
-
-		private Fragment currentFragment;
-		private boolean refreshAll;
-		private FragmentActivity fragmentActivity;
-		private ArrayList<Integer> ids;
-
-		public CharacterFragment getCurrentFragment() {
-			return (CharacterFragment) currentFragment;
+	public void sendMessage(String message){
+		if (mCastChannel != null) {
+			try {
+				mCastSession.sendMessage(mCastChannel.getNamespace(), message)
+						.setResultCallback(
+								new ResultCallback<Status>() {
+									@Override
+									public void onResult(Status result) {
+										if (!result.isSuccess()) {
+											Log.e(TAG, "Sending message failed");
+										}
+									}
+								});
+			} catch (Exception e) {
+				Log.e(TAG, "Exception while sending message", e);
+			}
 		}
+	}
 
-		public void setPrimaryItem(ViewGroup paramViewGroup, int paramInt, Object paramObject) {
-			this.currentFragment = ((Fragment) paramObject);
+	private void AddTitles(ActionBar actionBar) {
+		CharacterOrderProvider order = new CharacterOrderProvider(this);
+		ArrayList<Integer> ids = order.getIDs();
+
+		// For each character, add a tab to the action bar.
+		for (Integer id : ids) {
+			// Create a tab with text corresponding to the page title defined by
+			// the adapter. Also specify this Activity object, which implements
+			// the TabListener interface, as the callback (listener) for when
+			// this tab is selected.
+			actionBar.addTab(actionBar.newTab().setText(mCharacterPagerAdapter.getPageTitle(id)).setTabListener(this));
 		}
+	}
 
-		public CharacterPagerAdapter(FragmentManager fragmentManager, FragmentActivity fa) {
-			super(fragmentManager);
-			fragmentActivity = fa;
+	private class SessionManagerListenerImpl implements SessionManagerListener {
+		@Override
+		public void onSessionStarting(Session session) {
 
-			CharacterOrderProvider order = new CharacterOrderProvider(fragmentActivity);
-			ids = order.getIDs();
 		}
 
 		@Override
-		public Fragment getItem(int position) {
-			Fragment fragment = new CharacterFragment();
-			Bundle args = new Bundle();
-			args.putInt(CharacterFragment.ARG_ID, ids.get(position));
-			fragment.setArguments(args);
-			return fragment;
+		public void onSessionStarted(Session session, String sessionId) {
+			invalidateOptionsMenu();
+
+			try {
+				mCastSession.setMessageReceivedCallbacks(mCastChannel.getNamespace(), mCastChannel);
+			} catch (IOException e) {
+				e.printStackTrace();
+				Log.e(TAG, "Exception while creating channel", e);
+			}
 		}
 
 		@Override
-		public int getItemPosition(Object object) {
-			if (refreshAll || currentFragment.equals(object))
-				return POSITION_NONE;
-			return POSITION_UNCHANGED;
-		}
+		public void onSessionStartFailed(Session session, int i) {
 
-		public void notifyCurrChanged(ArrayList<Integer> ids) {
-			this.ids = ids;
-			refreshAll = false;
-			super.notifyDataSetChanged();
 		}
 
 		@Override
-		public void notifyDataSetChanged() {
-			CharacterOrderProvider order = new CharacterOrderProvider(fragmentActivity);
-			ids = order.getIDs();
-			refreshAll = true;
-			super.notifyDataSetChanged();
+		public void onSessionEnding(Session session) {
+
 		}
 
 		@Override
-		public int getCount() {
-			return ids.size();
+		public void onSessionResumed(Session session, boolean wasSuspended) {
+			invalidateOptionsMenu();
 		}
 
 		@Override
-		public CharSequence getPageTitle(int position) {
-			return getResources().getStringArray(R.array.titles)[position];
+		public void onSessionResumeFailed(Session session, int i) {
+
+		}
+
+		@Override
+		public void onSessionSuspended(Session session, int i) {
+
+		}
+
+		@Override
+		public void onSessionEnded(Session session, int error) {
+			finish();
+		}
+
+		@Override
+		public void onSessionResuming(Session session, String s) {
+
 		}
 	}
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BetrayalCharacterStats</string>
+    <string name="app_cast_id">F8634BB7</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -17,8 +18,10 @@
     <string name="menu_re_order_short">Re-Order</string>
     <string name="menu_reset_order">Reset</string>
     <string name="menu_reset_order_short">Reset</string>
+    <string name="media_route_menu_title">Cast</string>
 
     <string name="dscr_character">Character</string>
+    <string name="dscr_character_info">CharacterInfo</string>
     <string name="dscr_pins">Pins</string>
     <string name="dscr_speed_pin">Speed Pin</string>
     <string name="dscr_might_pin">Might Pin</string>

@@ -4,11 +4,12 @@
     <item
         android:id="@+id/menu_reset_order"
         android:enabled="true"
-        android:icon="@mipmap/reset"
+        android:icon="@drawable/reset"
         android:orderInCategory="100"
         android:title="@string/menu_reset_order"
         android:titleCondensed="@string/menu_reset_order_short"
         android:visible="true"
+        android:showAsAction="never"
         app:showAsAction="never"/>
 
 </menu>

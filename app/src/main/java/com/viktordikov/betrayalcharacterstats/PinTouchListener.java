@@ -33,7 +33,8 @@ abstract class PinTouchListener implements OnTouchListener {
 
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN:
-				ViewPager.requestDisallowInterceptTouchEvent(true);
+				if (ViewPager != null)
+					ViewPager.requestDisallowInterceptTouchEvent(true);
 				Rect rect = new Rect();
 				v.getHitRect(rect);
 				delta = new Point(x - rect.left, y - rect.top);
@@ -55,7 +56,8 @@ abstract class PinTouchListener implements OnTouchListener {
 				}
 				
 				delta = null;
-				ViewPager.requestDisallowInterceptTouchEvent(false);
+				if (ViewPager != null)
+					ViewPager.requestDisallowInterceptTouchEvent(false);
 				break;
 				
 			case MotionEvent.ACTION_CANCEL:
@@ -63,7 +65,8 @@ abstract class PinTouchListener implements OnTouchListener {
 				SetStats(CurrPos, false);
 				
 				delta = null;
-				ViewPager.requestDisallowInterceptTouchEvent(false);
+				if (ViewPager != null)
+					ViewPager.requestDisallowInterceptTouchEvent(false);
 				break;
 		}
 		return true;

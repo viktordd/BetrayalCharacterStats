@@ -1,11 +1,16 @@
 package com.viktordikov.betrayalcharacterstats.Data;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.viktordikov.betrayalcharacterstats.BR;
+
 import java.util.Locale;
 
 /**
  * Holds Character Stats
  */
-public class CharacterStats {
+public class CharacterStats extends BaseObservable {
 
 	private int Min;
 	private int Max;
@@ -55,6 +60,7 @@ public class CharacterStats {
 		return Defaults[0];
 	}
 
+	@Bindable
 	public int getSpeed() {
 		return Speed;
 	}
@@ -62,6 +68,8 @@ public class CharacterStats {
 	public int getSpeedVal() {
 		return Stats[Speed];
 	}
+
+	@Bindable
 	public String getSpeedString() {
 		return String.format(Locale.ROOT, "%d", getSpeedVal());
 	}
@@ -73,12 +81,15 @@ public class CharacterStats {
 			Speed = Max;
 		else
 			Speed = speed;
+		notifyPropertyChanged(BR.speed);
+		notifyPropertyChanged(BR.speedString);
 	}
 
 	public int getMightDefault() {
 		return Defaults[1];
 	}
 
+    @Bindable
 	public int getMight() {
 		return Might;
 	}
@@ -86,6 +97,8 @@ public class CharacterStats {
 	public int getMightVal() {
 		return Stats[Max + 1 + Might];
 	}
+
+	@Bindable
 	public String getMightString() {
 		return String.format(Locale.ROOT, "%d", getMightVal());
 	}
@@ -97,12 +110,15 @@ public class CharacterStats {
 			Might = Max;
 		else
 			Might = might;
+		notifyPropertyChanged(BR.might);
+		notifyPropertyChanged(BR.mightString);
 	}
 
 	public int getSanityDefault() {
 		return Defaults[2];
 	}
 
+    @Bindable
 	public int getSanity() {
 		return Sanity;
 	}
@@ -110,6 +126,8 @@ public class CharacterStats {
 	public int getSanityVal() {
 		return Stats[2 * (Max + 1) + Sanity];
 	}
+
+	@Bindable
 	public String getSanityString() {
 		return String.format(Locale.ROOT, "%d", getSanityVal());
 	}
@@ -121,12 +139,15 @@ public class CharacterStats {
 			Sanity = Max;
 		else
 			Sanity = sanity;
+		notifyPropertyChanged(BR.sanity);
+		notifyPropertyChanged(BR.sanityString);
 	}
 
 	public int getKnowledgeDefault() {
 		return Defaults[3];
 	}
 
+    @Bindable
 	public int getKnowledge() {
 		return Knowledge;
 	}
@@ -134,6 +155,8 @@ public class CharacterStats {
 	public int getKnowledgeVal() {
 		return Stats[3 * (Max + 1) + Knowledge];
 	}
+
+	@Bindable
 	public String getKnowledgeString() {
 		return String.format(Locale.ROOT, "%d", getKnowledgeVal());
 	}
@@ -145,11 +168,14 @@ public class CharacterStats {
 			Knowledge = Max;
 		else
 			Knowledge = knowledge;
+		notifyPropertyChanged(BR.knowledge);
+		notifyPropertyChanged(BR.knowledgeString);
 	}
 
 	public int getAge() {
 		return Age;
 	}
+
 	public String getAgeString() {
 		return String.format(Locale.ROOT, "%d", Age);
 	}
@@ -169,6 +195,7 @@ public class CharacterStats {
 	public int getWeight() {
 		return Weight;
 	}
+
 	public String getWeightString() {
 		return String.format(Locale.ROOT, "%d", Weight);
 	}

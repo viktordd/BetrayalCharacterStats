@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/item_height"
         android:layout_weight="0.0"
-        android:background="@mipmap/drag"
+        android:background="@drawable/drag"
         android:contentDescription="@string/drag_handle" />
 
     <TextView
@@ -26,6 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:contentDescription="@string/flip"
-        android:src="@mipmap/flip" />
+        android:src="@drawable/flip" />
 
 </LinearLayout>
