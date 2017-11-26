@@ -219,5 +219,4 @@ public class CharacterStats extends BaseObservable {
 	public void setBirthday(String birthday) {
 		Birthday = birthday;
 	}
-
 }

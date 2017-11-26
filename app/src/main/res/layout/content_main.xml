@@ -12,8 +12,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:background="@android:color/black" />
 
 </android.support.constraint.ConstraintLayout>
 

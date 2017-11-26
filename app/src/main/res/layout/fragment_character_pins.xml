@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/dscr_character"
+        android:gravity="top|left"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/ivSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/dscr_speed_pin" />
+
+        <ImageView
+            android:id="@+id/ivMight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/dscr_might_pin" />
+
+        <ImageView
+            android:id="@+id/ivSanity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/dscr_sanity_pin" />
+
+        <ImageView
+            android:id="@+id/ivKnowledge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/dscr_knowledge_pin" />
+
+    </RelativeLayout>
+</layout>

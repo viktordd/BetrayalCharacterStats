@@ -851,7 +851,7 @@
         <item name="knowledge_y">23</item>
     </integer-array>
 
-    <string-array name="titles">
+    <string-array name="titles_short">
         <item>Madame</item>
         <item>Vivian</item>
         <item>Brandon</item>
@@ -865,4 +865,35 @@
         <item>Missy</item>
         <item>Zoe</item>
     </string-array>
+
+    <string-array name="titles">
+        <item>Madame Zostra</item>
+        <item>Vivian Lopez</item>
+        <item>Brandon Jaspers</item>
+        <item>Peter Akimoto</item>
+        <item>Heather Granville</item>
+        <item>Jenny Le Clerc</item>
+        <item>Darrin "Flash" Williams</item>
+        <item>Ox Bellows</item>
+        <item>Father Rhinehardt</item>
+        <item>Professor Longfellow</item>
+        <item>Missy Dubourde</item>
+        <item>Zoe Ingstrom</item>
+    </string-array>
+
+    <string-array name="char_names">
+        <item>blue_madame_zostra</item>
+        <item>blue_vivian_lopez</item>
+        <item>green_brandon_jaspers</item>
+        <item>green_peter_akimoto</item>
+        <item>purple_heather_granville</item>
+        <item>purple_jenny_leclerc</item>
+        <item>red_darrin_flash_williams</item>
+        <item>red_ox_bellows</item>
+        <item>white_father_rhinehardt</item>
+        <item>white_professor_longfellow</item>
+        <item>yellow_missy_dubourde</item>
+        <item>yellow_zoe_ingstrom</item>
+    </string-array>
+
 </resources>

@@ -10,7 +10,7 @@ import com.viktordikov.betrayalcharacterstats.Data.AsyncResult;
 
 import java.lang.ref.WeakReference;
 
-public class TokenWorkerTask extends AsyncTask<Integer, Void, AsyncResult> {
+public class ImageLoaderTask extends AsyncTask<Integer, Void, AsyncResult> {
     final WeakReference<CharacterFragment> CharFragment;
     final int CharId;
     final int ImgResId;
@@ -19,12 +19,12 @@ public class TokenWorkerTask extends AsyncTask<Integer, Void, AsyncResult> {
     final int Height;
     final Resources r;
 
-    TokenWorkerTask(WeakReference<CharacterFragment> fragment, int charID, int imgResId, int orientation, int width, int height, Resources r) {
+    ImageLoaderTask(CharacterFragment fragment, int width, int height, Resources r) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
-        CharId = charID;
-        CharFragment = fragment;
-        ImgResId = imgResId;
-        Orientation = orientation;
+        CharFragment = new WeakReference(fragment);
+        CharId = fragment.getCharID();
+        ImgResId = fragment.GetImageResource();
+        Orientation = r.getConfiguration().orientation;
         Width = width;
         Height = height;
         this.r = r;
@@ -57,8 +57,7 @@ public class TokenWorkerTask extends AsyncTask<Integer, Void, AsyncResult> {
     private double getScale(Bitmap b) {
         if (Orientation == Configuration.ORIENTATION_PORTRAIT)
             return Width / (float) b.getWidth();
-        else
-            // Configuration.ORIENTATION_LANDSCAPE
+        else // Configuration.ORIENTATION_LANDSCAPE
             return Height / (float) b.getHeight();
     }
 

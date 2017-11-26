@@ -9,11 +9,11 @@ import android.view.View.OnTouchListener;
 import android.widget.RelativeLayout.LayoutParams;
 
 abstract class PinTouchListener implements OnTouchListener {
-	
 	private int CurrPos;
 	private Point[] PinPos;
 	private ViewPager ViewPager;
 	private Point delta;
+	private int PrevPos;
 
 	public PinTouchListener(int currPos, Point[] pinPos, ViewPager viewPager) {
 		CurrPos = currPos;
@@ -29,7 +29,7 @@ abstract class PinTouchListener implements OnTouchListener {
 			x -= delta.x;
 			y -= delta.y;
 		}
-		int closestPos = -1;
+		int closestPos;
 
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN:
@@ -38,13 +38,15 @@ abstract class PinTouchListener implements OnTouchListener {
 				Rect rect = new Rect();
 				v.getHitRect(rect);
 				delta = new Point(x - rect.left, y - rect.top);
+				PrevPos = CurrPos;
 				break;
 
 			case MotionEvent.ACTION_MOVE:
 				closestPos = getClosestPin(x, y);
-				if (closestPos > -1) {
+				if (closestPos > -1 && closestPos != PrevPos) {
 					SetPoint(v, closestPos);
 					SetStats(closestPos, false);
+					PrevPos = closestPos;
 				}
 				break;
 
@@ -53,8 +55,9 @@ abstract class PinTouchListener implements OnTouchListener {
 				if (closestPos > -1) {
 					SetPoint(v, closestPos);
 					SetStats(closestPos, true);
+					CurrPos = closestPos;
 				}
-				
+
 				delta = null;
 				if (ViewPager != null)
 					ViewPager.requestDisallowInterceptTouchEvent(false);

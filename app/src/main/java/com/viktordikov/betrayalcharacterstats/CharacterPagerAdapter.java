@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.viktordikov.betrayalcharacterstats.Data.CharacterOrderProvider;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +22,16 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
     private boolean refreshAll;
     private FragmentActivity fragmentActivity;
     private ArrayList<Integer> ids;
+    private ArrayList<WeakReference<CharacterFragment>> fragments;
 
     public CharacterFragment getCurrentFragment() {
         return (CharacterFragment) currentFragment;
+    }
+    public CharacterFragment getFragment(int position) {
+        if (fragments.size() <= position) {
+            return null;
+        }
+        return fragments.get(position).get();
     }
 
     public void setPrimaryItem(ViewGroup paramViewGroup, int paramInt, Object paramObject) {
@@ -36,14 +44,22 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
 
         CharacterOrderProvider order = new CharacterOrderProvider(fragmentActivity);
         ids = order.getIDs();
+        fragments = new ArrayList<>();
+
+        for (int i = 0; i < ids.size(); i++) {
+            fragments.add(new WeakReference<CharacterFragment>(null));
+        }
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = new CharacterFragment();
+        CharacterFragment fragment = new CharacterFragment();
+        fragments.set(position, new WeakReference<>(fragment));
+
         Bundle args = new Bundle();
         args.putInt(CharacterFragment.ARG_ID, ids.get(position));
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -74,7 +90,7 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return fragmentActivity.getResources().getStringArray(R.array.titles)[position];
+    public CharSequence getPageTitle(int id) {
+        return fragmentActivity.getResources().getStringArray(R.array.titles)[id];
     }
 }

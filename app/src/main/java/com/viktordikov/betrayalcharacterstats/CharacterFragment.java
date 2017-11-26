@@ -2,6 +2,7 @@ package com.viktordikov.betrayalcharacterstats;
 
 import android.annotation.TargetApi;
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character, container, false);
 		rootView = binding.getRoot();
 
 		rootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -80,47 +81,52 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 	public void ResetChar() {
 		m_stats.ResetToDefaults();
 		UpdateStats();
+        ((MainActivity) getActivity()).sendMessage(mId, m_stats);
 	}
 
 	// Called when character images are loaded
 	public void SetCharacterImages(AsyncResult result) {
-		if (binding.ivCharacter == null || binding.ivSpeed == null || binding.ivMight == null || binding.ivSanity == null || binding.ivKnowledge == null ||
-                result == null || result.Bitmap == null || result.Pins == null)
+		if (result == null || result.Bitmap == null || result.Pins == null)
 			return;
 
-		ViewPager vp = ((MainActivity) getActivity()).getViewPager();
+        final MainActivity mainActivity = (MainActivity) getActivity();
+        ViewPager vp = mainActivity.getViewPager();
         binding.ivCharacter.setImageBitmap(result.Bitmap);
 		Pins = result.Pins;
 
-		binding.ivSpeed.setImageBitmap(Pins.getSpeedPinImg());
-		binding.ivSpeed.setOnTouchListener(new PinTouchListener(m_stats.getSpeed(), Pins.getPinPos(PinDetails.SPEED_PINS), vp) {
+		binding.pins.ivSpeed.setImageBitmap(Pins.getSpeedPinImg());
+		binding.pins.ivSpeed.setOnTouchListener(new PinTouchListener(m_stats.getSpeed(), Pins.getPinPos(PinDetails.SPEED_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setSpeed(pos);
+                mainActivity.sendMessage(mId, m_stats);
 			}
 		});
 
-		binding.ivMight.setImageBitmap(Pins.getMightPinImg());
-		binding.ivMight.setOnTouchListener(new PinTouchListener(m_stats.getMight(), Pins.getPinPos(PinDetails.MIGHT_PINS), vp) {
+		binding.pins.ivMight.setImageBitmap(Pins.getMightPinImg());
+		binding.pins.ivMight.setOnTouchListener(new PinTouchListener(m_stats.getMight(), Pins.getPinPos(PinDetails.MIGHT_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setMight(pos);
+				mainActivity.sendMessage(mId, m_stats);
 			}
 		});
 
-		binding.ivSanity.setImageBitmap(Pins.getSanityPinImg());
-		binding.ivSanity.setOnTouchListener(new PinTouchListener(m_stats.getSanity(), Pins.getPinPos(PinDetails.SANITY_PINS), vp) {
+		binding.pins.ivSanity.setImageBitmap(Pins.getSanityPinImg());
+		binding.pins.ivSanity.setOnTouchListener(new PinTouchListener(m_stats.getSanity(), Pins.getPinPos(PinDetails.SANITY_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setSanity(pos);
+                mainActivity.sendMessage(mId, m_stats);
 			}
 		});
 
-		binding.ivKnowledge.setImageBitmap(Pins.getKnowledgePinImg());
-		binding.ivKnowledge.setOnTouchListener(new PinTouchListener(m_stats.getKnowledge(), Pins.getPinPos(PinDetails.KNOWLEDGE_PINS), vp) {
+		binding.pins.ivKnowledge.setImageBitmap(Pins.getKnowledgePinImg());
+		binding.pins.ivKnowledge.setOnTouchListener(new PinTouchListener(m_stats.getKnowledge(), Pins.getPinPos(PinDetails.KNOWLEDGE_PINS), vp) {
 			@Override
 			protected void SetStats(int pos, boolean touchEnd) {
 				m_stats.setKnowledge(pos);
+                mainActivity.sendMessage(mId, m_stats);
 			}
 		});
 
@@ -134,28 +140,28 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 		LayoutParams layoutParams;
 
 		Point speedPos = Pins.getPinPos(PinDetails.SPEED_PINS, m_stats.getSpeed());
-		layoutParams = (LayoutParams) binding.ivSpeed.getLayoutParams();
+		layoutParams = (LayoutParams) binding.pins.ivSpeed.getLayoutParams();
 		layoutParams.leftMargin = speedPos.x;
 		layoutParams.topMargin = speedPos.y;
-        binding.ivSpeed.setLayoutParams(layoutParams);
+        binding.pins.ivSpeed.setLayoutParams(layoutParams);
 
 		Point mightPos = Pins.getPinPos(PinDetails.MIGHT_PINS, m_stats.getMight());
-		layoutParams = (LayoutParams)  binding.ivMight.getLayoutParams();
+		layoutParams = (LayoutParams)  binding.pins.ivMight.getLayoutParams();
 		layoutParams.leftMargin = mightPos.x;
 		layoutParams.topMargin = mightPos.y;
-        binding.ivMight.setLayoutParams(layoutParams);
+        binding.pins.ivMight.setLayoutParams(layoutParams);
 
 		Point sanityPos = Pins.getPinPos(PinDetails.SANITY_PINS, m_stats.getSanity());
-		layoutParams = (LayoutParams) binding.ivSanity.getLayoutParams();
+		layoutParams = (LayoutParams) binding.pins.ivSanity.getLayoutParams();
 		layoutParams.leftMargin = sanityPos.x;
 		layoutParams.topMargin = sanityPos.y;
-        binding.ivSanity.setLayoutParams(layoutParams);
+        binding.pins.ivSanity.setLayoutParams(layoutParams);
 
 		Point knowledgePos = Pins.getPinPos(PinDetails.KNOWLEDGE_PINS, m_stats.getKnowledge());
-		layoutParams = (LayoutParams) binding.ivKnowledge.getLayoutParams();
+		layoutParams = (LayoutParams) binding.pins.ivKnowledge.getLayoutParams();
 		layoutParams.leftMargin = knowledgePos.x;
 		layoutParams.topMargin = knowledgePos.y;
-        binding.ivKnowledge.setLayoutParams(layoutParams);
+        binding.pins.ivKnowledge.setLayoutParams(layoutParams);
 	}
 
 	public int GetImageResource() {
@@ -192,7 +198,9 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 		return this.mId;
 	}
 
-
+    public CharacterStats getStats() {
+        return this.m_stats;
+    }
 
 	@Override
 	public void onGlobalLayout() {
@@ -201,7 +209,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 		Height = rootView.getHeight();
 
 		// Load bitmaps asynchronously
-		loadBitmaps(new WeakReference<>(this));
+		loadBitmaps();
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -214,12 +222,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 		}
 	}
 
-	private void loadBitmaps(WeakReference<CharacterFragment> fragment) {
-		int orientation = getResources().getConfiguration().orientation;
-
-		CharacterFragment f = fragment.get();
-
-		TokenWorkerTask task = new TokenWorkerTask(fragment, f.getCharID(), f.GetImageResource(), orientation, Width, Height, getResources());
-		task.execute();
+	private void loadBitmaps() {
+		new ImageLoaderTask(this, Width, Height, getResources()).execute();
 	}
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:bind="http://schemas.android.com/apk/res-auto">
+        xmlns:bind="http://schemas.android.com/apk/res-auto" >
     <data>
         <variable
             name="characterStats"
@@ -8,11 +8,10 @@
     </data>
 
     <RelativeLayout
-        android:id="@+id/rlCharacter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/dscr_character"
-        android:gravity="center"
+        android:gravity="top|left"
         android:orientation="vertical" >
 
         <ImageView
@@ -22,49 +21,12 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:contentDescription="@string/dscr_character"
-            android:scaleType="matrix" />
+            android:scaleType="center" />
+            <!--android:src="@drawable/char_blue_madame_zostra" />-->
 
-        <ImageView
-            android:id="@+id/ivSpeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:contentDescription="@string/dscr_speed_pin" />
+        <include layout="@layout/fragment_character_pins" android:id="@+id/pins" />
 
-        <ImageView
-            android:id="@+id/ivMight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:contentDescription="@string/dscr_might_pin" />
-
-        <ImageView
-            android:id="@+id/ivSanity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:contentDescription="@string/dscr_sanity_pin" />
-
-        <ImageView
-            android:id="@+id/ivKnowledge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:contentDescription="@string/dscr_knowledge_pin" />
-
-        <include layout="@layout/fragment_character_info" bind:stats="@{characterStats}" />
+        <include layout="@layout/fragment_character_info_wrapper" bind:stats="@{characterStats}" />
 
     </RelativeLayout>
 
