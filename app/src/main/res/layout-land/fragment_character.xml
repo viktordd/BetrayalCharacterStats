@@ -1,33 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="characterStats"
-            type="com.viktordikov.betrayalcharacterstats.Data.CharacterStats"/>
+            type="com.viktordikov.betrayalcharacterstats.Data.CharacterStats" />
     </data>
 
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/dscr_character"
-        android:gravity="top|left"
-        android:orientation="vertical" >
+        android:fitsSystemWindows="true">
 
-        <ImageView
-            android:id="@+id/ivCharacter"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rlCharacterContainer"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="@dimen/char_info_horizontal_margin"
+            android:layout_marginLeft="@dimen/char_info_horizontal_margin"
+            android:layout_marginRight="@dimen/char_info_horizontal_margin"
+            android:layout_marginStart="@dimen/char_info_horizontal_margin"
             android:contentDescription="@string/dscr_character"
-            android:scaleType="center"
-            android:src="@drawable/char_blue_madame_zostra"/>
+            android:gravity="top|start">
 
-        <include layout="@layout/fragment_character_pins" android:id="@+id/pins" />
+            <ImageView
+                android:id="@+id/ivCharacter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/dscr_character"
+                android:scaleType="center" />
+            <!--android:src="@drawable/char_blue_madame_zostra" />-->
 
-        <include layout="@layout/fragment_character_info" bind:stats="@{characterStats}" />
+            <include
+                android:id="@+id/pins"
+                layout="@layout/fragment_character_pins" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:clipToPadding="true"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="24dp"
+            app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkGray"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/char_info_horizontal_margin"
+                    android:paddingLeft="@dimen/char_info_horizontal_margin"
+                    android:paddingRight="@dimen/char_info_horizontal_margin"
+                    android:paddingStart="@dimen/char_info_horizontal_margin">
+
+                    <include
+                        layout="@layout/fragment_character_stats"
+                        app:stats="@{characterStats}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/char_info_horizontal_margin"
+                    android:paddingLeft="@dimen/char_info_horizontal_margin"
+                    android:paddingRight="@dimen/char_info_horizontal_margin"
+                    android:paddingStart="@dimen/char_info_horizontal_margin">
+
+                    <include
+                        layout="@layout/fragment_character_rooms"
+                        app:stats="@{characterStats}" />
+
+                    <include
+                        layout="@layout/fragment_character_info"
+                        app:stats="@{characterStats}" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>

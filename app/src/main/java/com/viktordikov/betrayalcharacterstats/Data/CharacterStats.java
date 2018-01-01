@@ -12,211 +12,303 @@ import java.util.Locale;
  */
 public class CharacterStats extends BaseObservable {
 
-	private int Min;
-	private int Max;
-	
-	private int[] Defaults;
+    private int Min;
+    private int Max;
 
-	private int Speed;
-	private int Might;
-	private int Sanity;
-	private int Knowledge;
+    private int[] Defaults;
 
-	private int[] Stats;
+    private int Speed;
+    private int Might;
+    private int Sanity;
+    private int Knowledge;
 
-	private int Age;
-	private String Height;
-	private int Weight;
-	private String Hobbies;
-	private String Birthday;
+    private boolean gymnasium;
+    private boolean larder;
+    private boolean chapel;
+    private boolean library;
 
-	public CharacterStats(int[] constraints, int[] stats, int[] defaults) {
-		Min = constraints[0];
-		Max = constraints[1];
-		
-		Defaults = defaults;
-		
-		ResetToDefaults();
-		
-		Stats = stats;
-	}
+    private int[] Stats;
 
-	public void ResetToDefaults() {
-		setSpeed(getSpeedDefault());
-		setMight(getMightDefault());
-		setSanity(getSanityDefault());
-		setKnowledge(getKnowledgeDefault());
-	}
+    private int Age;
+    private String Height;
+    private int Weight;
+    private String Hobbies;
+    private String Birthday;
 
-	public int getMin() {
-		return Min;
-	}
+    private boolean enableNotification = true;
 
-	public int getMax() {
-		return Max;
-	}
+    public CharacterStats(int[] constraints, int[] stats, int[] defaults) {
+        Min = constraints[0];
+        Max = constraints[1];
 
-	public int getSpeedDefault() {
-		return Defaults[0];
-	}
+        Defaults = defaults;
 
-	@Bindable
-	public int getSpeed() {
-		return Speed;
-	}
+        ResetToDefaults();
 
-	public int getSpeedVal() {
-		return Stats[Speed];
-	}
+        Stats = stats;
+    }
 
-	@Bindable
-	public String getSpeedString() {
-		return String.format(Locale.ROOT, "%d", getSpeedVal());
-	}
+    public void ResetToDefaults() {
+        enableNotification = false;
+        setGymnasium(false);
+        setLarder(false);
+        setChapel(false);
+        setLibrary(false);
+        setSpeed(getSpeedDefault());
+        setMight(getMightDefault());
+        setSanity(getSanityDefault());
+        setKnowledge(getKnowledgeDefault());
+        enableNotification = true;
+        notifyChange();
+    }
 
-	public void setSpeed(int speed) {
-		if (speed < Min)
-			Speed = Min;
-		else if (speed > Max)
-			Speed = Max;
-		else
-			Speed = speed;
-		notifyPropertyChanged(BR.speed);
-		notifyPropertyChanged(BR.speedString);
-	}
+    public int getMin() {
+        return Min;
+    }
 
-	public int getMightDefault() {
-		return Defaults[1];
-	}
+    public int getMax() {
+        return Max;
+    }
+
+    public int getSpeedDefault() {
+        return Defaults[0];
+    }
 
     @Bindable
-	public int getMight() {
-		return Might;
-	}
+    public int getSpeed() {
+        return Speed;
+    }
 
-	public int getMightVal() {
-		return Stats[Max + 1 + Might];
-	}
-
-	@Bindable
-	public String getMightString() {
-		return String.format(Locale.ROOT, "%d", getMightVal());
-	}
-
-	public void setMight(int might) {
-		if (might < Min)
-			Might = Min;
-		else if (might > Max)
-			Might = Max;
-		else
-			Might = might;
-		notifyPropertyChanged(BR.might);
-		notifyPropertyChanged(BR.mightString);
-	}
-
-	public int getSanityDefault() {
-		return Defaults[2];
-	}
+    public int getSpeedVal() {
+        return Stats[Speed];
+    }
 
     @Bindable
-	public int getSanity() {
-		return Sanity;
-	}
+    public String getSpeedString() {
+        return String.format(Locale.ROOT, "%d", getSpeedVal());
+    }
 
-	public int getSanityVal() {
-		return Stats[2 * (Max + 1) + Sanity];
-	}
+    public void setSpeed(int speed) {
+        if (speed < Min)
+            Speed = Min;
+        else if (speed > Max)
+            Speed = Max;
+        else
+            Speed = speed;
 
-	@Bindable
-	public String getSanityString() {
-		return String.format(Locale.ROOT, "%d", getSanityVal());
-	}
+        if (enableNotification) {
+            notifyPropertyChanged(BR.speed);
+            notifyPropertyChanged(BR.speedString);
+        }
+    }
 
-	public void setSanity(int sanity) {
-		if (sanity < Min)
-			Sanity = Min;
-		else if (sanity > Max)
-			Sanity = Max;
-		else
-			Sanity = sanity;
-		notifyPropertyChanged(BR.sanity);
-		notifyPropertyChanged(BR.sanityString);
-	}
-
-	public int getKnowledgeDefault() {
-		return Defaults[3];
-	}
+    public int getMightDefault() {
+        return Defaults[1];
+    }
 
     @Bindable
-	public int getKnowledge() {
-		return Knowledge;
-	}
+    public int getMight() {
+        return Might;
+    }
 
-	public int getKnowledgeVal() {
-		return Stats[3 * (Max + 1) + Knowledge];
-	}
+    public int getMightVal() {
+        return Stats[Max + 1 + Might];
+    }
 
-	@Bindable
-	public String getKnowledgeString() {
-		return String.format(Locale.ROOT, "%d", getKnowledgeVal());
-	}
+    @Bindable
+    public String getMightString() {
+        return String.format(Locale.ROOT, "%d", getMightVal());
+    }
 
-	public void setKnowledge(int knowledge) {
-		if (knowledge < Min)
-			Knowledge = Min;
-		else if (knowledge > Max)
-			Knowledge = Max;
-		else
-			Knowledge = knowledge;
-		notifyPropertyChanged(BR.knowledge);
-		notifyPropertyChanged(BR.knowledgeString);
-	}
+    public void setMight(int might) {
+        if (might < Min)
+            Might = Min;
+        else if (might > Max)
+            Might = Max;
+        else
+            Might = might;
 
-	public int getAge() {
-		return Age;
-	}
+        if (enableNotification) {
+            notifyPropertyChanged(BR.might);
+            notifyPropertyChanged(BR.mightString);
+        }
+    }
 
-	public String getAgeString() {
-		return String.format(Locale.ROOT, "%d", Age);
-	}
+    public int getSanityDefault() {
+        return Defaults[2];
+    }
 
-	public void setAge(int age) {
-		Age = age;
-	}
+    @Bindable
+    public int getSanity() {
+        return Sanity;
+    }
 
-	public String getHeight() {
-		return Height;
-	}
+    public int getSanityVal() {
+        return Stats[2 * (Max + 1) + Sanity];
+    }
 
-	public void setHeight(String height) {
-		Height = height;
-	}
+    @Bindable
+    public String getSanityString() {
+        return String.format(Locale.ROOT, "%d", getSanityVal());
+    }
 
-	public int getWeight() {
-		return Weight;
-	}
+    public void setSanity(int sanity) {
+        if (sanity < Min)
+            Sanity = Min;
+        else if (sanity > Max)
+            Sanity = Max;
+        else
+            Sanity = sanity;
 
-	public String getWeightString() {
-		return String.format(Locale.ROOT, "%d", Weight);
-	}
+        if (enableNotification) {
+            notifyPropertyChanged(BR.sanity);
+            notifyPropertyChanged(BR.sanityString);
+        }
+    }
 
-	public void setWeight(int weight) {
-		Weight = weight;
-	}
+    public int getKnowledgeDefault() {
+        return Defaults[3];
+    }
 
-	public String getHobbies() {
-		return Hobbies;
-	}
+    @Bindable
+    public int getKnowledge() {
+        return Knowledge;
+    }
 
-	public void setHobbies(String hobbies) {
-		Hobbies = hobbies;
-	}
+    public int getKnowledgeVal() {
+        return Stats[3 * (Max + 1) + Knowledge];
+    }
 
-	public String getBirthday() {
-		return Birthday;
-	}
+    @Bindable
+    public String getKnowledgeString() {
+        return String.format(Locale.ROOT, "%d", getKnowledgeVal());
+    }
 
-	public void setBirthday(String birthday) {
-		Birthday = birthday;
-	}
+    public void setKnowledge(int knowledge) {
+        if (knowledge < Min)
+            Knowledge = Min;
+        else if (knowledge > Max)
+            Knowledge = Max;
+        else
+            Knowledge = knowledge;
+
+        if (enableNotification) {
+            notifyPropertyChanged(BR.knowledge);
+            notifyPropertyChanged(BR.knowledgeString);
+        }
+    }
+
+
+    @Bindable
+    public boolean getGymnasium() {
+        return gymnasium;
+    }
+
+    @Bindable
+    public boolean getLarder() {
+        return larder;
+    }
+
+    @Bindable
+    public boolean getChapel() {
+        return chapel;
+    }
+
+    @Bindable
+    public boolean getLibrary() {
+        return library;
+    }
+
+    public void setGymnasium(boolean val) {
+        if (gymnasium != val) {
+            gymnasium = val;
+            setSpeed(getSpeed() + (val ? 1 : -1));
+
+            if (enableNotification) {
+                notifyPropertyChanged(BR.gymnasium);
+            }
+        }
+    }
+
+    public void setLarder(boolean val) {
+        if (larder != val) {
+            larder = val;
+            setMight(getMight() + (val ? 1 : -1));
+
+            if (enableNotification) {
+                notifyPropertyChanged(BR.larder);
+            }
+        }
+    }
+
+    public void setChapel(boolean val) {
+        if (chapel != val) {
+            chapel = val;
+            setSanity(getSanity() + (val ? 1 : -1));
+
+            if (enableNotification) {
+                notifyPropertyChanged(BR.chapel);
+            }
+        }
+    }
+
+    public void setLibrary(boolean val) {
+        if (library != val) {
+            library = val;
+            setKnowledge(getKnowledge() + (val ? 1 : -1));
+
+            if (enableNotification) {
+                notifyPropertyChanged(BR.library);
+            }
+        }
+    }
+
+
+    public int getAge() {
+        return Age;
+    }
+
+    public String getAgeString() {
+        return String.format(Locale.ROOT, "%d", Age);
+    }
+
+    public void setAge(int age) {
+        Age = age;
+    }
+
+    public String getHeight() {
+        return Height;
+    }
+
+    public void setHeight(String height) {
+        Height = height;
+    }
+
+    public int getWeight() {
+        return Weight;
+    }
+
+    public String getWeightString() {
+        return String.format(Locale.ROOT, "%d", Weight);
+    }
+
+    public void setWeight(int weight) {
+        Weight = weight;
+    }
+
+    public String getHobbies() {
+        return Hobbies;
+    }
+
+    public void setHobbies(String hobbies) {
+        Hobbies = hobbies;
+    }
+
+    public String getBirthday() {
+        return Birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        Birthday = birthday;
+    }
 }

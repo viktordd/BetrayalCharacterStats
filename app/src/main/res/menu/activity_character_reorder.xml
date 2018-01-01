@@ -9,7 +9,6 @@
         android:title="@string/menu_reset_order"
         android:titleCondensed="@string/menu_reset_order_short"
         android:visible="true"
-        android:showAsAction="never"
         app:showAsAction="never"/>
 
 </menu>

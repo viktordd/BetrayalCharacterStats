@@ -1,53 +1,38 @@
 package com.viktordikov.betrayalcharacterstats;
 
-import android.app.ActionBar;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
 
-import com.google.android.gms.cast.framework.CastButtonFactory;
-import com.google.android.gms.cast.framework.CastContext;
-import com.google.android.gms.cast.framework.CastSession;
-import com.google.android.gms.cast.framework.Session;
-import com.google.android.gms.cast.framework.SessionManager;
-import com.google.android.gms.cast.framework.SessionManagerListener;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.viktordikov.betrayalcharacterstats.Data.CharacterOrderProvider;
-import com.viktordikov.betrayalcharacterstats.Data.CharacterStats;
-import com.viktordikov.betrayalcharacterstats.Data.CharacterStatsProvider;
+import com.viktordikov.betrayalcharacterstats.Data.ImageResources;
+import com.viktordikov.betrayalcharacterstats.Data.SettingsProvider;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static final String SAVED_TAB_POSITION = "saved_tab_position";
-    private static final String TAG = "MainActivity";
-
-    private CharacterPagerAdapter mSectionsPagerAdapter;
-
-    private ViewPager mViewPager;
-    public ViewPager getViewPager() {
-        return mViewPager;
-    }
-    private CastChannel mCastChannel;
-    private SessionManager mSessionManager;
-    private CastSession mCastSession;
-    private final SessionManagerListener mSessionManagerListener = new SessionManagerListenerImpl();
+    private Menu menu;
+    private int currViewId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,28 +49,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        menu = navigationView.getMenu();
 
-        mSectionsPagerAdapter = new CharacterPagerAdapter(getSupportFragmentManager(), this);
+        CharacterOrderProvider order = new CharacterOrderProvider(this);
+        order.getPrefs().registerOnSharedPreferenceChangeListener(this);
+        displayView(R.id.nav_characters, order.getTabPosition(), null);
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                setCharTitleByPos(position);
-                CharacterFragment ch = mSectionsPagerAdapter.getFragment(position);
-                if (ch != null)
-                    sendMessage(ch.getCharID(), ch.getStats());
-            }
-        });
-        setCharTitleByPos(0);
-
-        mCastChannel = new CastChannel();
-        mSessionManager = CastContext.getSharedInstance(this).getSessionManager();
-        mCastSession = mSessionManager.getCurrentCastSession();
+        addMenuItems();
+        initAlwaysOnDisplayToggle();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -93,220 +66,178 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            if (currViewId != R.id.nav_characters) {
+                CharacterOrderProvider order = new CharacterOrderProvider(this);
+                int tabPosition = order.getTabPosition();
+                displayView(R.id.nav_characters, tabPosition, null);
+                setSelectedMenuItem(tabPosition);
+                return;
+            }
+
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        CastButtonFactory.setUpMediaRouteButton(getApplicationContext(), menu, R.id.media_route_menu_item);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int menuId = item.getItemId();
-
-        if (menuId == R.id.menu_reset) {
-            this.mSectionsPagerAdapter.getCurrentFragment().ResetChar();
-            return true;
-        }
-        if (menuId == R.id.menu_flip) {
-            int charId = mSectionsPagerAdapter.getCurrentFragment().getCharID();
-            int pos = mViewPager.getCurrentItem();
-
-            int newId = charId + (charId % 2 == 0 ? 1 : -1);
-
-            CharacterOrderProvider order = new CharacterOrderProvider(this);
-            ArrayList<Integer> ids = order.getIDs();
-            ids.set(pos, newId);
-            order.setIDs(ids);
-            order.apply();
-
-            ActionBar actionBar = getActionBar();
-            if (actionBar != null) {
-                ActionBar.Tab tab = actionBar.getTabAt(pos);
-                if (tab != null) {
-                    tab.setText(mSectionsPagerAdapter.getPageTitle(newId));
-                }
-            }
-
-            mSectionsPagerAdapter.notifyCurrChanged(ids);
-
-            setCharTitleById(newId);
-
-            CharacterStatsProvider statsProvider = new CharacterStatsProvider(this, newId);
-            sendMessage(newId, statsProvider.getStats());
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onDestroy() {
+        super.onDestroy();
+        CharacterOrderProvider order = new CharacterOrderProvider(this);
+        order.getPrefs().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        //displayView(item.getItemId());
+        displayView(item.getItemId(), item.getOrder(), item);
         return true;
     }
 
-//    public void displayView(int viewId) {
-//
-//        CharacterFragment fragment = null;
-//        String title = getString(R.string.app_name);
-//
-//        switch (viewId) {
-//            case R.id.nav_camera:
-//                fragment = getCharacterFragment(0);
-//                title  = "0";
-//
-//                break;
-//            case R.id.nav_gallery:
-//                fragment = getCharacterFragment(1);
-//                title = "1";
-//                break;
-//
-//        }
-//
-//        if (fragment != null) {
-//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            ft.replace(R.id.content_frame, fragment);
-//            ft.commit();
-//        }
-//
-//        // set the toolbar title
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setTitle(title);
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//    }
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.startsWith(CharacterOrderProvider.CHANGED)) {
+            addMenuItems();
+        }
+    }
 
-    public void setCharTitleByPos(int pos){
+    public void displayView(int viewId, int pos, MenuItem item) {
+        Fragment fragment = null;
+
+        switch (viewId) {
+            case R.id.nav_characters:
+                if (currViewId == viewId) {
+                    CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
+                    chars.setCurrentItem(pos);
+                } else {
+                    fragment = new CharactersViewPagerFragment();
+                    CharacterOrderProvider order = new CharacterOrderProvider(this);
+                    order.setTabPosition(pos);
+                    order.apply();
+                }
+                break;
+            case R.id.nav_reorder:
+                fragment = new ReorderCharsFragment();
+                setActionBarTitle(getResources().getText(R.string.a_menu_re_order));
+                break;
+            case R.id.nav_set_player_name:
+                setPlayerName();
+                return;
+            case R.id.nav_always_on_display:
+                return;
+            default:
+                return;
+        }
+
+        currViewId = viewId;
+
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void addMenuItems() {
+        Resources r = getResources();
+
+        menu.removeGroup(R.id.nav_character_group);
+
         CharacterOrderProvider order = new CharacterOrderProvider(this);
-        setCharTitleById(order.getIDs().get(pos));
-    }
+        ArrayList<Integer> iDs = order.getIDs();
+        int selected = order.getTabPosition();
 
-    public void setCharTitleById(int id){
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(mSectionsPagerAdapter.getPageTitle(id));
-        }
-    }
+        for (int i = 0; i < iDs.size(); i++) {
+            Integer id = iDs.get(i);
+            String title = r.getStringArray(R.array.titles)[id];
+            MenuItem menuItem = menu.add(R.id.nav_character_group, R.id.nav_characters, i, title)
+                    .setIcon(R.drawable.ic_char)
+//                    .setActionView(R.layout.menu_character)
+                    .setChecked(currViewId == R.id.nav_characters && i == selected);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
-        mViewPager.setCurrentItem(sharedPrefs.getInt(SAVED_TAB_POSITION, 0));
-
-        mCastSession = mSessionManager.getCurrentCastSession();
-        mSessionManager.addSessionManagerListener(mSessionManagerListener);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
-        editor.putInt(SAVED_TAB_POSITION, mViewPager.getCurrentItem());
-        editor.apply();
-
-        mSessionManager.removeSessionManagerListener(mSessionManagerListener);
-        mCastSession = null;
-    }
-
-    public void sendMessage(int charId, CharacterStats stats) {
-        if (mCastChannel == null || mCastSession == null) {
-            return;
-        }
-        try {
-            JSONObject msg = new JSONObject();
-            msg.put("name", "name");
-            msg.put("char", getResources().getStringArray(R.array.char_names)[charId]);
-            msg.put("speed", stats.getSpeed());
-            msg.put("might", stats.getMight());
-            msg.put("sanity", stats.getSanity());
-            msg.put("knowledge", stats.getKnowledge());
-
-            mCastSession.sendMessage(mCastChannel.getNamespace(), msg.toString())
-                    .setResultCallback(new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(Status result) {
-                            if (!result.isSuccess()) {
-                                Log.e(TAG, "Sending message failed");
-                            }
-                        }
-                    });
-        } catch (Exception e) {
-            Log.e(TAG, "Exception while sending message", e);
-        }
-    }
-
-    private class SessionManagerListenerImpl implements SessionManagerListener {
-        @Override
-        public void onSessionStarting(Session session) {
-
+//            View view = menuItem.getActionView();
+//
+//            ImageView img = view.findViewById(R.id.portrait);
+//            img.setImageResource(ImageResources.GetCharPortrait(id));
+//
+//            TextView text = view.findViewById(R.id.text);
+//            text.setText(title);
+//
+//            ImageView flip = view.findViewById(R.id.flip);
+//            flip.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
+//                    chars.flipCurrentCharacter();
+//                }
+//            });
         }
 
-        @Override
-        public void onSessionStarted(Session session, String sessionId) {
-            invalidateOptionsMenu();
+        menu.setGroupCheckable(R.id.nav_character_group, true, true);
+    }
 
-            try {
-                mCastSession = mSessionManager.getCurrentCastSession();
-                mCastSession.setMessageReceivedCallbacks(mCastChannel.getNamespace(), mCastChannel);
-                CharacterFragment ch = mSectionsPagerAdapter.getCurrentFragment();
-                sendMessage(ch.getCharID(), ch.getStats());
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e(TAG, "Exception while creating channel", e);
+    private void initAlwaysOnDisplayToggle() {
+        SettingsProvider settings = new SettingsProvider(this);
+        Switch alwaysOnToggle = menu.findItem(R.id.nav_always_on_display).getActionView().findViewById(R.id.toggle);
+
+        alwaysOnToggle.setChecked(settings.getAlwaysOnDisplay());
+        alwaysOnToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setAlwaysOnDisplay(true);
             }
+        });
+
+        setAlwaysOnDisplay(false);
+    }
+
+    private void setAlwaysOnDisplay(boolean save) {
+        boolean checked = ((Switch) menu.findItem(R.id.nav_always_on_display).getActionView().findViewById(R.id.toggle)).isChecked();
+        findViewById(R.id.drawer_layout).setKeepScreenOn(checked);
+
+        if (save) {
+            SettingsProvider settings = new SettingsProvider(this);
+            settings.setAlwaysOnDisplay(checked);
+            settings.apply();
         }
+    }
 
-        @Override
-        public void onSessionStartFailed(Session session, int i) {
+    private void setPlayerName() {
+        final SettingsProvider settings = new SettingsProvider(this);
+        final EditText name = new EditText(this);
+        name.setText(settings.getName());
 
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.title_set_player_name)
+                .setMessage(R.string.msg_enter_player_name)
+                .setView(name)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        settings.setName(name.getText().toString());
+                        settings.apply();
+
+                        if (currViewId == R.id.nav_characters) {
+                            CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
+                            CharacterFragment fr = chars.getSectionsPagerAdapter().getCurrentFragment();
+                            chars.sendMessage(fr.getCharID(), fr.getStats());
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+    public void setActionBarTitle(CharSequence text) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(text);
         }
+    }
 
-        @Override
-        public void onSessionEnding(Session session) {
-
-        }
-
-        @Override
-        public void onSessionResumed(Session session, boolean wasSuspended) {
-            invalidateOptionsMenu();
-            mCastSession = mSessionManager.getCurrentCastSession();
-            CharacterFragment ch = mSectionsPagerAdapter.getCurrentFragment();
-            if (ch != null)
-                sendMessage(ch.getCharID(), ch.getStats());
-        }
-
-        @Override
-        public void onSessionResumeFailed(Session session, int i) {
-
-        }
-
-        @Override
-        public void onSessionSuspended(Session session, int i) {
-
-        }
-
-        @Override
-        public void onSessionEnded(Session session, int error) {
-            mCastSession = null;
-        }
-
-        @Override
-        public void onSessionResuming(Session session, String s) {
-
-        }
+    public void setSelectedMenuItem(int pos) {
+        menu.getItem(pos).setChecked(true);
     }
 }

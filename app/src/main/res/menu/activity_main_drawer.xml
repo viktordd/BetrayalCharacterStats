@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/nav_character_group"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_characters"
+            android:icon="@drawable/ic_char"
+            android:orderInCategory="0"
+            android:title="@string/a_menu_characters" />
+    </group>
+
+    <group
+        android:id="@+id/nav_reorder_group"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_reorder"
+            android:icon="@drawable/re_order"
+            android:orderInCategory="100"
+            android:title="@string/a_menu_re_order" />
+    </group>
+
+    <group
+        android:id="@+id/nav_options_group"
+        android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_set_player_name"
+            android:orderInCategory="200"
+            android:title="@string/a_menu_set_player_name" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_always_on_display"
+            android:orderInCategory="200"
+            android:title=""
+            app:actionLayout="@layout/always_on_display_switch"/>
+
     </group>
 
 </menu>

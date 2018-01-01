@@ -1,50 +1,26 @@
 package com.viktordikov.betrayalcharacterstats.Data;
 
-import java.util.ArrayList;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.viktordikov.betrayalcharacterstats.R;
 
-public class CharacterOrderProvider {
+import java.util.ArrayList;
 
-	public static final String PREFS = "CharacterOrder";
-	public static final String ID_LIST = "CharacterOrder_ID_Array";
+public class CharacterOrderProvider extends BaseSettingsProvider {
+
+    private static final String PREFS = "CharacterOrder";
+	private static final String ID_LIST = "CharacterOrder_ID_Array";
+	private static final String SAVED_TAB_POSITION = "saved_tab_position";
 	public static final String CHANGED = "CharacterOrder_Changed";
 
-	private FragmentActivity fragmentActivity;
-	private SharedPreferences sharedPref;
-	private SharedPreferences.Editor editor;
-
 	public CharacterOrderProvider(FragmentActivity fa) {
-		fragmentActivity = fa;
+		super(fa, PREFS);
 	}
 
-	public SharedPreferences getPrefs() {
-		if (sharedPref == null)
-			sharedPref = fragmentActivity.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-		return sharedPref;
-	}
-
-	private SharedPreferences.Editor getEditor() {
-		if (editor == null)
-			editor = getPrefs().edit();
-		return editor;
-	}
-
-	public void apply() {
-		if (editor != null) {
-			editor.apply();
-			editor = null;
-		}
-	}
-
-	public ArrayList<Integer> getDefaults() {
+	private ArrayList<Integer> getDefaults() {
 		int numChars = fragmentActivity.getResources().getInteger(R.integer.numCharacters);
-		ArrayList<Integer> defaultIds = new ArrayList<Integer>(numChars);
+		ArrayList<Integer> defaultIds = new ArrayList<>(numChars);
 		for (int i = 0; i < numChars; i++) {
 			defaultIds.add(i * 2);
 		}
@@ -59,7 +35,7 @@ public class CharacterOrderProvider {
 
 		String[] idsSplit = TextUtils.split(idsStr, ",");
 
-		ArrayList<Integer> ids = new ArrayList<Integer>();
+		ArrayList<Integer> ids = new ArrayList<>();
 		for (int i = 0; i < idsSplit.length; i++) {
 			if (idsSplit[i].length() > 0) {
 				try {
@@ -78,5 +54,13 @@ public class CharacterOrderProvider {
 
 	public void setChanged() {
 		getEditor().putLong(CHANGED, System.currentTimeMillis());
+	}
+
+	public int getTabPosition() {
+		return getPrefs().getInt(SAVED_TAB_POSITION, 0);
+	}
+
+	public void setTabPosition(int pos) {
+		getEditor().putInt(SAVED_TAB_POSITION, pos);
 	}
 }

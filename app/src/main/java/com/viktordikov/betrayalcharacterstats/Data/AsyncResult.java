@@ -2,7 +2,7 @@ package com.viktordikov.betrayalcharacterstats.Data;
 
 import android.graphics.Bitmap;
 
-import com.viktordikov.betrayalcharacterstats.PinDetails;
+import com.viktordikov.betrayalcharacterstats.Helpers.PinDetails;
 
 public class AsyncResult {
     public final android.graphics.Bitmap Bitmap;

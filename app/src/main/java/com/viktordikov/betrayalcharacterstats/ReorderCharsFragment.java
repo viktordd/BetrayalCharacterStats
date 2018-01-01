@@ -6,21 +6,23 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.viktordikov.betrayalcharacterstats.Data.CharacterOrderProvider;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
+import com.viktordikov.betrayalcharacterstats.Helpers.ActionDragSortController;
 
 public class ReorderCharsFragment extends ListFragment {
 
 	private ArrayList<Integer> IdList;
 	private ArrayAdapter<String> adapter;
-
-	private boolean changed = false;
 
 	private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
 		@Override
@@ -34,7 +36,7 @@ public class ReorderCharsFragment extends ListFragment {
 				adapter.remove(item);
 				adapter.insert(item, to);
 
-				changed = true;
+				save();
 			}
 		}
 	};
@@ -42,10 +44,16 @@ public class ReorderCharsFragment extends ListFragment {
 	private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
 		@Override
 		public void remove(int which) {
-			IdList.remove(which);
-			adapter.remove(adapter.getItem(which));
+			if (IdList.size() > 1) {
+				IdList.remove(which);
+				adapter.remove(adapter.getItem(which));
 
-			changed = true;
+				save();
+			}
+			else {
+                Toast.makeText(getActivity(), getResources().getText(R.string.msg_min_one_item), Toast.LENGTH_SHORT).show();
+				adapter.notifyDataSetChanged();
+			}
 		}
 	};
 
@@ -62,7 +70,7 @@ public class ReorderCharsFragment extends ListFragment {
 			IdList.add(which, id);
 			adapter.insert(getResources().getStringArray(R.array.titles)[id], which);
 
-			changed = true;
+			save();
 		}
 	};
 
@@ -115,12 +123,12 @@ public class ReorderCharsFragment extends ListFragment {
 		String[] allTitles = getResources().getStringArray(R.array.titles);
 
 		Integer numChars = IdList.size();
-		ArrayList<String> titles = new ArrayList<String>(numChars);
+		ArrayList<String> titles = new ArrayList<>(numChars);
 		for (Integer id : IdList) {
 			titles.add(allTitles[id]);
 		}
 
-		adapter = new ArrayAdapter<String>(getActivity(), getItemLayout(), R.id.text, titles);
+		adapter = new ArrayAdapter<>(getActivity(), getItemLayout(), R.id.text, titles);
 		setListAdapter(adapter);
 	}
 
@@ -177,6 +185,12 @@ public class ReorderCharsFragment extends ListFragment {
 	}
 
 	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.activity_character_reorder, menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_reset_order) {
 			Resources r = getResources();
@@ -189,8 +203,9 @@ public class ReorderCharsFragment extends ListFragment {
 				IdList.add(i * 2);
 				adapter.add(titles[i * 2]);
 			}
-			changed = true;
 			adapter.notifyDataSetChanged();
+
+			save();
 
 			return true;
 		} else {
@@ -198,15 +213,10 @@ public class ReorderCharsFragment extends ListFragment {
 		}
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-
-		if (!changed)
-			return;
-		
+	public void save() {
 		CharacterOrderProvider order = new CharacterOrderProvider(getActivity());
 		order.setIDs(IdList);
+		order.setTabPosition(0);
 		order.setChanged();
 		order.apply();
 	}

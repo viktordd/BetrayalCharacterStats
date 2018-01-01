@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BetrayalCharacterStats</string>
+    <string name="app_name_long">Betrayal Character Stats</string>
     <string name="app_cast_id">F8634BB7</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -9,6 +10,11 @@
     <string name="action_settings">Settings</string>
     
     <string name="reorder_name">Re-Order Characters</string>
+
+    <string name="a_menu_characters">Characters</string>
+    <string name="a_menu_re_order">Re-Order Characters</string>
+    <string name="a_menu_set_player_name">Set Player Name</string>
+    <string name="a_menu_always_on_display">Always-On Display</string>
 
     <string name="menu_reset">Reset Current Character</string>
     <string name="menu_reset_short">Reset</string>
@@ -19,6 +25,11 @@
     <string name="menu_reset_order">Reset</string>
     <string name="menu_reset_order_short">Reset</string>
     <string name="media_route_menu_title">Cast</string>
+
+    <string name="msg_min_one_item">Minimum one character required.</string>
+
+    <string name="title_set_player_name">Set Player Name</string>
+    <string name="msg_enter_player_name">Enter player name to display when casting.</string>
 
     <string name="dscr_character">Character</string>
     <string name="dscr_character_info">CharacterInfo</string>
@@ -43,6 +54,11 @@
     <string name="might">Might:</string>
     <string name="sanity">Sanity:</string>
     <string name="knowledge">Knowledge:</string>
+    <string name="ended_turn_in">Ended turn in:</string>
+    <string name="gymnasium">Gymnasium Room (+1 Speed)</string>
+    <string name="larder">Larder Room (+1 Might)</string>
+    <string name="chapel">Chapel Room (+1 Sanity)</string>
+    <string name="library">Library Room (+1 Knowledge)</string>
 
     <string name="height_blue_madame_zostra">5\'0\"</string>
     <string name="height_blue_vivian_lopez">5\'5\"</string>

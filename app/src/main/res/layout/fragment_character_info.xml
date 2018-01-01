@@ -2,17 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="stats"
-            type="com.viktordikov.betrayalcharacterstats.Data.CharacterStats"/>
+            type="com.viktordikov.betrayalcharacterstats.Data.CharacterStats" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/dscr_character_info"
-        android:gravity="top|left"
-        android:orientation="vertical" >
+        android:gravity="top|start"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvAgeLbl"
@@ -20,10 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvAge"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/char_info_horizontal_margin"
+            android:layout_alignParentStart="true"
+            android:text="@string/age"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/age" />
+            android:textColor="@color/lightGray" />
 
         <TextView
             android:id="@id/tvAge"
@@ -31,10 +32,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvAgeLbl"
             android:layout_toRightOf="@id/tvAgeLbl"
+            android:text="@{stats.ageString}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:text="@{stats.ageString}" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tvHeightLbl"
@@ -42,10 +45,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvHeight"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/tvAge"
             android:layout_toRightOf="@id/tvAge"
+            android:text="@string/height"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/height" />
+            android:textColor="@color/lightGray" />
 
         <TextView
             android:id="@id/tvHeight"
@@ -53,10 +58,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvHeightLbl"
             android:layout_toRightOf="@id/tvHeightLbl"
+            android:text="@{stats.height}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:text="@{stats.height}" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tvWeightLbl"
@@ -64,10 +71,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvWeight"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/tvHeight"
             android:layout_toRightOf="@id/tvHeight"
+            android:text="@string/weight"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/weight" />
+            android:textColor="@color/lightGray" />
 
         <TextView
             android:id="@id/tvWeight"
@@ -75,10 +84,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvWeightLbl"
             android:layout_toRightOf="@id/tvWeightLbl"
+            android:text="@{stats.weightString}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:text="@{stats.weightString}" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tvLbs"
@@ -86,10 +97,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/tvWeight"
             android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@id/tvWeight"
             android:layout_toRightOf="@id/tvWeight"
+            android:text="@string/lbs"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/lbs" />
+            android:textColor="@color/lightGray" />
 
         <TextView
             android:id="@+id/tvHobbiesLbl"
@@ -97,10 +110,10 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvHobbies"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/char_info_horizontal_margin"
+            android:layout_alignParentStart="true"
+            android:text="@string/hobbies"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/hobbies" />
+            android:textColor="@color/lightGray" />
 
         <TextView
             android:id="@id/tvHobbies"
@@ -108,10 +121,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvAge"
             android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvHobbiesLbl"
             android:layout_toRightOf="@id/tvHobbiesLbl"
+            android:text="@{stats.hobbies}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:text="@{stats.hobbies}" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tvBirthdayLbl"
@@ -119,10 +134,10 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvBirthday"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/char_info_horizontal_margin"
+            android:layout_alignParentStart="true"
+            android:text="@string/birthday"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/birthday" />
+            android:textColor="@color/lightGray" />
 
         <TextView
             android:id="@id/tvBirthday"
@@ -130,97 +145,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvHobbies"
             android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvBirthdayLbl"
             android:layout_toRightOf="@id/tvBirthdayLbl"
+            android:text="@{stats.birthday}"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:text="@{stats.birthday}" />
-
-        <TextView
-            android:id="@+id/tvMightLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvMight"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/char_info_horizontal_margin"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/might" />
-
-        <TextView
-            android:id="@id/tvMight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvBirthday"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tvMightLbl"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@{stats.might == stats.mightDefault ? @color/green : @color/white}"
-            android:text="@{stats.mightString}" />
-
-        <TextView
-            android:id="@+id/tvSanityLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvSanity"
-            android:layout_alignRight="@+id/tvKnowledgeLbl"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/sanity" />
-
-        <TextView
-            android:id="@id/tvSanity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvBirthday"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tvSanityLbl"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@{stats.sanity == stats.sanityDefault ? @color/green : @color/white}"
-            android:text="@{stats.sanityString}" />
-
-        <TextView
-            android:id="@+id/tvSpeedLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvSpeed"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/char_info_horizontal_margin"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/speed" />
-
-        <TextView
-            android:id="@id/tvSpeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvMight"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tvSpeedLbl"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@{stats.speed == stats.speedDefault ? @color/green : @color/white}"
-            android:text="@{stats.speedString}" />
-
-        <TextView
-            android:id="@id/tvKnowledgeLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvKnowledge"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@id/tvSpeed"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/lightGray"
-            android:text="@string/knowledge" />
-
-        <TextView
-            android:id="@id/tvKnowledge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvSanity"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tvKnowledgeLbl"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@{stats.knowledge == stats.knowledgeDefault ? @color/green : @color/white}"
-            android:text="@{stats.knowledgeString}" />
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 </layout>

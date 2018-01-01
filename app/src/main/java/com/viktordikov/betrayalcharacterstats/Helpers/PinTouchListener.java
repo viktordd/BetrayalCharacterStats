@@ -1,4 +1,4 @@
-package com.viktordikov.betrayalcharacterstats;
+package com.viktordikov.betrayalcharacterstats.Helpers;
 
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.RelativeLayout.LayoutParams;
 
-abstract class PinTouchListener implements OnTouchListener {
+public abstract class PinTouchListener implements OnTouchListener {
 	private int CurrPos;
 	private Point[] PinPos;
 	private ViewPager ViewPager;

@@ -18,11 +18,8 @@
             android:id="@+id/rlCharacterContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="48dp"
-            android:layout_marginEnd="@dimen/char_info_horizontal_margin"
-            android:layout_marginLeft="@dimen/char_info_horizontal_margin"
-            android:layout_marginRight="@dimen/char_info_horizontal_margin"
-            android:layout_marginStart="@dimen/char_info_horizontal_margin"
+            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="@dimen/char_info_horizontal_margin"
             android:contentDescription="@string/dscr_character"
             android:gravity="top|start">
 
@@ -30,7 +27,6 @@
                 android:id="@+id/ivCharacter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:contentDescription="@string/dscr_character"
@@ -50,7 +46,7 @@
             android:background="@color/black"
             android:clipToPadding="true"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="48dp"
+            app:behavior_peekHeight="24dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
             <LinearLayout
@@ -63,10 +59,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/darkGray"
                     android:orientation="vertical"
-                    android:paddingEnd="@dimen/char_info_horizontal_margin"
-                    android:paddingLeft="@dimen/char_info_horizontal_margin"
-                    android:paddingRight="@dimen/char_info_horizontal_margin"
-                    android:paddingStart="@dimen/char_info_horizontal_margin">
+                    android:paddingHorizontal="@dimen/char_info_horizontal_margin">
 
                     <include
                         layout="@layout/fragment_character_stats"
@@ -78,10 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingEnd="@dimen/char_info_horizontal_margin"
-                    android:paddingLeft="@dimen/char_info_horizontal_margin"
-                    android:paddingRight="@dimen/char_info_horizontal_margin"
-                    android:paddingStart="@dimen/char_info_horizontal_margin">
+                    android:paddingHorizontal="@dimen/char_info_horizontal_margin">
 
                     <include
                         layout="@layout/fragment_character_rooms"

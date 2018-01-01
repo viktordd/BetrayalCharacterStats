@@ -1,9 +1,11 @@
-package com.viktordikov.betrayalcharacterstats;
+package com.viktordikov.betrayalcharacterstats.Helpers;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+
+import com.viktordikov.betrayalcharacterstats.R;
 
 public class PinDetails {
 	public static int SPEED_PINS = 0;
@@ -96,10 +98,10 @@ public class PinDetails {
 		int xOffset, yOffset;
 		if (orientation == Configuration.ORIENTATION_PORTRAIT){
 			xOffset = 0;
-			yOffset = height - charImg.getHeight();
+			yOffset = (height - charImg.getHeight()) / 2;
 		} 
 		else { // Configuration.ORIENTATION_LANDSCAPE
-			xOffset = width - charImg.getWidth();
+			xOffset = (width - charImg.getWidth()) / 2;
 			yOffset = 0;
 		}
 		

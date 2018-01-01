@@ -1,4 +1,4 @@
-package com.viktordikov.betrayalcharacterstats;
+package com.viktordikov.betrayalcharacterstats.Helpers;
 
 import android.util.Log;
 

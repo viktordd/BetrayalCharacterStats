@@ -1,4 +1,4 @@
-package com.viktordikov.betrayalcharacterstats;
+package com.viktordikov.betrayalcharacterstats.Helpers;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
+import com.viktordikov.betrayalcharacterstats.CharacterFragment;
 import com.viktordikov.betrayalcharacterstats.Data.CharacterOrderProvider;
+import com.viktordikov.betrayalcharacterstats.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
