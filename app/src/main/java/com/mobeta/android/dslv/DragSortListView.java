@@ -43,7 +43,7 @@ import android.widget.Checkable;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.viktordikov.betrayalcharacterstats.R;
+import com.ViktorDikov.BetrayalCharacterStats.R;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -6,7 +6,7 @@
 
         <variable
             name="characterStats"
-            type="com.viktordikov.betrayalcharacterstats.Data.CharacterStats" />
+            type="com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -39,7 +39,7 @@
 
             <include
                 android:id="@+id/pins"
-                layout="@layout/fragment_character_pins" />
+                layout="@layout/character_pins" />
 
         </RelativeLayout>
 
@@ -69,7 +69,7 @@
                     android:paddingStart="@dimen/char_info_horizontal_margin">
 
                     <include
-                        layout="@layout/fragment_character_stats"
+                        layout="@layout/character_stats"
                         app:stats="@{characterStats}" />
 
                 </LinearLayout>
@@ -84,11 +84,11 @@
                     android:paddingStart="@dimen/char_info_horizontal_margin">
 
                     <include
-                        layout="@layout/fragment_character_rooms"
+                        layout="@layout/character_rooms"
                         app:stats="@{characterStats}" />
 
                     <include
-                        layout="@layout/fragment_character_info"
+                        layout="@layout/character_info"
                         app:stats="@{characterStats}" />
 
                 </LinearLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="stats"
+            type="com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/dscr_character_info"
+        android:gravity="top|start"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvMightLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvMight"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray"
+            android:text="@string/might" />
+
+        <TextView
+            android:id="@id/tvMight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toRightOf="@id/tvMightLbl"
+            android:layout_toEndOf="@id/tvMightLbl"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@{stats.might == stats.mightDefault ? @color/green : @color/white}"
+            android:text="@{stats.mightString}" />
+
+        <TextView
+            android:id="@+id/tvSanityLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvSanity"
+            android:layout_toLeftOf="@id/tvSanity"
+            android:layout_toStartOf="@id/tvSanity"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray"
+            android:text="@string/sanity" />
+
+        <TextView
+            android:id="@id/tvSanity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvBirthday"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@{stats.sanity == stats.sanityDefault ? @color/green : @color/white}"
+            android:text="@{stats.sanityString}" />
+
+        <TextView
+            android:id="@+id/tvSpeedLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvSpeed"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray"
+            android:text="@string/speed" />
+
+        <TextView
+            android:id="@id/tvSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvMight"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toRightOf="@id/tvSpeedLbl"
+            android:layout_toEndOf="@id/tvSpeedLbl"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@{stats.speed == stats.speedDefault ? @color/green : @color/white}"
+            android:text="@{stats.speedString}" />
+
+        <TextView
+            android:id="@+id/tvKnowledgeLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvKnowledge"
+            android:layout_toLeftOf="@id/tvKnowledge"
+            android:layout_toStartOf="@id/tvKnowledge"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray"
+            android:text="@string/knowledge" />
+
+        <TextView
+            android:id="@id/tvKnowledge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSanity"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@{stats.knowledge == stats.knowledgeDefault ? @color/green : @color/white}"
+            android:text="@{stats.knowledgeString}" />
+
+    </RelativeLayout>
+</layout>

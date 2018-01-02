@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="stats"
+            type="com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/char_info_horizontal_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ended_turn_in"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray" />
+
+        <Switch
+            android:id="@+id/gymnasium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="@={stats.gymnasium}"
+            android:paddingEnd="@dimen/char_info_horizontal_margin"
+            android:paddingLeft="@dimen/char_info_horizontal_margin"
+            android:paddingRight="@dimen/char_info_horizontal_margin"
+            android:paddingStart="@dimen/char_info_horizontal_margin"
+            android:text="@string/gymnasium"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/lightGray"
+            android:trackTint="@color/lightGray" />
+
+        <Switch
+            android:id="@+id/larder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="@={stats.larder}"
+            android:paddingEnd="@dimen/char_info_horizontal_margin"
+            android:paddingLeft="@dimen/char_info_horizontal_margin"
+            android:paddingRight="@dimen/char_info_horizontal_margin"
+            android:paddingStart="@dimen/char_info_horizontal_margin"
+            android:text="@string/larder"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/lightGray"
+            android:trackTint="@color/lightGray" />
+
+        <Switch
+            android:id="@+id/chapel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="@={stats.chapel}"
+            android:paddingEnd="@dimen/char_info_horizontal_margin"
+            android:paddingLeft="@dimen/char_info_horizontal_margin"
+            android:paddingRight="@dimen/char_info_horizontal_margin"
+            android:paddingStart="@dimen/char_info_horizontal_margin"
+            android:text="@string/chapel"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/lightGray"
+            android:trackTint="@color/lightGray" />
+
+        <Switch
+            android:id="@+id/library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="@={stats.library}"
+            android:paddingEnd="@dimen/char_info_horizontal_margin"
+            android:paddingLeft="@dimen/char_info_horizontal_margin"
+            android:paddingRight="@dimen/char_info_horizontal_margin"
+            android:paddingStart="@dimen/char_info_horizontal_margin"
+            android:text="@string/library"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/lightGray"
+            android:trackTint="@color/lightGray" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="stats"
+            type="com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/dscr_character_info"
+        android:gravity="top|start"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvAgeLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvAge"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/age"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray" />
+
+        <TextView
+            android:id="@id/tvAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvAgeLbl"
+            android:layout_toRightOf="@id/tvAgeLbl"
+            android:text="@{stats.ageString}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvHeightLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/tvAge"
+            android:layout_toRightOf="@id/tvAge"
+            android:text="@string/height"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray" />
+
+        <TextView
+            android:id="@id/tvHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvHeightLbl"
+            android:layout_toRightOf="@id/tvHeightLbl"
+            android:text="@{stats.height}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvWeightLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvWeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/tvHeight"
+            android:layout_toRightOf="@id/tvHeight"
+            android:text="@string/weight"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray" />
+
+        <TextView
+            android:id="@id/tvWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvWeightLbl"
+            android:layout_toRightOf="@id/tvWeightLbl"
+            android:text="@{stats.weightString}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvLbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tvWeight"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@id/tvWeight"
+            android:layout_toRightOf="@id/tvWeight"
+            android:text="@string/lbs"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray" />
+
+        <TextView
+            android:id="@+id/tvHobbiesLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvHobbies"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/hobbies"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray" />
+
+        <TextView
+            android:id="@id/tvHobbies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAge"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvHobbiesLbl"
+            android:layout_toRightOf="@id/tvHobbiesLbl"
+            android:text="@{stats.hobbies}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvBirthdayLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvBirthday"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/birthday"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/lightGray" />
+
+        <TextView
+            android:id="@id/tvBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvHobbies"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/tvBirthdayLbl"
+            android:layout_toRightOf="@id/tvBirthdayLbl"
+            android:text="@{stats.birthday}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+</layout>
