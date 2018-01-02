@@ -31,6 +31,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private View header;
     private Menu menu;
     private int currViewId;
 
@@ -49,14 +50,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        header = navigationView.getHeaderView(0);
         menu = navigationView.getMenu();
 
         CharacterOrderProvider order = new CharacterOrderProvider(this);
         order.getPrefs().registerOnSharedPreferenceChangeListener(this);
         displayView(R.id.nav_characters, order.getTabPosition(), null);
 
-        addMenuItems();
         initAlwaysOnDisplayToggle();
+        setPlayerNameOnMenu();
     }
 
 
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity
 
     public void displayView(int viewId, int pos, MenuItem item) {
         Fragment fragment = null;
+        boolean redrawMenu = false;
 
         switch (viewId) {
             case R.id.nav_characters:
@@ -111,11 +114,13 @@ public class MainActivity extends AppCompatActivity
                     CharacterOrderProvider order = new CharacterOrderProvider(this);
                     order.setTabPosition(pos);
                     order.apply();
+                    redrawMenu = true;
                 }
                 break;
             case R.id.nav_reorder:
                 fragment = new ReorderCharsFragment();
                 setActionBarTitle(getResources().getText(R.string.a_menu_re_order));
+                redrawMenu = true;
                 break;
             case R.id.nav_set_player_name:
                 setPlayerName();
@@ -127,6 +132,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         currViewId = viewId;
+
+        if (redrawMenu)
+            addMenuItems();
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -150,27 +158,32 @@ public class MainActivity extends AppCompatActivity
         for (int i = 0; i < iDs.size(); i++) {
             Integer id = iDs.get(i);
             String title = r.getStringArray(R.array.titles)[id];
-            MenuItem menuItem = menu.add(R.id.nav_character_group, R.id.nav_characters, i, title)
-                    .setIcon(R.drawable.ic_char)
-//                    .setActionView(R.layout.menu_character)
+
+            MenuItem menuItem = menu.add(R.id.nav_character_group, R.id.nav_characters, i, "")
+                    .setActionView(R.layout.menu_character)
                     .setChecked(currViewId == R.id.nav_characters && i == selected);
 
-//            View view = menuItem.getActionView();
-//
-//            ImageView img = view.findViewById(R.id.portrait);
-//            img.setImageResource(ImageResources.GetCharPortrait(id));
-//
-//            TextView text = view.findViewById(R.id.text);
-//            text.setText(title);
-//
-//            ImageView flip = view.findViewById(R.id.flip);
-//            flip.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
-//                    chars.flipCurrentCharacter();
-//                }
-//            });
+            View view = menuItem.getActionView();
+
+            ImageView img = view.findViewById(R.id.portrait);
+            img.setImageResource(ImageResources.GetCharPortrait(id));
+
+            TextView text = view.findViewById(R.id.text);
+            text.setText(title);
+
+            ImageView flip = view.findViewById(R.id.flip);
+            if (currViewId != R.id.nav_characters) {
+                flip.setVisibility(View.INVISIBLE);
+            } else {
+                final int pos = i;
+                flip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
+                        chars.flipCharacter(pos);
+                    }
+                });
+            }
         }
 
         menu.setGroupCheckable(R.id.nav_character_group, true, true);
@@ -216,6 +229,7 @@ public class MainActivity extends AppCompatActivity
                         settings.setName(name.getText().toString());
                         settings.apply();
 
+                        setPlayerNameOnMenu();
                         if (currViewId == R.id.nav_characters) {
                             CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
                             CharacterFragment fr = chars.getSectionsPagerAdapter().getCurrentFragment();
@@ -229,6 +243,13 @@ public class MainActivity extends AppCompatActivity
                     }
                 })
                 .show();
+    }
+
+    private void setPlayerNameOnMenu(){
+        TextView name = header.findViewById(R.id.player_name);
+        SettingsProvider settings = new SettingsProvider(this);
+
+        name.setText(settings.getName());
     }
 
     public void setActionBarTitle(CharSequence text) {

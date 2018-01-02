@@ -21,7 +21,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.viktordikov.betrayalcharacterstats.Data.CharacterOrderProvider;
 import com.viktordikov.betrayalcharacterstats.Data.CharacterStats;
-import com.viktordikov.betrayalcharacterstats.Data.CharacterStatsProvider;
 import com.viktordikov.betrayalcharacterstats.Data.SettingsProvider;
 import com.viktordikov.betrayalcharacterstats.Helpers.CastChannel;
 import com.viktordikov.betrayalcharacterstats.Helpers.CharacterPagerAdapter;
@@ -97,7 +96,7 @@ public class CharactersViewPagerFragment extends Fragment {
             return true;
         }
         if (menuId == R.id.menu_flip) {
-            flipCurrentCharacter();
+            flipCharacter(mViewPager.getCurrentItem());
 
             return true;
         }
@@ -105,27 +104,29 @@ public class CharactersViewPagerFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void flipCurrentCharacter() {
-        int charId = mSectionsPagerAdapter.getCurrentFragment().getCharID();
-        int pos = mViewPager.getCurrentItem();
-
-        int newId = charId + (charId % 2 == 0 ? 1 : -1);
+    public void flipCharacter(int pos){
+        int currPos = mViewPager.getCurrentItem();
 
         CharacterOrderProvider order = new CharacterOrderProvider(getActivity());
         ArrayList<Integer> ids = order.getIDs();
+
+        int charId = ids.get(pos);
+        int newId = charId + (charId % 2 == 0 ? 1 : -1);
         ids.set(pos, newId);
+
         order.setIDs(ids);
         order.apply();
 
         mSectionsPagerAdapter.notifyCurrChanged(ids);
 
-        setCharTitleById(newId);
-
         // Fragment will call sendMessage when it initializes.
 
         MainActivity activity = (MainActivity) getActivity();
         activity.addMenuItems();
-        activity.setSelectedMenuItem(pos);
+        if (pos == currPos) {
+            activity.setSelectedMenuItem(pos);
+            setCharTitleById(newId);
+        }
     }
 
     public void setCharTitleByPos(int pos){
