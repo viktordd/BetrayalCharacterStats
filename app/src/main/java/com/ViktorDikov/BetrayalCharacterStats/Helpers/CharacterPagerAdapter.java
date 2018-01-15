@@ -35,6 +35,15 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
         }
         return fragments.get(position).get();
     }
+    public ArrayList<CharacterFragment> getAllFragments() {
+        ArrayList<CharacterFragment> all = new ArrayList<>();
+        for (int i = 0; i < fragments.size(); i++) {
+            CharacterFragment f = fragments.get(i).get();
+            if (f != null)
+                all.add(f);
+        }
+        return all;
+    }
 
     public void setPrimaryItem(ViewGroup paramViewGroup, int paramInt, Object paramObject) {
         this.currentFragment = ((Fragment) paramObject);

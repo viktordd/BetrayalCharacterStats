@@ -34,6 +34,7 @@ public class CharactersViewPagerFragment extends Fragment {
 
     private static final String TAG = "CharactersFragment";
 
+    private boolean SaveOnPause = true;
     private CharacterPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private CastChannel mCastChannel;
@@ -157,12 +158,22 @@ public class CharactersViewPagerFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-        CharacterOrderProvider order = new CharacterOrderProvider(getActivity());
-        order.setTabPosition(mViewPager.getCurrentItem());
-        order.apply();
+        if (SaveOnPause) {
+            CharacterOrderProvider order = new CharacterOrderProvider(getActivity());
+            order.setTabPosition(mViewPager.getCurrentItem());
+            order.apply();
+        }
 
         mSessionManager.removeSessionManagerListener(mSessionManagerListener);
         mCastSession = null;
+    }
+
+    public void ResetAll() {
+        SaveOnPause = false;
+        ArrayList<CharacterFragment> fragments = mSectionsPagerAdapter.getAllFragments();
+        for (int i = 0; i < fragments.size(); i++) {
+            fragments.get(i).ResetAll();
+        }
     }
 
     public void sendMessage(int charId, CharacterStats stats) {

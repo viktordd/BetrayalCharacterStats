@@ -23,6 +23,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterOrderProvider;
+import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStatsProvider;
 import com.ViktorDikov.BetrayalCharacterStats.Data.ImageResources;
 import com.ViktorDikov.BetrayalCharacterStats.Data.SettingsProvider;
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity
 
         CharacterOrderProvider order = new CharacterOrderProvider(this);
         order.getPrefs().registerOnSharedPreferenceChangeListener(this);
-        displayView(R.id.nav_characters, order.getTabPosition(), null);
+        displayView(R.id.nav_characters, null);
 
         initAlwaysOnDisplayToggle();
         setPlayerNameOnMenu();
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity
             if (currViewId != R.id.nav_characters) {
                 CharacterOrderProvider order = new CharacterOrderProvider(this);
                 int tabPosition = order.getTabPosition();
-                displayView(R.id.nav_characters, tabPosition, null);
+                displayView(R.id.nav_characters, null);
                 setSelectedMenuItem(tabPosition);
                 return;
             }
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        displayView(item.getItemId(), item.getOrder(), item);
+        displayView(item.getItemId(), item);
         return true;
     }
 
@@ -100,20 +101,25 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void displayView(int viewId, int pos, MenuItem item) {
+    public void displayView(int viewId, MenuItem item) {
         Fragment fragment = null;
         boolean redrawMenu = false;
 
         switch (viewId) {
             case R.id.nav_characters:
-                if (currViewId == viewId) {
+                if (currViewId == R.id.nav_characters) {
+                    if (item == null) return;
+                    int pos = item.getOrder();
                     CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
                     chars.setCurrentItem(pos);
                 } else {
                     fragment = new CharactersViewPagerFragment();
-                    CharacterOrderProvider order = new CharacterOrderProvider(this);
-                    order.setTabPosition(pos);
-                    order.apply();
+                    if (item != null) {
+                        int pos = item.getOrder();
+                        CharacterOrderProvider order = new CharacterOrderProvider(this);
+                        order.setTabPosition(pos);
+                        order.apply();
+                    }
                     redrawMenu = true;
                 }
                 break;
@@ -124,6 +130,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_set_player_name:
                 setPlayerName();
+                return;
+            case R.id.nav_reset_all_character_stats:
+                resetAllStats();
                 return;
             case R.id.nav_always_on_display:
                 return;
@@ -235,6 +244,35 @@ public class MainActivity extends AppCompatActivity
                             CharacterFragment fr = chars.getSectionsPagerAdapter().getCurrentFragment();
                             chars.sendMessage(fr.getCharID(), fr.getStats());
                         }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+    private void resetAllStats() {
+        final CharacterOrderProvider order = new CharacterOrderProvider(this);
+        final CharacterStatsProvider stats = new CharacterStatsProvider(this, 0);
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.title_reset_all_character_stats)
+                .setMessage(R.string.msg_reset_all_character_stats)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        if (currViewId == R.id.nav_characters) {
+                            CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
+                            chars.ResetAll();
+                        }
+
+                        order.clearAll();
+                        stats.clearAll();
+
+                        currViewId = -1;
+                        displayView(R.id.nav_characters, null);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -35,6 +35,11 @@
             android:orderInCategory="200"
             android:title=""
             app:actionLayout="@layout/menu_always_on_display_switch" />
+        <item
+            android:id="@+id/nav_reset_all_character_stats"
+            android:orderInCategory="200"
+            android:title=""
+            app:actionLayout="@layout/menu_reset_all_character_stats" />
 
     </group>
 

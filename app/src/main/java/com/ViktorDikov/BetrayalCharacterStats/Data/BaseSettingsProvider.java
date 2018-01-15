@@ -28,6 +28,10 @@ public abstract class BaseSettingsProvider {
 		return editor;
 	}
 
+	public void clearAll(){
+		getEditor().clear().apply();
+	}
+
 	public void apply() {
 		if (editor != null) {
 			editor.apply();

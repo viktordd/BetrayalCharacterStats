@@ -31,6 +31,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 
     public static final String ARG_ID = "position";
 
+    private boolean SaveOnPause = true;
     private View rootView;
     private int mId;
     private CharacterStats m_stats;
@@ -90,9 +91,11 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
     public void onPause() {
         super.onPause();
 
-        CharacterStatsProvider statsProvider = new CharacterStatsProvider(getActivity(), mId);
-        statsProvider.setStats(m_stats);
-        statsProvider.apply();
+        if (SaveOnPause) {
+            CharacterStatsProvider statsProvider = new CharacterStatsProvider(getActivity(), mId);
+            statsProvider.setStats(m_stats);
+            statsProvider.apply();
+        }
     }
 
     @Override
@@ -101,6 +104,10 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 
         if (Width < 0)
             removeOnGlobalLayoutListener();
+    }
+
+    public void ResetAll() {
+        SaveOnPause = false;
     }
 
     public void ResetChar() {
