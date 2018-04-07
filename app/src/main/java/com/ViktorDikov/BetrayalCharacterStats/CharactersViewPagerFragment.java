@@ -10,7 +10,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterOrderProvider;
+import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats;
+import com.ViktorDikov.BetrayalCharacterStats.Data.SettingsProvider;
+import com.ViktorDikov.BetrayalCharacterStats.Helpers.CastChannel;
+import com.ViktorDikov.BetrayalCharacterStats.Helpers.CharacterPagerAdapter;
 import com.google.android.gms.cast.framework.CastButtonFactory;
 import com.google.android.gms.cast.framework.CastContext;
 import com.google.android.gms.cast.framework.CastSession;
@@ -19,11 +25,6 @@ import com.google.android.gms.cast.framework.SessionManager;
 import com.google.android.gms.cast.framework.SessionManagerListener;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterOrderProvider;
-import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats;
-import com.ViktorDikov.BetrayalCharacterStats.Data.SettingsProvider;
-import com.ViktorDikov.BetrayalCharacterStats.Helpers.CastChannel;
-import com.ViktorDikov.BetrayalCharacterStats.Helpers.CharacterPagerAdapter;
 
 import org.json.JSONObject;
 
@@ -208,18 +209,20 @@ public class CharactersViewPagerFragment extends Fragment {
     private class SessionManagerListenerImpl implements SessionManagerListener {
         @Override
         public void onSessionStarting(Session session) {
-
+            Log.d(TAG, "Session starting");
         }
 
         @Override
         public void onSessionStarted(Session session, String sessionId) {
+            Log.d(TAG, "Session started");
             getActivity().invalidateOptionsMenu();
 
             try {
                 mCastSession = mSessionManager.getCurrentCastSession();
                 mCastSession.setMessageReceivedCallbacks(mCastChannel.getNamespace(), mCastChannel);
                 CharacterFragment ch = mSectionsPagerAdapter.getCurrentFragment();
-                sendMessage(ch.getCharID(), ch.getStats());
+                if (ch != null)
+                    sendMessage(ch.getCharID(), ch.getStats());
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e(TAG, "Exception while creating channel", e);
@@ -227,17 +230,19 @@ public class CharactersViewPagerFragment extends Fragment {
         }
 
         @Override
-        public void onSessionStartFailed(Session session, int i) {
-
+        public void onSessionStartFailed(Session session, int error) {
+            Log.e(TAG, "Session start failed: " + error);
+            Toast.makeText(getActivity(), getResources().getText(R.string.msg_cast_failed), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onSessionEnding(Session session) {
-
+            Log.d(TAG, "Session ending");
         }
 
         @Override
         public void onSessionResumed(Session session, boolean wasSuspended) {
+            Log.d(TAG, "Session resumed");
             getActivity().invalidateOptionsMenu();
             mCastSession = mSessionManager.getCurrentCastSession();
             CharacterFragment ch = mSectionsPagerAdapter.getCurrentFragment();
@@ -246,23 +251,23 @@ public class CharactersViewPagerFragment extends Fragment {
         }
 
         @Override
-        public void onSessionResumeFailed(Session session, int i) {
-
-        }
+        public void onSessionResumeFailed(Session session, int error) {
+            Log.e(TAG, "Session resume failed: " + error);        }
 
         @Override
         public void onSessionSuspended(Session session, int i) {
-
+            Log.d(TAG, "Session suspended");
         }
 
         @Override
         public void onSessionEnded(Session session, int error) {
+            Log.d(TAG, "Session ended");
             mCastSession = null;
         }
 
         @Override
         public void onSessionResuming(Session session, String s) {
-
+            Log.d(TAG, "Session resuming");
         }
     }
 }

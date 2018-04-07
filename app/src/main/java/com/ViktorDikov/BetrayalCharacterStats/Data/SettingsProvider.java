@@ -6,6 +6,7 @@ public class SettingsProvider extends BaseSettingsProvider {
 
 	private static final String PREFS = "Settings";
 	private static final String ALWAYS_ON_DISPLAY = "always_on_display";
+	private static final String VIBRATE = "vibrate";
 	private static final String NAME = "name";
 
 	public SettingsProvider(FragmentActivity fa) {
@@ -20,6 +21,13 @@ public class SettingsProvider extends BaseSettingsProvider {
 		getEditor().putBoolean(ALWAYS_ON_DISPLAY, val);
 	}
 
+	public boolean getVibrate() {
+		return getPrefs().getBoolean(VIBRATE, true);
+	}
+
+	public void setVibrate(boolean val) {
+		getEditor().putBoolean(VIBRATE, val);
+	}
 
 	public String getName() {
 		return getPrefs().getString(NAME, "Player");

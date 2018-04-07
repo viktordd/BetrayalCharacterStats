@@ -1,12 +1,15 @@
 package com.ViktorDikov.BetrayalCharacterStats;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,6 +22,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.ViktorDikov.BetrayalCharacterStats.Data.AsyncResult;
 import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats;
 import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStatsProvider;
+import com.ViktorDikov.BetrayalCharacterStats.Data.SettingsProvider;
 import com.ViktorDikov.BetrayalCharacterStats.Helpers.ImageLoaderTask;
 import com.ViktorDikov.BetrayalCharacterStats.Helpers.PinDetails;
 import com.ViktorDikov.BetrayalCharacterStats.Helpers.PinTouchListener;
@@ -130,6 +134,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
             @Override
             protected void SetStats(int pos, boolean touchEnd) {
                 m_stats.setSpeed(pos);
+                Vibrate();
                 parent.sendMessage(mId, m_stats);
             }
         });
@@ -139,6 +144,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
             @Override
             protected void SetStats(int pos, boolean touchEnd) {
                 m_stats.setMight(pos);
+                Vibrate();
                 parent.sendMessage(mId, m_stats);
             }
         });
@@ -148,6 +154,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
             @Override
             protected void SetStats(int pos, boolean touchEnd) {
                 m_stats.setSanity(pos);
+                Vibrate();
                 parent.sendMessage(mId, m_stats);
             }
         });
@@ -157,6 +164,7 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
             @Override
             protected void SetStats(int pos, boolean touchEnd) {
                 m_stats.setKnowledge(pos);
+                Vibrate();
                 parent.sendMessage(mId, m_stats);
             }
         });
@@ -220,5 +228,20 @@ public class CharacterFragment extends Fragment implements ViewTreeObserver.OnGl
 
     public CharacterStats getStats() {
         return this.m_stats;
+    }
+
+    private void Vibrate() {
+        SettingsProvider settings = new SettingsProvider(getActivity());
+        if (settings.getVibrate()) {
+            int time = 10;
+            int amplitude = 168;
+            Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(time, amplitude));
+            } else {
+                //deprecated in API 26
+                v.vibrate(time);
+            }
+        }
     }
 }

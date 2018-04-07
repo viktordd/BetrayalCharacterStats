@@ -58,8 +58,7 @@ public class MainActivity extends AppCompatActivity
         order.getPrefs().registerOnSharedPreferenceChangeListener(this);
         displayView(R.id.nav_characters, null);
 
-        initAlwaysOnDisplayToggle();
-        setPlayerNameOnMenu();
+        initOptions();
     }
 
 
@@ -134,9 +133,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_reset_all_character_stats:
                 resetAllStats();
                 return;
-            case R.id.nav_always_on_display:
-                return;
             default:
+            case R.id.nav_always_on_display:
+            case R.id.nav_vibrate:
                 return;
         }
 
@@ -198,28 +197,47 @@ public class MainActivity extends AppCompatActivity
         menu.setGroupCheckable(R.id.nav_character_group, true, true);
     }
 
-    private void initAlwaysOnDisplayToggle() {
-        SettingsProvider settings = new SettingsProvider(this);
+
+    private void initOptions() {
+        final SettingsProvider settings = new SettingsProvider(this);
         Switch alwaysOnToggle = menu.findItem(R.id.nav_always_on_display).getActionView().findViewById(R.id.toggle);
+        Switch vibrateToggle = menu.findItem(R.id.nav_vibrate).getActionView().findViewById(R.id.toggle);
 
         alwaysOnToggle.setChecked(settings.getAlwaysOnDisplay());
         alwaysOnToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setAlwaysOnDisplay(true);
+                setAlwaysOnDisplay(settings);
             }
         });
 
-        setAlwaysOnDisplay(false);
+        vibrateToggle.setChecked(settings.getVibrate());
+        vibrateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                saveVibrate(settings);
+            }
+        });
+
+        setAlwaysOnDisplay(null);
+        setPlayerNameOnMenu(settings);
     }
 
-    private void setAlwaysOnDisplay(boolean save) {
+    private void setAlwaysOnDisplay(SettingsProvider settings) {
         boolean checked = ((Switch) menu.findItem(R.id.nav_always_on_display).getActionView().findViewById(R.id.toggle)).isChecked();
         findViewById(R.id.drawer_layout).setKeepScreenOn(checked);
 
-        if (save) {
-            SettingsProvider settings = new SettingsProvider(this);
+        if (settings != null) {
             settings.setAlwaysOnDisplay(checked);
+            settings.apply();
+        }
+    }
+
+    private void saveVibrate(SettingsProvider settings) {
+        boolean checked = ((Switch) menu.findItem(R.id.nav_vibrate).getActionView().findViewById(R.id.toggle)).isChecked();
+
+        if (settings != null) {
+            settings.setVibrate(checked);
             settings.apply();
         }
     }
@@ -238,7 +256,7 @@ public class MainActivity extends AppCompatActivity
                         settings.setName(name.getText().toString());
                         settings.apply();
 
-                        setPlayerNameOnMenu();
+                        setPlayerNameOnMenu(settings);
                         if (currViewId == R.id.nav_characters) {
                             CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
                             CharacterFragment fr = chars.getSectionsPagerAdapter().getCurrentFragment();
@@ -283,9 +301,8 @@ public class MainActivity extends AppCompatActivity
                 .show();
     }
 
-    private void setPlayerNameOnMenu(){
+    private void setPlayerNameOnMenu(SettingsProvider settings){
         TextView name = header.findViewById(R.id.player_name);
-        SettingsProvider settings = new SettingsProvider(this);
 
         name.setText(settings.getName());
     }

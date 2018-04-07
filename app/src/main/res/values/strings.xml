@@ -16,6 +16,7 @@
     <string name="a_menu_set_player_name">Set Player Name</string>
     <string name="a_menu_reset_all">Reset All</string>
     <string name="a_menu_always_on_display">Always-On Display</string>
+    <string name="a_menu_vibrate">Vibrate</string>
 
     <string name="menu_reset">Reset Current Character</string>
     <string name="menu_reset_short">Reset</string>
@@ -28,6 +29,7 @@
     <string name="media_route_menu_title">Cast</string>
 
     <string name="msg_min_one_item">Minimum one character required.</string>
+    <string name="msg_cast_failed">Cast failed.</string>
 
     <string name="title_set_player_name">Set Player Name</string>
     <string name="msg_enter_player_name">Enter player name to display when casting.</string>

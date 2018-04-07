@@ -13,7 +13,7 @@ public abstract class PinTouchListener implements OnTouchListener {
 	private Point[] PinPos;
 	private ViewPager ViewPager;
 	private Point delta;
-	private int PrevPos;
+	private static int touches = 0;
 
 	public PinTouchListener(int currPos, Point[] pinPos, ViewPager viewPager) {
 		CurrPos = currPos;
@@ -38,41 +38,40 @@ public abstract class PinTouchListener implements OnTouchListener {
 				Rect rect = new Rect();
 				v.getHitRect(rect);
 				delta = new Point(x - rect.left, y - rect.top);
-				PrevPos = CurrPos;
+				touches++;
 				break;
 
 			case MotionEvent.ACTION_MOVE:
-				closestPos = getClosestPin(x, y);
-				if (closestPos > -1 && closestPos != PrevPos) {
-					SetPoint(v, closestPos);
-					SetStats(closestPos, false);
-					PrevPos = closestPos;
-				}
+				setPos(v, x, y, false);
 				break;
 
 			case MotionEvent.ACTION_UP:
-				closestPos = getClosestPin(x, y);
-				if (closestPos > -1) {
-					SetPoint(v, closestPos);
-					SetStats(closestPos, true);
-					CurrPos = closestPos;
-				}
-
+				setPos(v, x, y, true);
+				if (touches > 0)
+				    touches--;
 				delta = null;
-				if (ViewPager != null)
+				if (ViewPager != null && touches == 0)
 					ViewPager.requestDisallowInterceptTouchEvent(false);
 				break;
 				
 			case MotionEvent.ACTION_CANCEL:
-				SetPoint(v, CurrPos);
-				SetStats(CurrPos, false);
-				
 				delta = null;
-				if (ViewPager != null)
+                if (touches > 0)
+                    touches--;
+                if (ViewPager != null && touches == 0)
 					ViewPager.requestDisallowInterceptTouchEvent(false);
 				break;
 		}
 		return true;
+	}
+
+	private void setPos(View v, int x, int y, boolean touchEnd){
+		int closestPos = getClosestPin(x, y);
+		if (closestPos > -1 && closestPos != CurrPos) {
+			SetPoint(v, closestPos);
+			SetStats(closestPos, touchEnd);
+			CurrPos = closestPos;
+		}
 	}
 
 	private int getClosestPin(int x, int y) {
