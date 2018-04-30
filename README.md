@@ -10,4 +10,8 @@ You can rearrange the character order to match your player order.
 New Chromecast integration.
 Everybody can cast their character to see all characters on one screen.
 
-App includes option to keep the phone's screen on. Caution this will drain your battery faster.
+App includes option to keep the phone's screen on.
+
+The app is a native Android app written in Java using the Andorid Studio
+
+The main feature keeping track of the position of character stats is acheived by positioning 4 pin images on top of the character image. I've measures the positions of the stats on each character card, to be able to position the pins precisely. I ensure that all pin images are loaded with the same pixel density as the main character image.
