@@ -14,4 +14,7 @@ App includes option to keep the phone's screen on.
 
 The app is a native Android app written in Java using the Andorid Studio
 
-The main feature keeping track of the position of character stats is acheived by positioning 4 pin images on top of the character image. I've measures the positions of the stats on each character card, to be able to position the pins precisely. I ensure that all pin images are loaded with the same pixel density as the main character image.
+# About
+The purpose of BetrayalCharacterStats is to keep track of player stats in the "Betrayal at House on The Hill" board gaem. The app keeps track of stats by positioning 4 pin images on top of a character image. The pin can slide up and down 
+
+![character](../docs/Character.PNG)
