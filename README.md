@@ -17,4 +17,4 @@ The app is a native Android app written in Java using the Andorid Studio
 # About
 The purpose of BetrayalCharacterStats is to keep track of player stats in the "Betrayal at House on The Hill" board gaem. The app keeps track of stats by positioning 4 pin images on top of a character image. The pin can slide up and down 
 
-![character](/BetrayalCharacterStats/blob/master/docs/Character.PNG)
+![character](BetrayalCharacterStats/blob/master/docs/Character.PNG)
