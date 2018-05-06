@@ -51,5 +51,4 @@ Using the app is simple, when the app starts you are presented with the first ch
 
 
 ## Resources to Build Android Apps
-// 2-5 useful android tutorials
 https://developer.android.com/guide/
