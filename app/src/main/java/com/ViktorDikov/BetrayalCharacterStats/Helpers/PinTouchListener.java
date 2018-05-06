@@ -29,7 +29,6 @@ public abstract class PinTouchListener implements OnTouchListener {
 			x -= delta.x;
 			y -= delta.y;
 		}
-		int closestPos;
 
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN:

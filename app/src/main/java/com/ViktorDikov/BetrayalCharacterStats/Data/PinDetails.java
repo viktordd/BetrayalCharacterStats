@@ -1,4 +1,4 @@
-package com.ViktorDikov.BetrayalCharacterStats.Helpers;
+package com.ViktorDikov.BetrayalCharacterStats.Data;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -25,24 +25,10 @@ public class PinDetails {
 	public boolean isSet() {
 		return speedPinImg != null && mightPinImg != null && sanityPinImg != null && knowledgePinImg != null;
 	}
-	
-	public void Clear(){
-		if (isSet()){
-			speedPinImg.recycle();
-			mightPinImg.recycle();
-			sanityPinImg.recycle();
-			knowledgePinImg.recycle();
-		}
-		speedPinImg = null;
-		mightPinImg = null;
-		sanityPinImg = null;
-		knowledgePinImg = null;
-	}
 
 	public Bitmap getSpeedPinImg() {
 		return speedPinImg;
 	}
-
 	public void setSpeedPinImg(Bitmap speedPinImg) {
 		this.speedPinImg = speedPinImg;
 	}
@@ -50,7 +36,6 @@ public class PinDetails {
 	public Bitmap getMightPinImg() {
 		return mightPinImg;
 	}
-
 	public void setMightPinImg(Bitmap mightPinImg) {
 		this.mightPinImg = mightPinImg;
 	}
@@ -58,7 +43,6 @@ public class PinDetails {
 	public Bitmap getSanityPinImg() {
 		return sanityPinImg;
 	}
-
 	public void setSanityPinImg(Bitmap sanityPinImg) {
 		this.sanityPinImg = sanityPinImg;
 	}
@@ -66,7 +50,6 @@ public class PinDetails {
 	public Bitmap getKnowledgePinImg() {
 		return knowledgePinImg;
 	}
-
 	public void setKnowledgePinImg(Bitmap knowledgePinImg) {
 		this.knowledgePinImg = knowledgePinImg;
 	}
@@ -89,7 +72,7 @@ public class PinDetails {
 			}
 		}
 		int[] pinPoint = r.getIntArray(R.array.pin_pointer_offset);
-		int[] array = r.getIntArray(getCharPinOffsetResoureID(charID));
+		int[] array = r.getIntArray(getCharPinOffsetResourceID(charID));
 		fillScaledPinPos(SPEED_PINS, width, height, orientation, charImg, densityScale, array, 0, pinPoint[0], pinPoint[1]);
 		fillScaledPinPos(MIGHT_PINS, width, height, orientation, charImg, densityScale, array, 4, pinPoint[2], pinPoint[3]);
 		fillScaledPinPos(SANITY_PINS, width, height, orientation, charImg, densityScale, array, 8, pinPoint[4], pinPoint[5]);
@@ -107,7 +90,7 @@ public class PinDetails {
 			yOffset = 0;
 		}
 		
-		double xMin = xOffset + ((pinOffsets[pinOffsetsI + 0] - pinX) * densityScale);
+		double xMin = xOffset + ((pinOffsets[pinOffsetsI] - pinX) * densityScale);
 		double yMin = yOffset + ((pinOffsets[pinOffsetsI + 1] - pinY) * densityScale);
 		
 		double xMax = xOffset + ((pinOffsets[pinOffsetsI + 2] - pinX) * densityScale);
@@ -123,7 +106,7 @@ public class PinDetails {
 		PinPos[i][lastPos].set((int) xMax, (int) yMax);
 	}
 	
-	private int getCharPinOffsetResoureID(int m_id) {
+	private int getCharPinOffsetResourceID(int m_id) {
 		switch (m_id) {
 			default:
 			case 0:

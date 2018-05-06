@@ -10,6 +10,7 @@ import android.util.Log;
 import com.ViktorDikov.BetrayalCharacterStats.CharacterFragment;
 import com.ViktorDikov.BetrayalCharacterStats.Data.AsyncResult;
 import com.ViktorDikov.BetrayalCharacterStats.Data.ImageResources;
+import com.ViktorDikov.BetrayalCharacterStats.Data.PinDetails;
 import com.ViktorDikov.BetrayalCharacterStats.R;
 
 import java.lang.ref.WeakReference;

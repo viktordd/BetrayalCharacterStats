@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (viewId) {
             case R.id.nav_characters:
+                //if the character view pager is already loaded, scroll to the selected character.
                 if (currViewId == R.id.nav_characters) {
                     if (item == null) return;
                     int pos = item.getOrder();
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity
                     chars.setCurrentItem(pos);
                 } else {
                     fragment = new CharactersViewPagerFragment();
+                    //if menu item is passed save the tab position so the view pager displays the selected character.
                     if (item != null) {
                         int pos = item.getOrder();
                         CharacterOrderProvider order = new CharacterOrderProvider(this);
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
     }
 
+    //Remove and add characters to menu.
     public void addMenuItems() {
         Resources r = getResources();
 
@@ -200,14 +203,19 @@ public class MainActivity extends AppCompatActivity
 
     private void initOptions() {
         final SettingsProvider settings = new SettingsProvider(this);
-        Switch alwaysOnToggle = menu.findItem(R.id.nav_always_on_display).getActionView().findViewById(R.id.toggle);
-        Switch vibrateToggle = menu.findItem(R.id.nav_vibrate).getActionView().findViewById(R.id.toggle);
+        final View drawerLayout = findViewById(R.id.drawer_layout);
+        final Switch alwaysOnToggle = menu.findItem(R.id.nav_always_on_display).getActionView().findViewById(R.id.toggle);
+        final Switch vibrateToggle = menu.findItem(R.id.nav_vibrate).getActionView().findViewById(R.id.toggle);
 
+        drawerLayout.setKeepScreenOn(settings.getAlwaysOnDisplay());
         alwaysOnToggle.setChecked(settings.getAlwaysOnDisplay());
         alwaysOnToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setAlwaysOnDisplay(settings);
+                boolean checked = alwaysOnToggle.isChecked();
+                drawerLayout.setKeepScreenOn(checked);
+                settings.setAlwaysOnDisplay(checked);
+                settings.apply();
             }
         });
 
@@ -215,31 +223,12 @@ public class MainActivity extends AppCompatActivity
         vibrateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                saveVibrate(settings);
+                settings.setVibrate(vibrateToggle.isChecked());
+                settings.apply();
             }
         });
 
-        setAlwaysOnDisplay(null);
         setPlayerNameOnMenu(settings);
-    }
-
-    private void setAlwaysOnDisplay(SettingsProvider settings) {
-        boolean checked = ((Switch) menu.findItem(R.id.nav_always_on_display).getActionView().findViewById(R.id.toggle)).isChecked();
-        findViewById(R.id.drawer_layout).setKeepScreenOn(checked);
-
-        if (settings != null) {
-            settings.setAlwaysOnDisplay(checked);
-            settings.apply();
-        }
-    }
-
-    private void saveVibrate(SettingsProvider settings) {
-        boolean checked = ((Switch) menu.findItem(R.id.nav_vibrate).getActionView().findViewById(R.id.toggle)).isChecked();
-
-        if (settings != null) {
-            settings.setVibrate(checked);
-            settings.apply();
-        }
     }
 
     private void setPlayerName() {
@@ -251,7 +240,7 @@ public class MainActivity extends AppCompatActivity
                 .setTitle(R.string.title_set_player_name)
                 .setMessage(R.string.msg_enter_player_name)
                 .setView(name)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         settings.setName(name.getText().toString());
                         settings.apply();
@@ -264,7 +253,7 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
                     }
@@ -279,7 +268,7 @@ public class MainActivity extends AppCompatActivity
         new AlertDialog.Builder(this)
                 .setTitle(R.string.title_reset_all_character_stats)
                 .setMessage(R.string.msg_reset_all_character_stats)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         if (currViewId == R.id.nav_characters) {
                             CharactersViewPagerFragment chars = (CharactersViewPagerFragment) (getSupportFragmentManager().findFragmentById(R.id.content_frame));
@@ -293,7 +282,7 @@ public class MainActivity extends AppCompatActivity
                         displayView(R.id.nav_characters, null);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
                     }

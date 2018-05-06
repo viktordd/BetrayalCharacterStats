@@ -24,7 +24,7 @@ import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStats;
 import com.ViktorDikov.BetrayalCharacterStats.Data.CharacterStatsProvider;
 import com.ViktorDikov.BetrayalCharacterStats.Data.SettingsProvider;
 import com.ViktorDikov.BetrayalCharacterStats.Helpers.ImageLoaderTask;
-import com.ViktorDikov.BetrayalCharacterStats.Helpers.PinDetails;
+import com.ViktorDikov.BetrayalCharacterStats.Data.PinDetails;
 import com.ViktorDikov.BetrayalCharacterStats.Helpers.PinTouchListener;
 import com.ViktorDikov.BetrayalCharacterStats.databinding.FragmentCharacterBinding;
 

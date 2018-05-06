@@ -28,6 +28,9 @@
     <string name="menu_reset_order_short">Reset</string>
     <string name="media_route_menu_title">Cast</string>
 
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
+
     <string name="msg_min_one_item">Minimum one character required.</string>
     <string name="msg_cast_failed">Cast failed.</string>
 

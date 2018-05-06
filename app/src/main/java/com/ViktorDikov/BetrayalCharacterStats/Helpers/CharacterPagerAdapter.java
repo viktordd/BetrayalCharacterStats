@@ -1,6 +1,7 @@
 package com.ViktorDikov.BetrayalCharacterStats.Helpers;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -75,7 +76,7 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         if (refreshAll || currentFragment.equals(object))
             return POSITION_NONE;
         return POSITION_UNCHANGED;

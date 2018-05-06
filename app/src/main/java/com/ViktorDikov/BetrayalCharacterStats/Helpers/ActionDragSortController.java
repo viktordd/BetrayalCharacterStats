@@ -8,7 +8,7 @@ import com.mobeta.android.dslv.DragSortListView;
 public class ActionDragSortController extends DragSortController {
 
     public interface ActionListener {
-        public void click(int which);
+        void click(int which);
     }
     private DragSortListView mDslv;
     private ActionListener mActionListener;
