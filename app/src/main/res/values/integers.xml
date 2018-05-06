@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="sourceDensity">320</integer>
     <integer name="numCharacters">6</integer>
 
     <integer name="age_blue_madame_zostra">37</integer>

@@ -15,17 +15,17 @@ import com.ViktorDikov.BetrayalCharacterStats.R;
 import java.lang.ref.WeakReference;
 
 public class ImageLoaderTask extends AsyncTask<Integer, Void, AsyncResult> {
-    final WeakReference<CharacterFragment> CharFragment;
-    final int CharId;
-    final int ImgResId;
-    final int Orientation;
-    final int Width;
-    final int Height;
-    final Resources r;
+    private final WeakReference<CharacterFragment> CharFragment;
+    private final int CharId;
+    private final int ImgResId;
+    private final int Orientation;
+    private final int Width;
+    private final int Height;
+    private final Resources r;
 
     public ImageLoaderTask(CharacterFragment fragment, int width, int height, Resources r) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
-        CharFragment = new WeakReference(fragment);
+        CharFragment = new WeakReference<>(fragment);
         CharId = fragment.getCharID();
         ImgResId = ImageResources.GetChar(fragment.getCharID());
         Orientation = r.getConfiguration().orientation;
@@ -41,8 +41,9 @@ public class ImageLoaderTask extends AsyncTask<Integer, Void, AsyncResult> {
         // Load image
         Bitmap tempImg = BitmapFactory.decodeResource(r, ImgResId);
 
+        double sourceDensity = r.getInteger(R.integer.sourceDensity);
         double scale = getScale(tempImg);
-        int density = tempImg.getDensity();
+        double density = tempImg.getDensity();
 
         Bitmap bitmap = scaleImage(scale, tempImg);
 
@@ -53,7 +54,7 @@ public class ImageLoaderTask extends AsyncTask<Integer, Void, AsyncResult> {
         pins.setSanityPinImg(scaleImage(r, R.drawable.pin_sanity, scale));
         pins.setKnowledgePinImg(scaleImage(r, R.drawable.pin_knowledge, scale));
 
-        pins.FillScaledPinPos(r, CharId, bitmap, Width, Height, (density / 320.0) * scale, Orientation);
+        pins.FillScaledPinPos(r, CharId, bitmap, Width, Height, (density / sourceDensity) * scale, Orientation);
 
         return new AsyncResult(bitmap, pins);
     }
@@ -76,8 +77,7 @@ public class ImageLoaderTask extends AsyncTask<Integer, Void, AsyncResult> {
         int newWidth = (int) (tempImg.getWidth() * Scale);
         int newHeight = (int) (tempImg.getHeight() * Scale);
         try {
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(tempImg, newWidth, newHeight, true);
-            return scaledBitmap;
+            return Bitmap.createScaledBitmap(tempImg, newWidth, newHeight, true);
         }
         catch (Exception e)
         {

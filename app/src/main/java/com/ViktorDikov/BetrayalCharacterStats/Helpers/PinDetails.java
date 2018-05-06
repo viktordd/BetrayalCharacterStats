@@ -78,6 +78,7 @@ public class PinDetails {
 	public Point getPinPos(int i, int j) {
 		return PinPos[i][j];
 	}
+
 	public void FillScaledPinPos(Resources r, int charID, Bitmap charImg, int width, int height, double densityScale, int orientation) {
 		int numPositions = r.getIntArray(R.array.char_constraints)[1] + 1;
 		PinPos = new Point[4][];
@@ -94,6 +95,7 @@ public class PinDetails {
 		fillScaledPinPos(SANITY_PINS, width, height, orientation, charImg, densityScale, array, 8, pinPoint[4], pinPoint[5]);
 		fillScaledPinPos(KNOWLEDGE_PINS, width, height, orientation, charImg, densityScale, array, 12, pinPoint[6], pinPoint[7]);
 	}
+
 	private void fillScaledPinPos(int i, int width, int height, int orientation, Bitmap charImg, double densityScale, int[] pinOffsets, int pinOffsetsI, int pinX, int pinY) {
 		int xOffset, yOffset;
 		if (orientation == Configuration.ORIENTATION_PORTRAIT){
