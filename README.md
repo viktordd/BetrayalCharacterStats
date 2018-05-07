@@ -47,11 +47,16 @@ Android Studio will ask you where you want to run the app. Select the phone you 
 ## App Walkthrough
 Using the app is simple, when the app starts you are presented with the first character card, you can swipe left and right to view all characters, each character is double sided so you can flip the current card to view the other side by going to the 3 dots menu and selecting the "Flip Current Character". Each character card also has a pull up drawer that has more information about the character as well as one time stats increases when a player ends their turn in a specific room.
 
-<img src="https://lh3.googleusercontent.com/-CmOHGGOeB1Sw8LhRfHlhavcD7KoI8YbIWHJShaPJe0JXCAQByanr3D_bJYawgfwazg=w2048-h1047-rw" alt="character" width="200px"> <img src="https://lh3.googleusercontent.com/tvMOm6nkjbzz5ntaMxnBc_qZumx7KRhjDw3nkUjUi9CZppCPSF_FhL4KjzXtuKHqXpw=w2048-h1047-rw" alt="character" width="200px"> <img src="https://lh3.googleusercontent.com/Je2uG8eJOkXwhH6_REK2r3jcTfRdwFB1u4lrOi1HRhVGySLFXj3mm3Zf9U9QSOZFKQ=w2048-h1047-rw" alt="character" width="200px">
+<img src="https://lh3.googleusercontent.com/-CmOHGGOeB1Sw8LhRfHlhavcD7KoI8YbIWHJShaPJe0JXCAQByanr3D_bJYawgfwazg=w2048-h1047-rw" alt="app" width="200px"> <img src="https://lh3.googleusercontent.com/tvMOm6nkjbzz5ntaMxnBc_qZumx7KRhjDw3nkUjUi9CZppCPSF_FhL4KjzXtuKHqXpw=w2048-h1047-rw" alt=" app " width="200px"> <img src="https://lh3.googleusercontent.com/Je2uG8eJOkXwhH6_REK2r3jcTfRdwFB1u4lrOi1HRhVGySLFXj3mm3Zf9U9QSOZFKQ=w2048-h1047-rw" alt=" app " width="200px">
 
 The side menu shows all characters, allows you to flip any of them or to jump to any character on the list. From there you can also set the always-on display option, turn vibrate on and off (phone vibrates when you change stats), set the player name that appears when you cast your character, and reset all stats for all characters.
 
-<img src="https://lh3.googleusercontent.com/XD4gXDkzz0pSnfmbIZmV5v17DadrSMDyfU1yBU3Bl9-8IzNST4WmSD5w3r_rj0apheM=w2048-h1047-rw" alt="character" width="200px"> <img src="https://lh3.googleusercontent.com/XD4gXDkzz0pSnfmbIZmV5v17DadrSMDyfU1yBU3Bl9-8IzNST4WmSD5w3r_rj0apheM=w2048-h1047-rw" alt="character" width="200px">
+<img src="https://lh3.googleusercontent.com/XD4gXDkzz0pSnfmbIZmV5v17DadrSMDyfU1yBU3Bl9-8IzNST4WmSD5w3r_rj0apheM=w2048-h1047-rw" alt=" app " width="200px"> <img src="https://lh3.googleusercontent.com/XD4gXDkzz0pSnfmbIZmV5v17DadrSMDyfU1yBU3Bl9-8IzNST4WmSD5w3r_rj0apheM=w2048-h1047-rw" alt=" app " width="200px">
+
+Finally, you can change the character order from the Re-Order Characters screen. You can drag characters up and down to rearrange them or swipe them away to remove them from the list. This allows multiple players to use a single device. The reset option resets both the order and add all removed characters. The reset all options in the side menu also resets the character order.
+
+<img src="https://lh3.googleusercontent.com/l6Q5tvDAM7LBhh3w5Uf6Y4xhr2gMd_H7G3HUQAIqZazgtszVD7-0aKMT44nnhGcECdQL=w2048-h1047-rw" alt="app" width="200px"> <img src="https://lh3.googleusercontent.com/Oni3eGkW2qYyXm2A0R7i_QES8LdLAa-QseaHyxJT1ej2o4bwVadY1Dl4jUNOKV17faY=w2048-h1047-rw" alt="app" width="200px"> <img src="https://lh3.googleusercontent.com/2K3kqYW-i9XYwSpt86p6Lo2Z-I7d787cPSCbFuACZQGZ8mgdQYzbRDzrw502RG0lRatQ=w2048-h1047-rw" alt="app" width="200px">
+
 
 ## Resources to Build Android Apps
 A good place to start learning how to develop android apps is the android developer guide https://developer.android.com/guide/.
