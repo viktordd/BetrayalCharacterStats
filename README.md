@@ -32,11 +32,11 @@ The App has a single Activity which is responsible for managing the main menu an
 ## Setup Instructions + 
 To compile and run the app you need Android Studio https://developer.android.com/studio/. After downloading and installing Android Studio it will ask you to download the necessary portions of Android SDK.
 
-To open the app select the "Open an existing project" option and navigate to the folder where you downloaded the source code.
+To open the app, select the "Open an existing project" option and navigate to the folder where you downloaded the source code.
 
 <img src="/docs/AndroidStudioStart.PNG" alt="Open an existing project" width="300px">
 
-To run the app connect your phone, ensure that you have USB debugging enabled in the Developer options, then Run app button(green play button).
+To run the app, connect your phone, ensure that you have USB debugging enabled in the Developer options, then Run app button (green play button).
 
 <img src="/docs/Run.PNG" alt="Run">
 
@@ -45,10 +45,13 @@ Android Studio will ask you where you want to run the app. Select the phone you 
 <img src="/docs/RunDevice.PNG" alt="Run on device">
 
 ## App Walkthrough
-Using the app is simple, when the app starts you are presented with the first character card, you can swipe left and right to view all characters, each character is double sided so you can flip the current card to view the other side by going to the 3 dots menu and selecting the "Flip Current Character". Yach character card also has a pull up card that has more information about the caracter as well as one time stats increases when a player ends their turn in a specific room.
+Using the app is simple, when the app starts you are presented with the first character card, you can swipe left and right to view all characters, each character is double sided so you can flip the current card to view the other side by going to the 3 dots menu and selecting the "Flip Current Character". Each character card also has a pull up drawer that has more information about the character as well as one time stats increases when a player ends their turn in a specific room.
 
 <img src="https://lh3.googleusercontent.com/-CmOHGGOeB1Sw8LhRfHlhavcD7KoI8YbIWHJShaPJe0JXCAQByanr3D_bJYawgfwazg=w2048-h1047-rw" alt="character" width="200px"> <img src="https://lh3.googleusercontent.com/tvMOm6nkjbzz5ntaMxnBc_qZumx7KRhjDw3nkUjUi9CZppCPSF_FhL4KjzXtuKHqXpw=w2048-h1047-rw" alt="character" width="200px"> <img src="https://lh3.googleusercontent.com/Je2uG8eJOkXwhH6_REK2r3jcTfRdwFB1u4lrOi1HRhVGySLFXj3mm3Zf9U9QSOZFKQ=w2048-h1047-rw" alt="character" width="200px">
 
+The side menu shows all characters, allows you to flip any of them or to jump to any character on the list. From there you can also set the always-on display option, turn vibrate on and off (phone vibrates when you change stats), set the player name that appears when you cast your character, and reset all stats for all characters.
+
+<img src="https://lh3.googleusercontent.com/XD4gXDkzz0pSnfmbIZmV5v17DadrSMDyfU1yBU3Bl9-8IzNST4WmSD5w3r_rj0apheM=w2048-h1047-rw" alt="character" width="200px"> <img src="https://lh3.googleusercontent.com/XD4gXDkzz0pSnfmbIZmV5v17DadrSMDyfU1yBU3Bl9-8IzNST4WmSD5w3r_rj0apheM=w2048-h1047-rw" alt="character" width="200px">
 
 ## Resources to Build Android Apps
-https://developer.android.com/guide/
+A good place to start learning how to develop android apps is the android developer guide https://developer.android.com/guide/.
