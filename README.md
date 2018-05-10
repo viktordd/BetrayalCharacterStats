@@ -16,7 +16,7 @@ The app supports casting to [Google Chromecast](https://store.google.com/product
 # Where to Download The Live App - Google PlayStore
 <a href='https://play.google.com/store/apps/details?id=com.ViktorDikov.BetrayalCharacterStats&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' width="240px" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
-## Technical Architecture 
+# Technical Architecture 
 The app is written using Java, Android Studio, and the Android SDK.
 
 The app uses the SharedPreferences API to store data. This allows apps to store simple key-value pairs which is perfect for storing only 4 values for each character and looking it up quickly.
@@ -31,7 +31,7 @@ The ImageLoaderTask offloads the image loading to a separate thread. This helps 
 
 The App has a single Activity which is responsible for managing the main menu and loading either the CharacterViewPagerFragment or the ReorderCharsFragment. The CharacterViewPagerFragment is a carousel of character cards, this is the main screen where characters and their stats are shown. You can swipe left and right between all the characters. The ReorderCharsFragment is responsible for reordering the characters. It implements drag-sort-listview which gives users the ability to reorder and remove characters. 
 
-## Setup Instructions
+# Setup Instructions
 To compile and run the app you need Android Studio https://developer.android.com/studio/. After downloading and installing Android Studio, it will ask you to download the necessary portions of Android SDK.
 
 To open the app, select the "Open an existing project" option and navigate to the folder where you downloaded the source code.
@@ -46,7 +46,7 @@ Android Studio will ask you where you want to run the app. Select the phone you 
 
 <img src="/docs/RunDevice.PNG" alt="Run on device">
 
-## App Walkthrough
+# App Walkthrough
 Using the app is simple, when the app starts you are presented with the first character card, you can swipe left and right to view all characters, each character is double sided so you can flip the current card to view the other side by going to the vertical ellipsis menu and selecting the "Flip Current Character". Each character card also has a pull up drawer that has more information about the character as well as one time stats increases when a player ends their turn in a specific room.
 
 <img src="https://lh3.googleusercontent.com/-CmOHGGOeB1Sw8LhRfHlhavcD7KoI8YbIWHJShaPJe0JXCAQByanr3D_bJYawgfwazg=w2048-h1047-rw" alt="app" width="200px"> <img src="https://lh3.googleusercontent.com/tvMOm6nkjbzz5ntaMxnBc_qZumx7KRhjDw3nkUjUi9CZppCPSF_FhL4KjzXtuKHqXpw=w2048-h1047-rw" alt=" app " width="200px"> <img src="https://lh3.googleusercontent.com/Je2uG8eJOkXwhH6_REK2r3jcTfRdwFB1u4lrOi1HRhVGySLFXj3mm3Zf9U9QSOZFKQ=w2048-h1047-rw" alt=" app " width="200px">
@@ -60,5 +60,5 @@ Finally, you can change the character order from the Re-Order Characters screen.
 <img src="https://lh3.googleusercontent.com/l6Q5tvDAM7LBhh3w5Uf6Y4xhr2gMd_H7G3HUQAIqZazgtszVD7-0aKMT44nnhGcECdQL=w2048-h1047-rw" alt="app" width="200px"> <img src="https://lh3.googleusercontent.com/Oni3eGkW2qYyXm2A0R7i_QES8LdLAa-QseaHyxJT1ej2o4bwVadY1Dl4jUNOKV17faY=w2048-h1047-rw" alt="app" width="200px"> <img src="https://lh3.googleusercontent.com/2K3kqYW-i9XYwSpt86p6Lo2Z-I7d787cPSCbFuACZQGZ8mgdQYzbRDzrw502RG0lRatQ=w2048-h1047-rw" alt="app" width="200px">
 
 
-## Resources to Build Android Apps
+# Resources to Build Android Apps
 A good place to start learning how to develop Android apps is the Android Developer guide: https://developer.android.com/guide/.
