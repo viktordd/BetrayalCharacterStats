@@ -1,6 +1,3 @@
-# Where to Download Live App
-<a href='https://play.google.com/store/apps/details?id=com.ViktorDikov.BetrayalCharacterStats&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' width="240px" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
-
 # Betrayal Board Game
 Betrayal is a board game where you explore a haunted mansion with friends (3-6 player game).  The gameplay starts with everybody cooperating, exploring, adding rooms, and collecting items. Each turn players can choose to explore the mansion existing rooms, or to add on additional rooms if they want to explore a direction that hasn't been setup yet (this will add on a new random tile the player can draw).  The game gets really interesting when you encounter the "haunt" event;  a "haunt" can unite all the players against a common enemy, or turn one of the players into the enemy.  The mansion is random every time you play and is paired with one of 50 "haunt" scenarios (or more with the expansion pack). You can play as one of 6 characters, each with his own strengths and weaknesses. Each character has 4 attributes Speed, Sanity, Might, and Knowledge which contain stats that can change throughout the game. 
 https://boardgamegeek.com/boardgame/10547/betrayal-house-hill
@@ -15,6 +12,9 @@ The game comes with cardboard sheets with the player names and little plastic nu
 The app keeps track of stats by positioning 4 pin images on top of a character image. You can change stats by touching and sliding pins up and down, it also has haptic feedback to let you know you have shifted a stat. The app stores all stats locally on the phone. The user can reset stats for individual characters or for the whole app. The app also allows users to rearrange characters, to allow multiple players to keep track of their stats one a single device. 
 
 The app supports casting to [Google Chromecast](https://store.google.com/product/chromecast_2015). Google Chromecast is an easy way to add smart TV functionality to any TV. I decided to integrate Chromecast since all player stats in the game are supposed to be visible to everybody. All players can cast to a single TV where each character shows the name and stats of each player either by using one shared device or using multiple devices and connecting each to the same session.  
+
+# Where to Download The Live App - Google PlayStore
+<a href='https://play.google.com/store/apps/details?id=com.ViktorDikov.BetrayalCharacterStats&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' width="240px" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
 ## Technical Architecture 
 The app is written using Java, Android Studio, and the Android SDK.
